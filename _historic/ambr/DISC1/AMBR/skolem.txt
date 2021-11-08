@@ -1,0 +1,423 @@
+;;; -*- Mode: ASCII Text -*-
+
+;;; FILE:       AMBR/skolem.txt    ; see AMBR/skolem?.lsp
+;;; VERSION:    2.2.2    ; see AMBR/VERSION.LSP
+;;; PURPOSE:    Outline of the Skolemization mechanism.
+;;; DEPENDS-ON: This is not a program file.
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    30-04-98 [2.2.2]
+;;; UPDATED:    20-06-98 -- Distinguishing b/n 'old' and 'new' Skolem props.
+;;; UPDATED:    14-08-98 -- The 'official release'
+;;; UPDATED:    ...
+;;;;;;;
+;;; TO DO:      Distinguish between :CONJECTURE and :INFERENCE modalities
+;;;             of Skolem instances depending on the general proposition.
+
+
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ;;;;;;;;    OUTLINE  OF  SKOLEMIZATION    ;;;;;;;;
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+This file introduces the notion of SKOLEMIZATION and outlines the skolemization
+mechanism.  See AMBR/SKOLEM1 and =/SKOLEM2.LSP for the implementation.
+
+In our context, skolemization is a technique for converting 'general proposi-
+tions' into 'specific propositions'.
+
+
+TERMINOLOGY
+~~~~~~~~~~~~
+A PROPOSITION in AMBR is a coalition of agents that represent an instantiation
+of some relation.  The proposition has a 'head' and one, two, or more
+'arguments'.  For example:
+
+  ROSE-17-IS-RED                       ROSE-17
+   :type    (:instance :relation)       :type    (:instance :object)
+   :inst-of color-of                    :inst-of rose
+   :slot1
+     :inst-of color-of.slot1
+     :c-coref rose-17                  RED-17
+   :slot2                               :type    (:instance  :object)
+     :inst-of color-of.slot2            :inst-of red
+     :c-coref red-17
+
+(Note: Sometimes the term 'proposition' is used to refer only )
+(      to the head rather to the whole coalition of agents.   )
+
+The head of each proposition always is an instance-agent and always has S-slots
+that serve as hooks for the arguments.  The arguments themselves are attached
+to their respective S-slots in the head via C-COREF facets.
+
+Each C-COREF facet has one of two alternative interpretations -- it can either
+mean 'value' or 'range' depending on the labels of the other facets in the
+S-slot.  If the S-slot has an INST-OF facet, the respective C-COREF is
+interpreted as 'value'.  (The two C-COREFs in the example above belong to this
+category.)  If the S-slot has a SUBC facet, the respective C-COREF is inter-
+preted as 'range'.  It is an error if a S-slot has both INST-OF and SUBC facets
+at once.  Finally, when a S-slot has neither INST-OF nor SUBC facets but has a
+C-COREF, the latter is interpreted as 'range' by default.
+
+When a C-COREF facet means 'range', its filler must be a concept-agent.  It
+represents the class of possible arguments of the proposition.  When the
+C-COREF facet means 'value', its filler is usually an instance-agent repre-
+senting the specific argument of the propositon.  It may happen, however,
+that the filler of a 'value' C-COREF is a concept-agent.  (In this case the
+proposition is a 'meta proposition'.)
+
+A SPECIFIC PROPOSITION is a proposition in which all C-COREF facets in the head
+have 'value' interpretations. The example above illustrates a specific propostn.
+
+A GENERAL PROPOSITION is a proposition in which at least one of the C-COREF
+facets in the head has 'range' interpretation.  Such propositions represent
+a general fact about a whole class of objects.  For example, the fact
+'Each snowdrop is white' is represented by the following general propostn:
+
+  EACH-SNOWDROP-IS-WHITE               SHOWDROP
+   :type    (:instance :relation)       :type  (:concept :object)
+   :inst-of color-of                    :subc  flower
+   :slot1
+     :SUBC    color-of.slot1
+     :c-coref snowdrop                 WHITE
+   :slot2                               :type  (:concept :object)
+     :SUBC    color-of.slot2            :subc  color
+     :c-coref white
+
+
+Typically only one of the arguments of a general proposition is a class.
+The other argument(s) are PROTOTYPICAL INSTANCES.  The latter are instance-
+agents distinguished by the tag :PROTOTYPE in their TYPE slot.
+A HOMOGENEOUS PROPOSITION is a proposition whose all arguments are of the
+same kind -- either instance or class.  Specific propositions are always
+homogeneous -- they involve only instance arguments by definition.  General
+propositions may be homo- or heterogeneous.
+
+The proposition illustrated above is homogeneous.  This makes it symmetric
+in the sense that it may be interpreted in two ways: (i) 'Each snowdrop is
+white' and (ii) 'Each white thing is a snowdrop'.  These two interpretations
+are equally justifiable from syntactical point of view.
+
+Heterogeneous propositions are more restrictive in their interpretation.
+The phrase 'Each snowdrop is white' is better represented by the following:
+
+  EACH-SNOWDROP-IS-WHITE               SHOWDROP
+   :type    (:instance :relation)       :type  (:concept :object)
+   :inst-of color-of                    :subc  flower
+   :slot1
+     :SUBC    color-of.slot1
+     :c-coref snowdrop                 WHITE-SNOWDROP
+   :slot2                               :type  (:PROTOTYPE :instance :object)
+     :INST-OF color-of.slot2            :INST-OF color
+     :c-coref white-snowdrop
+
+Heterogeneous general propositions are more common that homogeneous ones.
+Both kinds are subject to skolemization.  Prototypical instances are not mapped
+directly but are treated as representatives of their corresponding class.
+
+
+THE PURPOSE OF SKOLEMIZATION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Specific propositions are usually affiliated to situations (see AMBR/SITUATN.TXT
+for comments on affiliation) and participate in the episodic memory of the
+model.  In contrast, general propositions are usually free-standing and support
+some concept in the semantic memory.  (For example EACH-SNOWDROP-IS-WHITE
+supports the concepts SNOWDROP and, to a lesser extent, WHITE.)
+
+Now suppose that there is some situation involving ROSE-17, ROSE-17-IS-RED, and
+other objects and propositions.  Suppose further that this situation becomes
+the target situation and is attached to the goal list.  In this way it becomes
+a 'driver situation' for the mapping mechanisms in AMBR (see the function
+T-DRIVER-P in AMBR/GOALINPT.LSP).
+
+The marker-passing mechanism (see AMBR/MARKER.LSP) looks for possible
+correspondences between the driver proposition ROSE-17-IS-RED.  It finds
+a number of specific propositions affiliated to the 'recipient' situations
+stored in the LTM and will create hypotheses such as ROSE-17-IS-RED<-->ROSE-8-
+IS-YELLOW and ROSE-17-IS-RED<-->TEAPOT-1-IS-BLACK.  These hypotheses involve
+specific propositions only and do not pose any problems.  The problems (and
+the need for skolemization) begin when the marker emitted by the (general)
+proposition EACH-SNOWDROP-IS-WHITE intersects with the marker from ROSE-17-
+IS-RED and constructs a hypothesis.
+
+The hypothesis ROSE-17-IS-RED<-->EACH-SNOWDROP-IS-WHITE is a justified hypoth.
+It is constructed by the marker-passing mechanism on the grounds that both
+propositions are instances of the relation COLOR-OF.  It involves the general
+proposition EACH-SNOWDROP-IS-WHITE, however, and this may lead to problems when
+the top-down structure correspondence mechanism (see AMBR/STR_CORR.LSP) tries
+to build 'child' hypotheses.  Previous versions of AMBR (prior to ver. 2.2.2)
+would build the following two hypotheses in these circumstances: ROSE-17<==>
+SNOWDROP and RED-17<==>WHITE.  These hypotheses are not very sensible because
+they map an instance-agent to a concept-agent.
+
+The purpose of the skolemization mechanism is to avoid such instance-to-concept
+hypotheses.  The main idea is to transform the general proposition into a
+specific one and then build hypotheses about the two specific propositions.
+
+(Note: There are cases in which instance-to-concept hypotheses are warranted.  )
+(      This happens mainly in 'meta reasoning'.  AMBR  mechanisms can generate )
+(      such mappings too (see below).                                          )
+
+
+MAIN IDEA OF SKOLEMIZATION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The main idea is to transform general propositions into specific ones by
+substituting instance-arguments for the concept-arguments and constructing
+a parallel proposition about the instances.  In the example above, the
+general proposition stating that each snowdrop is white will eventually be
+replaced by the specific proposition that the color of one particular snowdrop
+is a particular nuance of white.
+
+The skolemization mechanism must face two main difficulties:
+  1. Which instance-agent(s) to substitute for the concept-agent(s) being
+       skolemized?
+  2. Which of the many general propositions stored in the semantic memory
+       to skolemize?  Even when restricting the 'search' to the working memory
+       only (as opposed to the whole LTM), a knowledge base of any realistic
+       size will contain tens or even hundreds of such propositions, most
+       of which have nothing to do with the target situation.
+       (This question is a variant of the so-called FRAME PROBLEM.)
+
+AMBR has two potential answers to the first question:
+  1a. It may 'recruit' some of the existing instances of the concept being
+       skolemized.  The marker-passing mechanism (see AMBR/MARKER.LSP) ensures
+       that each instance-agent sends a marker to its respective concept-agent.
+       These markers accumulate in the local memory of the concept agents.
+       Thus, the concept could access its currently active instances via
+       these markers.  (Note that this allows for indirect inheritance -- e.g.
+       the concept FLOWER may keep a marker originating from SNOWDROP-5.)
+  1b. When no instances of the concept are active at the moment (or those that
+       are active are rejected for some reason), the skolemization mechanism
+       may generate new instance agents from skratch.  These SKOLEM INSTANCES
+       are temporary instance agents and are distinguished by the tag
+       :CONJECTURE in their MODALITY slot.  By convention, the names of
+       Skolem instances begin with a '*' (e.g. *SNOWDROP-23).
+
+The skolemization mechanism tries to use existing instance-agents whenever
+possible.  In other words, it prefers answer 1a and falls back to 1b only as
+a last resort.
+
+To illustrate using the snowdrop example, suppose that the proposition
+EACH-SNOWDROP-IS-WHITE must be skolemized.  It involves to concept agents --
+SNOWDROP and WHITE.  Suppose further that some of the (recipient) situations
+contains a snowdrop, say SNOWDROP-5, but does not explicate its color.
+Thus, the local buffer of the agent SNOWDROP will keep a marker sent by
+SNOWDROP-5 but the buffer of WHITE will be empty (which means that no instances
+of WHITE are currently in the working memory).  Under these assumptions, the
+skolemization mechanism will recruit SNOWDROP-5 as instantiation of SNOWDROP
+and, for lack of a better option, will construct a Skolem instance for WHITE.
+It will then construct the following new proposition:
+
+  *COLOR-OF-23                        SHOWDROP-5
+   :type     (:instance :relation)      :type     (:instance :object)
+   :inst-of  color-of                   :inst-of  snowdrop
+   :modality :conjecture     ; <---
+   :slot1
+     :INST-OF color-of.slot1           *WHITE-23
+     :c-coref snowdrop-5                :type     (:instance :object)
+   :slot2                               :inst-of  white
+     :INST-OF color-of.slot2            :modality :conjecture   ; <---
+     :c-coref *white-23
+
+This is a specific proposition and it can map smoothly to ROSE-17-IS-RED (which
+is specific too).  In particular, the top-down SC mechanism could now build the
+hypotheses ROSE-17<==>SNOWDROP-5 and RED-17<==>*WHITE-23.
+
+Prototypical instances in heterogeneous propositions (i.e. WHITE-SNOWDROP) are
+handled by retrieving the respective concept-agent (i.e. WHITE), looking at
+the markers accumulated in its buffer, etc.  The prototypical instance is
+always replaced by another instance (Skolem or marker-origin) during skolemiza-
+tion, just as concept-arguments are.
+
+The marker-passing mechanism also helps answer which propositions to skolemize
+(the second main question above).  The criterion is that at least one of the
+arguments of the general proposition must allow instantiation by an existing
+agent.  In the example above, EACH-SNOWDROP-IS-WHITE is skolemized only when
+SNOWDROP or WHITE (or both) have a suitable marker in their local memories.
+
+
+OUTLINE OF THE SKOLEMIZATION MECHANISM
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Skolemization is rather complex because it involves construction of a whole
+coalition of agents.  The bulk of the work is performed by the symbolic
+processor of the so-called 'general hypothesis'.
+
+A GENERAL HYPOTHESIS is a hypothesis involving a general proposition.
+In the examples above, ROSE-17-IS-RED<-->EACH-SNOWDROP-IS-WHITE is a general
+hypothesis while ROSE-17-IS-RED<-->ROSE-8-IS-YELLOW is not.
+General hypotheses can be homo- and heterogeneous depending on whether both
+or only one of the propositions involved are general.  For example, EACH-ROSE-
+IS-RED<-->EACH-SNOWDROP-IS-WHITE is a homogeneous general proposition while
+ROSE-17-IS-RED<-->EACH-SHOWDROP-IS-WHITE is a heterogeneous one.
+(Note: Don't confuse 'homo/heterogeneous _proposition_' with '= _hypothesis_'.)
+
+General hypotheses are usually constructed by the marker-passing mechanism.
+Like all hypotheses, general hypotheses engage in the structure correspondence
+mechanism at a certain point of their life cycle (see AMBR/HYPOTH.LSP and
+=/STR_CORR.LSP).  Each hypothesis-agent checks whether it is a general hypoth.
+and whether it should do skolemization.  If skolemization is warranted (see
+predicate NEED-SKOLEMIZATION-P in AMBR/SKOLEM.LSP), the general hypotheses
+performs the following rough sequence of events:
+  1. It analyzes its two propositions and determines which one is the general
+     proposition and which are its concept-arguments.  Prototypical instances
+     are translated into their respective concepts.  This information is
+     summarized in a symbolic structure called SKOLEMIZATION-TABLE and is
+     stored in the local buffer of the general hypothesis.  If some concept-
+     arguments are not visible, the skolemization process is aborted.
+  2. The local buffers of the concept-arguments are searched for markers.
+     The marker-origins (see AMBR/MARKER.LSP) of 'useful' markers are recorded
+     in the skolemization table under the slot of the respective concept-arg.
+     If a concept-argument has no (useful) markers, its field in the table is
+     left empty.
+  3. If all fields of the skolemization table are empty at this point, the
+     skolemization process is abandoned.  (Empty table means that all arguments
+     need Skolem instances.)  The activation level of the general hypothesis
+     is decreased, thus giving way to alternative hypotheses in the CSN.
+  4. Otherwise, construct new SKOLEM INSTANCES for each empty field in the
+     skolemization table, if any.  This is done by sending NC-requests to the
+     node constructors (see DUAL/ARCHIT/NC_AGENT).
+  3. The general hypothesis waits for the Skolem instances to show up.  They
+     send it SKOLEM-MESSAGEs for that purpose.  The general hypothesis consults
+     the skolemization table stored in its buffer to determine how many Skolem
+     messages to wait for, if any.
+  5. When all instance-agents -- Skolem or old -- are at hand, the general
+     hypothesis turns to SKOLEM-PROPOSITIONS.  A Skolem proposition is a
+     specific proposition (i.e. involves instance-arguments instead of concept-
+     args.) that parallels the initial general proposition.  There are two
+     kinds of Skolem propositions: 'old' and 'new'.
+       The old ones are not really 'Skolem' props because they are not created
+     by the skolemization mechanism. They simply are existing propositions that
+     bind the same instance-args into the same relation.  (See the last section
+     of this file for a discussion of exceptional cases.)  Old props are
+     detected by looking at the markers in the buffer of the concept-agent of
+     the relation that underlyies the general proposition (e.g. COLOR-OF).
+      New Skolem propositions are brand new agents generated by the skolemiza-
+     tion mechanism. (The term 'Skolem proposition' is often used to denote
+     only _new_ ones; old ones are sometimes termed 'non-Skolem props'.) Again,
+     the actual construction is done by node constr's via NC-requests and the
+     new agents communicate with the hypothesis via Skolem messages.
+      Note: When there are several 'useful' markers for a single concept-arg
+      (e.g. SNDROP-5 and SNDROP-6), several Skolem propositions are considered.
+  6. When the Skolem proposition is ready, it notifies the general hypothesis
+     that has initiated it.  The latter establishes some links to tighten up
+     the newly constructed coalition.
+  7. The usual AMBR mechanisms (MP and SC) will construct correspondences
+     between the Skolem instances and the elements of the driver situation.
+     The new hypothesis participates in the constraint satisfaction network
+     on an equal footing.  It has the support from the winner situation and
+     hence easily supplants the general hypothesis that has generated it.
+     (Note: When there are more than one new hyps, they compete for the place
+      of their parent.)
+
+The net effect of this sequence is that the general hypoth. ROSE-17-IS-RED<-->
+EACH-SNOWDROP-IS-WHITE will give rise to the specific hypotheses ROSE-17-IS-
+RED<-=>*COLOR-OF-23,  ROSE-17<-=>SNOWDROP-5, and RED-17<-=>*WHITE-23.
+
+See file AMBR/SKOLEM.LSP for more details on the mechanism, for the exact
+structure of the skolemization table and messages, for the specific links
+established during the process, etc.
+
+
+TRIGGERING THE SKOLEMIZATION MECHANISM
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The skolemization mechanism is carried out by the symbolic processors of
+general propositions.  Not all general propositions, however, are allowed
+to skolemize.  (They may be too many and if all were allowed, the model
+would not scale up to larger KB sizes.)  Successful skolemization results
+from the following coordinated effort of several AMBR mechanisms:
+  1. The ASSOCIATIVE MECHANISM (spreading activation) retrieves a general
+     proposition like EACH-SNOWDROP-IS-WHITE.  The associative mechanism
+     keeps irrelevant general propositions (e.g. EACH-ANIMAL-BREATHS) out
+     of the working memory.
+  2. When a general proposition enters the WM it emits a marker like all
+     instance agents do.  The MARKER-PASSING MECHANISM then may construct
+     hypothesis that it maps to some proposition in the driver situation.
+     In our example, suppose that ROSE-17-IS-RED<-->EACH-SNOWDROP-IS-WHITE is
+     one such correspondence.  (It has been generated by marker intersection
+     at the node COLOR-OF.)  Prototypical instances, if the proposition is
+     heterogeneous, also emit markers and can participate in collateral
+     hypotheses such as RED-17<-->WHITE-SNOWDROP.
+  3. The new hypothesis is registered at the secretary of ROSE-17-IS-RED and
+     starts to compete with its rivals.  The CONSTRAING SATISFACTION MECHANISM
+     determines which of the several competing hypotheses best fits the overall
+     mapping. Generally, constraint satisfaction favors hypotheses involving
+     affiliated propositions (i.e. propositions belonging to some recipient
+     situation).  And affiliated propositions are usually specific.  Therefore,
+     the general hypothesis wins the competition mostly in cases when no other
+     specific hypothesis are available.
+  4a.If the general hypothesis leads the competition long enough, the RATING
+     MECHANISM detects this and sends it a 'Skolem incentive'. (See
+     the section 'Triggering the skolemization mechanism' in AMBR/RATING.LSP.)
+     When the general hypothesis receives the incentive, it undertakes steps
+     1-7 outlined in the previous section.  When a hypothesis involving a
+     prototypical instance receives a Skolem incentive, it hands it over to
+     the respective general hypothesis.  For example if the rating mechanism
+     sends an incentive to RED-17<-->WHITE-SNOWDROP, this will initiate
+     skolemization of ROSE-17-IS-RED<-->EACH-SNOWDROP-IS-WHITE.
+  4b.An alternative scenario for issuing Skolem incentives is the so called
+     'big ballotage' performed by the rating mechanism (see the 'Ballotage'
+     section in AMBR/RATING.LSP).  It occurs when a specific hypothesis from
+     inappropriate situation wins the rating at some authorized secretary.
+     For example, the situation-level mapping is SIT-A<-->SIT-B but the
+     strongest correspondence for ROSE-17-IS-RED (which belongs to SIT-A) is,
+     e.g, TULIP-28-IS-YELLOW which belongs to SIT-C -- a situation different
+     from SIT-B.  To prevent the blending, the rating mechanism anounces a 'big
+     ballotage' and undertakes certain measures one of which is to send a Skolem
+     incentive to the most active general hypothesis that could augment the
+     description of SIT-B, if any.  In the example above, suppose that SIT-B
+     has an element that is an instance of SNOWDROP but the color of this
+     SNOWDROP-6 is not explicated.  Skolemization of the general rule that all
+     snowdrops are white could construct a new [Skolem] proposition SNOWDROP-6-
+     IS-WHITE and add it to the coalition representing SIT-B.
+     In practice, Skolem incentives are send more often via step 4b than 4a
+     because general hypotheses are quite weak and seldom win the rating
+     competition (4a).
+
+A general proposition may be rejected at any of the steps above.  Thus, the
+complex and time-consuming skolemization mechanism is invoked with care.
+
+If we now abstract away the details, we may say that skolemization begins
+when the hypothesis-agent receives a SKOLEM-INCENTIVE from the authorized
+secretary.
+
+The skolemization mechanism may be blocked by setting *SKOLEMIZATION-FLAG*
+to NIL.  The default value for this flag is T (see AMBR/DEFS.LSP).
+When the flag is NIL, secretaries do not send any Skolem incentives.
+
+
+BLOCKING SKOLEMIZATION ON META-PROPOSITIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+On rare occasions the instance-to-concept correspondences that skolemization
+is designed to prevent are in fact warranted.  In such cases the skolemization
+mechanism is not triggered.  Instead, the usual top-down structure corresp.
+takes place (see AMBR/STR_CORR.LSP). The criteria whether a general hypothesis
+should proceed with SK or SC are the following:
+
+  Cr1. If the general hypothesis is HOMOGENEOUS (i.e. both propositions involved
+         are general propositions), then it does structure correspondence.
+  Cr2. If the general hypothesis is HETEROGENEOUS (i.e. it maps a specific
+         proposition to a general one or v.v.) and it has been generated by
+         the marker-passing mechanism, then it does skolemization.
+  Cr3. If it has been generated by the structure correspondence mechanism,
+         then it does (recursively) structure correspondence.
+
+Case CR2 is distinguished from CR3 on the basis of the justification of the
+general hypothesis -- see CORRESP-JUSTIF in AMBR/CORRESP.LSP.  If the
+justification is a concept-agent, then the hypothesis has been generated
+by intersection of markers at that concept.  Otherwise the justification
+is a hypothesis-agent and hence we are in case CR3 above.
+
+
+EXCEPTIONS TO GENERAL PROPOSITIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There is one complication that is ignored in the current version of the model.
+To illustrate, suppose that there is a general rule that all cups are made of
+china (represented by the general proposition EACH-CUP-MD-CHINA).  Suppose
+further that CUP-3 is an exception -- it is made of glass as duly represented
+by the proposition CUP-3-MD-GLASS.  Still, if EACH-CUP-MD-CHINA is skolemized,
+it will fail to notice that the material of CUP-3 is known and will generate
+a Skolem instance *CHINA-7 and a Skolem proposition *MADE-OF-45 stating that
+CUP-3 is made of *CHINA-7.  The new proposition will then fight with the old
+one and hopefully will loose.  But who knows...
+
+
+;;;;;;;  End of file AMBR/SKOLEM.TXT

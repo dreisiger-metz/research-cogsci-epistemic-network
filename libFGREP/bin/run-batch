@@ -1,0 +1,87 @@
+#!/bin/bash
+## ============================================================================
+## Filename          : $RCSfile: run-batch,v $
+## Version           : $Revision: 1.2 $
+## Release           : $Name:  $
+##
+## Original author   : Peter Dreisiger, MOD, DSTO Stirling
+## Original date     : 3-Mar-2009
+## Last modified by  : $Author: prd $
+## Last modified on  : $Date: 2009/03/25 06:06:12 $
+##
+## Security class.   : UNCLASSIFIED
+## Copyright         : DSTO
+##
+## Purpose           : This shell script runs the 'console' command for the
+##                     specified FGREP console script, and over a range of
+##                     representation and hidden-layer sizes.
+##
+## Revision history  :
+## ============================================================================
+if (( $# == 0 )); then
+  echo "Usage: $0 <command-file> [--number-of-trials N] [--min-representation-size m] [--max-representation-size M] [--min-hidden-layer-size h] [--max-hidden-layer-size H]"
+  exit 1
+fi
+
+
+if [[ -f $1 ]]; then
+  scriptname=$1
+  basename=`date +%Y%m%d--%H%M`--`echo $scriptname | cut -d. -f 1`
+  numtrials=25
+  minrepsize=12
+  maxrepsize=0
+  minhlsize=0
+  maxhlsize=0
+
+  while [ "$2" != "" ]; do
+    case $2 in
+      --number-of-trials )
+        shift
+        numtrials=$2
+        ;;
+      --min-representation-size )
+        shift
+        minrepsize=$2
+        ;;
+      --max-representation-size )
+        shift
+        maxrepsize=$2
+        ;;
+      --min-hidden-layer-size )
+        shift
+        minhlsize=$2
+        ;;
+      --max-hidden-layer-size )
+        shift
+        maxhlsize=$2
+        ;;
+      * )
+        exit 1
+    esac
+    shift
+  done
+
+  if (( maxrepsize < minrepsize )); then
+    maxrepsize=$minrepsize
+  fi
+  if (( maxhlsize < minhlsize )); then
+    maxhlsize=$minhlsize
+  fi
+
+  for (( h = minhlsize; h <= maxhlsize; h++ )); do
+    for (( i = minrepsize; i <= maxrepsize; i++ )); do
+      for (( j = 0; j < $numtrials; j++ )); do
+        mkdir -p $basename/hidden-layer-size--$h/$i--$j
+        cd $basename/hidden-layer-size--$h/$i--$j
+        ../../../console --hidden-layer-size $h --representation-size $i --terms-per-sentence 3 --load-commands ../../../$scriptname
+        cd ../../..
+      done
+    done
+  done
+
+  cp $scriptname $basename
+
+else
+  echo "Error: file '$1' does not exist"
+  exit 2
+fi

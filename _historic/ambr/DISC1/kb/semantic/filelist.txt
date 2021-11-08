@@ -1,0 +1,39 @@
+;;; -*- Mode: ASCII Text -*-
+
+;;; FILE:       AMBR/kb/semantic/filelist.txt
+;;; VERSION:    3.0.0    ; see AMBR/KB/VERSION.LSP
+;;; PURPOSE:    List of files comprising the semantic portion of AMBR's LTM.
+;;; DEPENDS-ON: This is not a program file.
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    24-06-98 [3.0.0]
+;;; UPDATED:    ...
+
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;;;;;;;   L I S T   O F   S E M A N T I C   F I L E S   ;;;;;;;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+See file AMBR/KB/DEFSYS.LSP and AMBR/KB/VERSION.LSP for more details.
+See file AMBR/KB/EPISODIC/SIT_LIST.TXT for a list of AMBR's episodes.
+
+
+File name       Description
+=================================================================
+abstract:  53   Most abstract concepts: THING, OBJECT, etc.
+temp_rel:  16   Temporal relations: FOLLOWS, BEFORE, etc.
+spat_rel:  35   Spatial relations:  LEFT-OF, LONG, etc.
+phys_rel:  29   Physical relations:  PART-OF, PROTECTS,etc.
+physprop:  29   Physical properties: COLOR-OF, IS-RED, etc.
+liquid  :  30   Liquids and gases: WATER, RED-WINE, AIR, etc.
+contain :  26   Containers: BAG, BOX, CUP, BOTTLE, etc.
+food    :  33   Food: BREAD, FRUIT, VEGETABLE, etc.
+animals :  24   Living beings: ANIMAL, BIRD, COW, etc.
+kitchen :  22   Kitchen and cooking: SAUCEPAN, FRIDGE, etc.
+forest  :  11   Forest objects: FIRE, STONE, KNIFE, etc.
+furnit  :  15   Furniture: TABLE, CHAIR, BED, etc.
+-------------------------
+Total   : 323 agents  (273 concepts + 49 instances + 1 special)
+
+
+;;;;;;; End of file AMBR/KB/SEMANTIC/FILELIST.TXT

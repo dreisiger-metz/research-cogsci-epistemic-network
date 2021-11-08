@@ -1,0 +1,41 @@
+
+                        R E V I E W
+
+                       of the thesis
+                "Extensions of DUAL and AMBR"
+
+                       presented by
+                 Alexander Alexandrov Petrov
+
+
+
+   The thesis of Mr. Alexander Petrov is related to the ongoing work on
+cognitive modeling at the Cognitive Science department of the New Bulgarian
+University.  Mr. Petrov demonstrates deep knowledge of cognitive architectures
+and models and presents a comprehensive and critical, though somewhat too
+long, overview of the essence of the cognitive architecture DUAL and the
+cognitive model AMBR based on this architecture.  The interdisciplinary
+approach is a merit of this part of the thesis.
+
+   The main goal and the particular task of the investigation are clearly
+outlined.  The modifications of DUAL and AMBR introduced by the author and
+the development of the computer implementation of the DUAL architecture for
+the sake of the cognitive modeling of the process of reasoning can be regarded
+as a successful fulfillment of the outlined tasks.  Detailed description of
+the knowledge-representation scheme and the computational mechanisms used
+by the model AMBR2 makes it understandable even for nonspecialists in the
+field.  The design, the performance, and the results of the simulation
+experiment are well described and pointing to the possibilities of AMBR2 as
+a cognitive model which can be used in the future for further simulations
+of the process of reasoning with the emphasis on analogy despite the
+difficulties of the task of analogy-making.
+
+   I think that the work of Mr. Petrov presents in a very satisfactory way
+the present level of knowledge in the field, contains original ideas and
+contributions, and meets the highest criteria for a Master of Sciences thesis.
+
+
+
+                                     Reviewer:     (signature)
+
+    Sofia, 17.07.1997                   (Prof. Naum Yakimov)

@@ -1,0 +1,105 @@
+## =============================================================================
+## Filename          : $RCSfile: Makefile.osx,v $
+## Version           : $Revision: 1.1.1.1 $
+## Release           : $Name:  $
+##
+## Original author   : Peter Dreisiger, MOD, DSTO Stirling
+## Original date     : 12-Aug-2008
+## Last modified by  : $Author: prd $
+## Last modified on  : $Date: 2009/03/12 05:54:51 $
+##
+## Security Class.   : UNCLASSIFIED
+## Copyright         : DSTO
+##
+## Purpose           : Makefile for the AMBR Working Memory system
+##
+## Revision History  :
+## =============================================================================
+INCLUDES =      -I../../include
+CPPFLAGS = 	$(INCLUDES) -fPIC -Wall
+		
+CPPFLAGS_TEST = $(CPPFLAGS)
+
+RELEASEFLAGS =	-O2
+# Debug flags include: __DEBUG (generic), __DEBUG__INTERACTIVE_TESTS (to enable
+#     the TestRunner's interactive tests), __LOGGER (to enable the AMBRLogger)
+#     and __LOGGER__PRINT_LINE_NUMBERS (to do what it says)
+DEBUGFLAGS =    -g -D__DEBUG -D__LOGGER # -D__LOGGER__PRINT_LINE_NUMBERS
+LDFLAGS =       
+LIBS =          $(LDFLAGS) -L../../lib/debug -lVariableRateExecution
+LIBS_TEST =	$(LIBS) -L/usr/local/lib/cppunit/lib -lcppunit -ldl
+
+CXX = 		g++
+LD = 		g++
+TARGET =	AMBR++
+FULL_VERSION =	0.1
+MAJOR_VERSION =	0.1
+
+OBJS = 		\
+		AMBR.o \
+		Reference.o \
+		Slot.o \
+		Agent.o \
+		ConceptAgent.o \
+		HypothesisAgent.o \
+		InstanceAgent.o \
+		Exceptions.o \
+		Messages.o \
+		Logger.o \
+		LongTermMemory.o \
+		AMBRLogger.o
+
+
+DOBJS =		$(OBJS:.o=.do)
+
+
+DOBJS_TEST =	SlotTest.do \
+		AgentTest.do \
+		LoggerTest.do \
+		AMBRTest.do \
+		test-$(TARGET).do
+
+
+all:		debug test
+
+release:	$(OBJS)
+		mkdir -p ../../lib ../../include/$(TARGET)
+		$(CXX) -shared -fPIC -Wl,-install_name,lib$(TARGET).dylib.$(MAJOR_VERSION) \
+			-o ../../lib/lib$(TARGET).dylib.$(FULL_VERSION) $(OBJS) $(LIBS)
+		chmod ugo+x ../../lib/lib$(TARGET).*.$(FULL_VERSION)
+		ln -sf lib$(TARGET).dylib.$(MAJOR_VERSION) ../../lib/lib$(TARGET).dylib && true
+		cp -u *.hpp ../../include/$(TARGET)
+
+debug:		$(DOBJS)
+		mkdir -p ../../lib/debug ../../include/$(TARGET)
+		$(CXX) -dynamiclib -fPIC -Wl,-install_name,../../lib/debug/lib$(TARGET).dylib.$(MAJOR_VERSION) \
+			-o ../../lib/debug/lib$(TARGET).dylib.$(FULL_VERSION) $(DOBJS) $(LIBS)
+		chmod ugo+x ../../lib/debug/lib$(TARGET).*.$(FULL_VERSION)
+		ln -sf lib$(TARGET).dylib.$(MAJOR_VERSION) ../../lib/debug/lib$(TARGET).dylib && true
+		cp *.hpp ../../include/$(TARGET)
+
+test:		$(DOBJS) $(DOBJS_TEST)
+		$(CXX) $(DOBJS) $(DOBJS_TEST) $(LIBS_TEST) -lcppunit -o test-$(TARGET)
+
+docs:		
+		doxygen
+
+install:
+	
+
+%.o:		%.cpp %.hpp
+		$(CXX) $(CPPFLAGS) $(RELEASEFLAGS) -c $< -o $*.o
+
+%.do:		%.cpp %.hpp
+		$(CXX) $(CPPFLAGS) $(DEBUGFLAGS) -c $< -o $*.do
+
+%.do:		%.cpp
+		$(CXX) $(CPPFLAGS) $(DEBUGFLAGS) -c $< -o $*.do
+
+clean:
+		rm -f *.o *.do *.*~ test-$(TARGET)
+
+cleaner:
+		rm -f *.o *.do *.*~ test-$(TARGET)
+		rm -f ../../lib/lib$(TARGET)* ../../lib/debug/lib$(TARGET)*
+

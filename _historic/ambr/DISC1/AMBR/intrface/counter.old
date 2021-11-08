@@ -1,0 +1,133 @@
+;;; -*- Mode: Lisp; Syntax: Common-Lisp; Package: AMBR-interface -*-
+
+;;; FILE:       AMBR/intrface/verbose.lsp
+;;; VERSION:    2.1.2  ; see AMBR/VERSION.LSP
+;;; PURPOSE:    :AROUND methods that print out loud the action of main methods.
+;;; DEPENDS-ON: DUAL; ambr/*.lsp, ambr/intrface/defs.lsp
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    19-55-97
+;;; UPDATED:    30-06-97 -- Adding counters
+;;; UPDATED:    26-12-97 -- Accounting for changes in DUAL and AMBR programs.
+;;; UPDATED:    ...
+
+     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     ;;;;;;;;;;;;     V E R B O S E   INTERFACE     ;;;;;;;;;;;;
+     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(in-package  "AMBR-INTERFACE")
+
+
+;;;; SYMBOLS: reset-all-counters,
+;;;;          *marker-intersection-counter*,
+;;;;          *add-to-WM-counter*, *remove-from-WM-counter*,
+;;;;          *make-agent-counter*, *kill-agent-counter*,
+;;;;          *establish-hypothesis-counter*, *resign-hypothesis-counter*
+;;;;
+;;;; See *xxx-VERBOSE* in AMBR/INTRFACE/DEFS.LSP
+;;;; This file depends very heavily on DUAL/INTRFACE/VERBOSE.LSP.
+
+
+
+;;;;   ****  COUNTERS  ****
+
+(defvar *marker-intersection-counter* 0 
+  "Number of marker intersections since last resetting of counter." )
+
+(defvar *add-to-WM-counter* 0 
+  "Number of _entity_ agents added to WM since last resetting." )
+(defvar *remove-from-WM-counter* 0 
+  "Number of _entity_ agents removed from WM since last resetting." )
+
+(defvar *make-agent-counter* 0 
+  "Number of new agents since last resetting of counter." )
+(defvar *kill-agent-counter* 0 
+  "Number of killed agents since last resetting of counter." )
+
+(defvar *establish-hypothesis-counter* 0 
+  "Number of hypotheses established since last resetting of counter." )
+(defvar *resign-hypothesis-counter* 0 
+  "Number of hypotheses resigned since last resetting of counter." )
+
+
+(defun reset-all-counters ()
+  "Sets all counters to zero."
+  (setf *marker-intersection-counter* 0 )
+  (setf *add-to-WM-counter* 0 )
+  (setf *remove-from-WM-counter* 0 )
+  (setf *make-agent-counter* 0 )
+  (setf *kill-agent-counter* 0 )
+  (setf *establish-hypothesis-counter* 0 )
+  (setf *resign-hypothesis-counter* 0 )
+)
+
+
+;;;;   ****  VERBOSE REPORTS  AND  COUNTER INCREMENTS  ****
+
+
+
+;;;;;;;  For AMBR/HYPOTH.LSP
+
+(defmethod resign-hypothesis :before ((hypothesis hypoth-agent)
+                                      (in-favor-of hypoth-agent) )
+  (incf *resign-hypothesis-counter*)
+  (when (spy-template-match-p *resign-hypothesis-verbose* hypothesis in-favor-of)
+    (print-verbose-header)
+    (format *verbose-stream* "~S resigns in favor of ~S."
+            hypothesis in-favor-of) ))
+
+(defmethod establish-hypothesis :before ((hypothesis hypoth-agent)
+                                         (competitors list) )
+  (declare (ignore competitors))
+  (incf *establish-hypothesis-counter*)
+  (when (spy-template-match-p *establish-hypothesis-verbose* hypothesis)
+    (print-verbose-header)
+    (format *verbose-stream* "establishing hypothesis ~S." hypothesis) ))
+
+
+
+;;;;;;;  For AMBR/STR_CORR.LSP
+
+(defmethod bottom-up-SC :before ((hypothesis hypoth-agent))
+  (when (spy-template-match-p *bottom-up-SC-verbose* hypothesis)
+    (print-verbose-header)
+    (format *verbose-stream* "~S begins bottom-up SC."
+            hypothesis) ))
+
+(defmethod top-down-SC :before ((hypothesis hypoth-agent))
+  (when (spy-template-match-p *top-down-SC-verbose* hypothesis)
+    (print-verbose-header)
+    (format *verbose-stream* "~S begins top-down SC."
+            hypothesis) ))
+
+
+;;;;;;;  For  DUAL/ARCHIT/*.LSP
+
+(defmethod establish-agent-integrity :before ((agent hypoth-agent))
+  (declare (ignore agent))
+  (incf *make-agent-counter*) )
+
+(defmethod kill-temp-agent :before ((agent hypoth-agent))
+  (declare (ignore agent))
+  (incf *kill-agent-counter*) )
+
+
+(defmethod add-to-WM :before ((agent secretary-agent)
+                              (WM working-memory)
+                              &optional weight )
+  (declare (ignore agent WM weight))
+  (incf *add-to-WM-counter*) )
+
+(defmethod remove-from-WM :after ((agent secretary-agent)
+                                  &optional (reset-p T) )
+  (declare (ignore agent reset-p))
+  (incf *remove-from-WM-counter*) )
+
+
+(defmethod report-marker-intersection :before ((agent MP-AMBR-agent)
+                                               (m1 AMBR-marker)
+                                               (m2 AMBR-marker) )
+  (declare (ignore agent m1 m2))
+  (incf *marker-intersection-counter*) )
+
+
+;;;;;;; End of file AMBR/INTRFACE/VERBOSE.LSP

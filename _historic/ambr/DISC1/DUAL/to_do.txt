@@ -1,0 +1,243 @@
+;;; -*- Mode: ASCII Text -*-
+
+;;; FILE:       DUAL/to_do.txt
+;;; VERSION:    1.1.2    ; see DUAL/VERSION.LSP
+;;; PURPOSE:    Things to do on DUAL's implementation.
+;;; DEPENDS-ON: NIL
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    21-12-97 [1.1]
+;;; UPDATED:    24-07-98 [1.1.2]  The 'official release'
+;;; UPDATED:    ...
+
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;                                                                   ;;;;
+ ;;;;      SUGGESTIONS FOR IMPROVEMENT OF DUAL'S IMPLEMENTATION         ;;;;
+ ;;;;                                                                   ;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+***********   WORK TO BE DONE ON DUAL CORE   ******************
+
+SUSPENDABLE COMPUTATIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~
+** BRACKETS             (low priority)
+   Design a mechanism for proclaiming the consumption of SETF methods.
+   For example:
+     (proclaim-consumption '(setf get-filler) *default-MODIFY-consumption* )
+   and then:
+     [setf (get-filler ag slot) filler]   or alternatively (and equivalently)
+     (setf [get-filler ag slot] filler)
+
+** S-PROGN              (low priority)
+   Support more language features in S-PROGN.
+   Make a file DUAL/ARCHIT/TESTS/SPROGN.LSP full of ASSERT clauses that
+   systematically test everything related to suspendable computation.
+   Finish the 'common pitfalls' section of the documentation of S-PROGN.
+
+** PUSH-TO-STACK        (medium priority)
+   Reimplement suspended-process stacks (DUAL/ARCHIT/AGENDA.LSP) using arrays.
+   Now they are implemented by lists which leads to excessive consing.
+
+
+GARBAGE COLLECTION      (low priority)
+~~~~~~~~~~~~~~~~~~~
+When a temporary agent dies, all references to it become garbage.
+The specification of DUAL states that the absence of an agent (due to its
+death) is immediately and easily apparent to all other agents. This theoretical
+assumption is probably too strong and may need reconsideration.
+
+In practice, it is very difficult to remove all references to a (dead) agent.
+It is relatively easy to destroy the explicit references stored in other
+agents' slots but it is very difficult to eliminate implicit references in
+marker paths, etc.  One possible way out of this situation is to do garbage
+collection.  When the symbolic processor is idle and no garbage collection has
+been undertaken recently [needs specification], go through all symbolic
+structures in the local memory of the agent and check whether all references
+are still alive (and even visible).  To do this, the symbolic microcycle of
+MP-DUAL-agents have to become (even more) elaborated.
+
+
+MODIFY-LINK-WEIGHT      (medium priority)
+~~~~~~~~~~~~~~~~~~~
+Design, implement, and document a function MODIFY-LINK-WEIGHT that changes
+the (raw) weight of a link. It should support :DESTRUCTIVE-P, :NOTIFY-P, etc.
+Place this function in the file DUAL/ARCHIT/LINKS.LSP.
+The need for it is already apparent (e.g. by the function DOUBLE-TRIVIAL-WEIGHTS
+in AMBR/CORRESP.LSP) and will become overwhelming when we come to the problem
+of learning in the architecture.
+One of the parameters to MODIFY-LINK-WEIGHT should be the new weight, of course.
+To gain flexibility, there may be additional parameter -- :TRANSITION-RULE.
+It is a function of two single-float arguments which defines the law of
+transition from the old link weight to the new one.  The default value for
+:TRANSITION-RULE should be:   #'(lambda (new-wgt old-wgt)
+                                  (declare (ignore old-wgt))
+                                  (clip-min-max new-wgt) )
+Then for example, to double the old weight one may use the following transition
+rule:  #'(lambda (new-wgt old-wgt)
+           (declare (ignore new-wht))
+           (clip-min-max (* 2.0 old-wgt)) )
+
+
+PROVISIONS FOR EFFICIENT LEARNING      (medium priority)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sooner or later, more and more learning mechanisms will be added to the
+architecture.  The present implementation is oriented towards relatively
+static agents and, therefore, changing an agent is an expensive operation.
+In particular, the function SLOTS->LINKS (see DUAL/ARCHIT/HYBRID.LSP) produces
+a lot of garbage.  As a consequence, DUAL models that learn link weights are
+expected to run quite slowly.  The future versions of the program should
+support more efficient learning.  With respect to connectionist learning
+(a likely candidate) the problem basically stems out of the fact that the
+connectionist links (see AGENT-NEIGHBORS in DUAL/ARCHIT/CONNECT.LSP) are
+derived on the basis of micro-frame slot fillers.  Therefore, whenever we
+change one link (or its weight), the whole micro-frame is traversed and all
+connectionist weights are re-computed, re-normalized, etc.
+
+One possible way out of this situation is to move the machinery for weight
+normalization from the function ADD-NEIGHBORS to ACTIVATE-NEIGHBORS (both
+defined in DUAL/ARCHIT/CONNECT.LSP).  Each agent may have an additional slot
+keeping the summary weight of the links.  Thus the 'conrefs' comprising
+the 'conn-neighbors' list will keep the 'raw' weights instead of the normalized
+ones.  Changing one weight in this case is a local operation -- the other
+weights are not affected.  The price to pay is at the phase of sending
+activation along the weights -- each time the amount to be sent needs to
+be divided by the total weight thus emulating an effective total weight of 1.0.
+Compare with the approach adopted for the weights in special working memories.
+(See [DE]NORMALIZE-WM-WEIGHTS in DUAL/ARCHIT/WORK_MEM.LSP)
+
+
+CHANGES IN MAKE-DUAL-AGENT      (low priority)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Define new keyword parameters to MAKE-DUAL-AGENT to improve the efficiency
+of DEFAGENT and WITH-AGENT macros.  In particular, add the following params:
+  - :ESTABLISH-AGENT-INTEGRITY-P  -- whether to invoke ESTABLISH-AGENT-INTEGRITY
+  - :ESTABLISH-MICROFRAME-INTEGRITY-P  -- ditto for ESTABLISH-MICROFRAME-INTEGR.
+  - :ADD-TO-WM-P                  -- whether to add the new agent to WM
+These argumets are to be used by the generic function ESTABLISH-AGENT-INTEGRITY.
+
+(Rationale: When the KB got larger, it was split into several files.
+ Thus, for example, the concept WATER is defined in file KB/SEMANTIC/LIQUID.LSP,
+ some instances of water in file KB/EPISODIC/B_WTP.LSP, still other instances
+ in other files, etc. Each instance may want to change the concept by adding
+ new :INSTANCE links. When the KB-related files are then loaded in order, the
+ computation-intensive and garbage-producing functions ESTABLISH-xxx-INTEGRITY
+ are called several times (via WITH-AGENT) on successive versions of the same
+ agent (in our example, WATER).  The proposed modification would provide a
+ mechanism for suspending ESTABLISH-xxx-INTEGRITY initially and calling them
+ once in the end.)
+
+
+DOCUMENTATION
+~~~~~~~~~~~~~~
+** Finish the interface sections of all program files.      (HIGH priority)
+   The following files need attention: DUAL/defs.lsp, DUAL/general.lsp,
+   DUAL/archit/DUAL_ag.lsp, DUAL/archit/temp_ag.lsp, DUAL/archit/NC_agent.lsp,
+   and DUAL/archit/MP_agent.lsp
+
+** Provide examples on the use of DUAL.                     (high priority)
+   Some ideas for useful examples are listed below:
+     -- on the connectionist aspect and SPREAD -- a constraint satisfaction
+        network for the 'room' example from McClelland et al.(1986)
+     -- on variable-speed symbolic processing -- propagating markers on a
+        rectangular grid.  The botom side emits black markers, the top -- white.
+        There are obstacles in the field. Profile of activation across the grid.
+     -- on defining new types of agents -- usage of AGENT-DESCRIPTOR-STRING,
+        TEMP-AGENT-DYING-CLASS, ESTABLISH-AGENT-INTEGRITY :AFTER, etc.
+
+** "DUAL Report #2"         (medium priority)
+   Edit, revise, print, and bind a technical report describing the implementa-
+   tion of DUAL.  This document should integrate the interface sections of all
+   program files, provide an introduction and 'getting started' section, etc.
+   Descriptive characteristics of the program -- e.g. 6,000 lines of source
+   code and ??? lines of documentation, 300 Kbytes of source code and 250 Kbytes
+   of documentation, 200 Kbytes of compiled ('fasl') files, etc.
+   The APA-style reference to this document is the following:
+     Petrov, A.A. (1997). "Computer implementation of the cognitive architecture
+       DUAL: Reference Manual, ver. 1.1."   (Tech. Rep. No.NBU-COG-97-1).
+       Sofia: New Bulgarian University, Cognitive Science Department.
+
+
+PROFILING AND OPTIMIZATION    (low priority)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+** Profile the program and re-write the functions that spend most of the time.
+   (Hint: Preliminary profiling shows that SLOTS->LINKS uses about 25% of the
+    time.  Optimize the derivation of conn-neighbor-list from symb-micro-frame.)
+
+
+
+***********   WORK TO BE DONE ON DUAL INTERFACE   ******************
+
+DEFAGENT     (low priority)
+~~~~~~~~~
+ More reliable and robust error detection and recovery.
+ Mechanism for user customization.
+
+
+VERBOSE and PDESCRIBE
+~~~~~~~~~~~~~~~~~~~~~~
+1. PDESCRIBE             (high priority)
+   Design, implement, and document a 'pretty describe' utility.  It should,
+   in particular, print micro-frames in human-readable form.  It should also
+   be configurable -- e.g. 'show me only the symbolic/conn. aspect', etc.
+   SET-PDESCRIBE -- a utility for customizing PDESCRIBE.
+
+2. VERBOSE               (high priority)
+   Document the 'verbose' utility (see DUAL/INTRFACE/VERBOSE.LSP).
+
+
+FRONT-END INTERPRETER       (high priority)
+~~~~~~~~~~~~~~~~~~~~~~
+Design, implement, and document a front-end to DUAL programs.  This should
+be a function that is in control all the time and dispatches to the 'real'
+DUAL functions such as MAIN-DUAL-CYCLE, ADD-TO-WM, etc. according to the
+keystrokes of the user.  For example (suppose '>' is the prompt):
+  > c 100                      means  'do 100 cycles'
+  > h                          means  'help'
+  > r                          means  'report'
+  > s report mapping-index     means  'set *report-mapping-index* on'
+  > ? #$ag                     means  'pretty describe #$AG'
+  > ! form                     means  'evaluate FORM'
+  > q                          means  'quit'
+
+
+The front-end interpreter should be customizable without recompilation of
+the core.  One possible way to do that is by a generic function that specializes
+on keystrokes, e.g:
+  (defmethod  front-end ((key (eql #\h)) &rest params)
+    (help))
+
+
+LOG and HISTORY         (medium priority)
+~~~~~~~~~~~~~~~~
+Design, implement, and document utilities for logging a DUAL run, for
+monitoring a variable (e.g. (wm-size *wm*), (act *focus*)) in time, etc.
+
+'History tools' should act as input streams -- the values of certain variable(s)
+are regularly sent to the history tool.  It absorbes it and that's all that
+is visible from the main program.  At the other side of the abstraction barrier
+erected by the history tool, however, various kinds of things may happen.
+For instance, 'log history tools' write the values into a data file, 'plot
+history tools' plot them on the screen, 'max history tools' track the peak
+values, etc.  The whole machinery should be customizable by the user.
+Define a base class HISTORY-TOOL and an extensible protocol.  Then provide
+specific tools specializing on the base class.
+
+Proposed file name: DUAL/INTRFACE/HISTORY.LSP, etc.
+
+
+DOCUMENTATION           (high priority)
+~~~~~~~~~~~~~~
+** Write the interface section of all files from DUAL/INTRFACE directory.
+
+** Provide examples of using the program -- loading a knowledge base, setting
+   model parameters, running a simulation, logging the results, etc.
+
+
+GRAPHICAL INTERFACE     (low priority)
+~~~~~~~~~~~~~~~~~~~~
+Design, implement, and document a GUI featuring network maps, variable-vs-time
+plots, control panel, etc.  This utilities need not be (indeed, _could_ not
+be) portable.
+
+
+;;;;  End of file DUAL/TO_DO.TXT

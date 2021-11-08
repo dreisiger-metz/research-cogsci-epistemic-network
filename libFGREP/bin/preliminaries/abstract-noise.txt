@@ -1,0 +1,67 @@
+# Abstract, noisy : one quarter of all classes below level 1 shares
+#                   one feature or ability with a peer
+# class-0
+has class-0 feature-0
+can class-0 ability-0
+
+# class-1
+has class-1 feature-1
+can class-1 ability-1
+
+
+# class-00
+has class-00 feature-2
+can class-00 ability-2
+
+# class-01
+has class-01 feature-3
+can class-01 ability-3
+
+# class-10
+has class-10 feature-3
+can class-10 ability-4
+
+# class-11
+has class-11 feature-5
+can class-11 ability-5
+
+
+# class-000
+has class-000 feature-6
+can class-000 ability-9
+
+# class-001
+has class-001 feature-7
+can class-001 ability-7
+
+# class-010
+has class-010 feature-8
+can class-010 ability-8
+
+# class-011
+has class-011 feature-9
+can class-011 ability-9
+
+# class-100
+has class-100 feature-10
+can class-100 ability-10
+
+# class-101
+has class-101 feature-11
+can class-101 ability-11
+
+# class-110
+has class-110 feature-12
+can class-110 ability-12
+
+# class-111
+has class-111 feature-11
+can class-111 ability-13
+
+
+# instances of class-000 -- 011 choose one feature at random from feature-14 -- 15
+# instances of class-100 -- 111 choose one feature at random from feature-16 -- 17
+# instances of class-000 -- 111 choose two features at random from feature-18 -- 21
+
+
+# generate between 1 and 4 instances of classes 000 -- 111

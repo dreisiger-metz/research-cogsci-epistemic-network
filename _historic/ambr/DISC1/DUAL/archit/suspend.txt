@@ -1,0 +1,1386 @@
+;;; -*- Mode: ASCII Text -*-
+
+;;; FILE:       DUAL/archit/suspend.txt   ; see DUAL/archit/suspend.lsp
+;;; VERSION:    1.1.2    ; see DUAL/VERSION.LSP
+;;; PURPOSE:    Outline and documentation of 'suspendable computations'.
+;;; DEPENDS-ON: DUAL/packages.lsp
+;;; PROGRAMMER: Alexander Alexandrov Petrov   (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    01-02-98 [1.1.1]
+;;; UPDATED:    24-07-98 [1.1.2] The 'official release'
+;;; UPDATED:    ...
+;;;;;;;
+;;; TO DO:      Finish the 'Common pitfalls' section of the documentation.
+
+
+     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     ;;;;;                                                       ;;;;;
+     ;;;;;        G E T T I N G   S T A R T E D   W I T H        ;;;;;
+     ;;;;;                                                       ;;;;;
+     ;;;;;    S U S P E N D A B L E   C O M P U T A T I O N S    ;;;;;
+     ;;;;;                                                       ;;;;;
+     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+This file introduces the notion of SUSPENDABLE COMPUTATION and documents a
+specialized programming language for writing 'suspendable programs'.
+The language is an extension of LISP and is called S-LISP ('suspendable LISP').
+
+The aim of this file is to clarify the theoretical ideas of suspendable
+computation and to introduce the basic programming concepts and techniques
+of S-LISP.  It is not intended as complete and unambiguous specification --
+such spec is provided in the corresponding files in the DUAL/ARCHIT directory.
+See DUAL/ARCHIT/SUSPEND.LSP, =/BRACKETS.LSP, =/MAILBOX.LSP, and =/SPROGN.LSP.
+
+
+****************************************************************************
+***                                                                      ***
+***     SUSPENDABLE COMPUTATION AS ARCHITECTURAL FEATURE OF DUAL         ***
+***                                                                      ***
+
+The specification of the cognitive architecture DUAL ("DUAL Report #1")
+postulates that each DUAL agent has a 'symbolic processor' which performs
+symbolic manipulations (see DUAL/ARCHIT/SYMPROC?.LSP and =/DUAL_AG.LSP).
+The symbolic processor conceptually is part of the DUAL agent which interacts
+with the other parts -- connectionist processor and symbolic micro-frame.
+
+From the perspective of this documentation, however, we will treat the
+symbolic processor as a relatively independent entity and will refer to
+the corresponding DUAL agent as the 'host' of the processor.
+
+DUAL symbolic processors run at different speeds depending on the activation
+level of the host (see DUAL/ARCHIT/CONNECT.LSP).  Very active DUAL agents
+(or, more precisely, their processors) run rapidly and thus determine system's
+overall flow of computation, low-active agents run slowly, and inactive agents
+do not run at all.  As the activation level of each host changes, the speed
+of its symbolic processor changes accordingly.  This is a key factor to the
+_computational_dynamics_ that is a characteristic feature of DUAL.
+
+The exact mechanism that governs processing speed as a function of the host's
+activation level is based on the following ENERGETIC ANALOGY (Petrov, 1997):
+Each symbolic operation requires that the symbolic processor does a certain
+amount of _work_ to carry it out.  Doing work requires _energy_ which is
+supplied to the symbolic processor by the connectionist aspect of the agent.
+The speed of the computation depends on the _power_, i.e. on the rate of
+energy supply and consumption.  The same amount of work may be done rapidly
+if there is enough power, slowly if power is scarce, or not at all if power
+is lacking completely.
+
+Most of these energetic concepts have a counterpart in DUAL as the following
+table demonstrates: (section 3.2.5.3. in "DUAL Report #1").
+
+   ENERGY DOMAIN                     DUAL DOMAIN
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   work                              symbolic operation
+   amount of work A                  consumption C of an operation
+   consumer                          symbolic processor
+   generator (power supply)          connectionist aspect of the agent
+   power P(t)                        activation a(t)
+   energy E = integral P(t) dt       accumulated activation = intgrl a(t) dt
+   efficiency coefficient ETA        efficiency coefficient ETA
+
+
+The connectionist aspect of the host serves as a power supply to the symbolic
+processor.  The amount of energy produced by the connectionist aspect may be
+computed by integrating the activation level in time.  This integral defines
+the _energy function_ E(T):
+               /T
+      E(T) := |  a(t) dt      , where a(t) is the activation level,
+             /                  T0 is some fixed initial moment and T > T0 .
+            T0
+
+When  a(t)  is positive in interval (T0,T), E(T) is an increasing function
+of T and thus has an inverse: E~'.  This inverse function expresses the time
+needed for production of a given amount of energy: T-T0 = E~'(E).
+
+The symbolic processor consumes energy in order to perform symbolic operations.
+In other words, the symbolic processor can be regarded as a machine that
+transforms connectionist energy into symbolic work.  Not all energy, however,
+is converted into useful work.  There are some losses that cover the internal
+needs of the processor itself.  The _efficiency_coefficient_ ETA is defined
+as the ratio of the useful work to the total energy input: ETA = A/E.
+The efficiency coefficient ranges from 0 to 1 and is a characteristic of the
+symbolic processor.  The processors of different DUAL agents have different
+efficiencies.
+
+With these definitions at hand, we are able to calculate the time needed to
+perform a symbolic operation. Each symbolic operation has a parameter associated
+with it -- its _consumption_ C.  This specifies how much connectionist energy
+is equivalent to the amount of symbolic work embedded in the operation.
+Each DUAL model specifies the consumption of each kind of symbolic operations.
+These are parameters of the model.
+
+Now, in order to perform an operation with consumption C, a symbolic processor
+with efficiency coefficient ETA needs a total input of E = C/ETA units of
+connectionist energy.  This energy must be produced by the connectionist
+aspect.  This, however, takes time because the power of the latter is limited.
+The activation a(t) of the connectionist aspect is integrated over time --
+see the expression for E(T) above.  When enough energy is produced by the
+connectionist aspect and then transformed into symbolic work, the symbolic
+operation is completed.  This happens at time  Te = T0 + E~'(C/ETA) .
+
+Can the energetic analogy be legitimately applied to the cognitive architecture
+DUAL ?  Yes, if one takes into account three more points:
+  1. The specification of DUAL postulates that if the activation level of an
+     agent drops below a threshold, its symbolic processing is terminated and
+     all intermediate results are lost.  In the context of the present
+     discussion, we may assume that  a(t)  above zero (and even above the
+     threshold) and, therefore, E(T) is monotonically increasing and the
+     inverse function E~' is well defined.
+  2. The symbolic operations in DUAL are atomic.  Therefore, the exact process
+     that takes place during the execution of an operation is irrelevant.
+     What matters is only the final outcome and the timing of its appearance.
+  3. When a symbolic processor is idle, no energy is accumulated by definition.
+     In other words, it is not possible to amass energy 'on store' and then
+     expense it at once, thus imitating very high peak power.  When there is
+     no symbolic operation for the processor to work upon, the energy produced
+     by the connectionist aspect goes away unused.
+
+
+
+****************************************************************************
+***                                                                      ***
+***       IMPLEMENTATION OF SUSPENDABLE COMPUTATION USING STACKS         ***
+***                                                                      ***
+
+The utility of the energetic analogy outlined above is that it replaces the
+VARIABLE-SPEED computation with SUSPENDABLE computation.  It allows to imple-
+ment the continuous symbolic processor by a 'saltatory' one. In other words:
+  -- DUAL postulates that symbolic processors run smoothly and at different
+     speeds.
+  -- The LISP program that is documented here supports symbolic processors
+     that run in punctated instantaneous jumps. Each such jump executes one
+     symbolic operation.  There are pauses between the jumps and these pauses
+     implement the timing of the overall process.
+
+For example, suppose that the symbolic processor of some DUAL agent executes
+(smoothly and at variable speed) the following sequence of operations:
+  ...  ->  receive-marker  ->  analyze-marker  ->  send-marker  -> ...
+
+Suppose also that the parameters of the model state that the consumption for
+receiving a marker is 1, for analyzing it -- 2, and for sending it -- 1.
+Then the smooth process schematized above may be implemented by the following
+sequence of (instantaneous) operations:
+  (consume-energy 1)
+  (receive-marker ...)
+  (consume-energy 2)
+  (analyze-marker ...)
+  (consume-energy 1)
+  (send-marker ...)
+
+In the current implementation, the forms above (or, more precisely, the
+corresponding _closures_) are put on a stack.  There is an ENERGY BALANCE
+associated with the stack (see DUAL/ARCHIT/AGENDA.LSP).  It reflects the
+current energetic level of the suspended process.  Each invocation of the
+function CONSUME-ENERGY decreases the balance.  On the other hand, on each
+connectionist cycle, the connectionist machinery increases the balance with
+some small amount depending on the activation level of the agent.
+
+The stack is operated according to the following algorithm (see RUN-PROCESS
+in DUAL/ARCHIT/AGENDA.LSP):
+  1. If the stack is empty, stop.
+  2. If the energy balance is >= 0, pop a closure from (the top of) the
+        stack and execute it. Then loop back to step 1.
+  3. If the energy balance is negative, wait until it becomes positive.
+
+It is arranged that the loop eventually terminates, either because of empty
+stack or because of negative energetic balance.
+
+The effect of this algorithm is that the computation is carried out step by
+step (i.e. closure by closure) with pauses between the consecutive steps.
+We call such computation 'suspendable computation' and say that the symbolic
+process is 'suspended' when the energy balance is negative.
+
+The closures in the stack are executed for their side effects only.
+Some important side effects (or 'events') are:
+  a) A closure can change the internal state of the host, e.g. store a
+     marker in its local memory.
+  b) A closure can bring forth some changes visible outside the host, e.g.
+     send a marker to another agent, construct new link, etc.
+  c) A closure can push other closures to the stack.
+  d) A closure can consume energy, thus causing the energy level to drop, which
+     in turn suspends the execution of the remaining closures on the stack.
+
+Events of type a) and b) are important for the behavior of the cognitive model.
+Events of type c) and d) are not -- they belong to the implementation.
+
+The suspendable model of variable-speed symbolic computation has an important
+property that justifies the whole approach.  Assume the symbolic processor
+is as a black box and we can observe only its inputs and outputs. Assume
+further that we have collected a detailed log of all events of type a) and b)
+but we cannot observe any events of type c) or d).  Under this assumption, we
+would be unable to tell on the basis of the behavioral trace whether the
+symbolic processor inside the black box works smoothly or suspendedly.  Both
+modes of computation yield the same behavior -- the same events happen, and
+with the same intercepting time intervals.
+
+
+
+****************************************************************************
+***                                                                      ***
+***           CONVERTING LISP PROGRAMS INTO STACK PROGRAMS               ***
+***                                                                      ***
+
+The stack-oriented model of suspendable computation outlined in the previous
+section has been chosen for his equivalence with the theoretically postulated
+model of symbolic processing in DUAL.  It is very inconvenient, however, to
+actually write programs using stacks.  For example, an algorithm that is
+expressed in LISP as simply as:
+  (progn
+    (receive-marker ...)
+    (analyze-marker ...)
+    (send-marker    ...) )
+
+has to be re-written in the following obscure way in order to run on a stack:
+  (progn
+    (push-to-stack proc (send-marker ...))
+    (push-to-stack proc (consume-energy (get-consumption 'send-marker)))
+    (push-to-stack proc (analyze-marker ...))
+    (push-to-stack proc (consume-energy (get-consumption 'analyze-marker)))
+    (push-to-stack proc (receive-marker ...))
+    (push-to-stack proc (consume-energy (get-consumption 'receive-marker))) )
+
+Clearly it is very difficult to write and debug non-trivial programs in
+this way.  Moreover, when we introduce conditional statements and loops,
+programming with direct stack operations becomes virtually impossible.
+(Stack-oriented programming languages such as FORTH are a different matter.)
+
+This difficulty is overcome in the implementation of DUAL by designing and
+implementing a specialized programming language for suspendable computation.
+This language is called S-LISP (from 'suspendable LISP') and is an extension
+of Common LISP.  A sample (and simple) program written in S-LISP looks like:
+  (s-progn host
+     [receive-marker ...]
+     [analyze-marker ...]
+     [send-marker    ...] )
+
+The S-LISP compiler then automatically converts this source code into a
+sequence of PUSH-TO-STACK forms.  In this way, the programmer may express the
+algorithm (relatively) easily, leaving stack management to the S-compiler.
+
+
+
+****************************************************************************
+***                                                                      ***
+***                    INTRODUCTION TO S-LISP                            ***
+***                                                                      ***
+
+S-LISP is a programming language based on Common LISP.  Its main difference
+from 'plain' LISP is that it supports some additional special operators,
+namely:
+ + S-PROGN  -- suspendable analog to PROGN
+ + S-EVAL   -- suspendable analog to EVAL
+ + S-VALUES -- suspendable analog to VALUES
+ + SUSPENDED-VALUE-BIND -- suspendable analog to MULTIPLE-VALUE-BIND
+
+These additional operators are called 'suspension primitives'.  So, S-LISP
+supports the four suspension primitives listed above as well as many (but
+not all) 'ordinary' LISP primitives like PROGN, IF, LET, and SETQ. It also
+supports function calls and recursion, which in turn allows for loops. (One
+curious consequence of the stack model is that recursion is easier to
+implement than iteration.)  Thus, S-LISP is a 'full' programming language.
+
+
+MAIN S-PROGN PRIMITIVES
+~~~~~~~~~~~~~~~~~~~~~~~~
+The two main suspension primitives are S-PROGN and S-EVAL. They are introduced
+here and are documented fully in DUAL/ARCHIT/SUSPEND.LSP and =/SPROGN.LSP.
+The remaining suspension primitives are dealt with later in this file, as well
+as in DUAL/ARCHIT/MAILBOX.LSP.
+
+S-PROGN establishes a suspendable process running under some DUAL agent called
+a 'host'.  The syntax of S-PROGN is:
+  (s-progn <host>
+     <form1> <form2> ... <form_n> )
+
+S-EVAL signals that a given S-LISP form is 'suspendable' and determines the
+amount of energy needed for it.  The syntax of S-EVAL is:
+  (s-progn <consumption> <form> )
+
+S-PROGN and S-EVAL go together. S-EVAL may appear only within the lexical scope
+of a S-PROGN; it is an error elsewhere. Conversely, S-PROGN is like an ordinary
+PROGN in all respects except the treatment of S-EVALs and the other suspension
+primitives.  When a S-EVAL appears within a S-PROGN, the latter generates
+LISP code that arranges that the FORM inside the S-EVAL will be executed after
+consuming C units of energy.  Consider, for instance, the following program:
+  (s-progn host
+     (s-eval 0.1 (prepare stuff))
+     (when (s-eval 0.5 (check stuff))
+        (s-eval 2.5 (work-on stuff)) )
+     (s-eval 0.5 (cleanup)) )
+
+When this code is compiled and run, the stack of the symbolic processor of
+the agent HOST will be arranged approximately in the way shown below.
+(The actual code is more sophisticated and heavily implementation-dependent;
+ think of the text below as a pseudo-code.)
+
+    (consume-energy 0.1)           ; consumption for PREPARE
+    (prepare stuff)
+    (consume-energy 0.5)           ; consumption for CHECK
+    (when (check stuff)
+      (push-to-stack #:PROC (work-on stuff))
+      (push-to-stack #:PROC (consume-energy 2.5))) )
+    (consume-energy 0.5)           ; consumption for CLEANUP
+    (cleanup)
+
+
+SHORTHAND FOR S-EVAL
+~~~~~~~~~~~~~~~~~~~~~
+Suspendable programs typically involve many suspendable operations and hence
+many S-EVALs.  To avoid cluttering the code, a shorthand notation for S-EVAL
+has been defined.  It uses the square brackets and is handled by the LISP
+reader.  This notation is documented in detail in DUAL/ARCHIT/BRACKETS.LSP.
+We shall introduce it here by giving a few examples.  The basic rule for
+transforming bracketed expressions into S-EVAL forms is the following:
+
+  [0.1 fun arg1 arg2]  - ->  (s-eval 0.1 (fun arg1 arg2))
+
+With this notation, the example above may be re-written in the following way:
+  (s-progn host
+     [0.1 prepare stuff]
+     (when [0.5 check stuff]
+        [2.5 work-on stuff] )
+     [0.5 cleanup] )
+
+Moreover, the bracket handler supports a CONSUMPTION-TABLE that keeps the
+consumption of each particular operation.  Thus, one could 'proclaim' that the
+consumption of PREPARE is 0.1, that of WORK-ON is 2.5, etc. by:
+  (proclaim-consumption 'prepare 0.1)
+  (proclaim-consumption 'work-on 2.5)
+  (proclaim-consumption 'check   0.5)
+  (proclaim-consumption 'cleanup 0.5)
+
+Having done this at the beginning of the session (or in a separate file --
+see DUAL/PROCLAIM.LSP and DUAL/CONSUM.LSP), one can then write:
+  (s-progn host
+     [prepare stuff]
+     (when [check stuff]
+        [work-on stuff] )
+     [cleanup] )
+
+
+SIMPLE FORMS VS. SUSPENDABLE FORMS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  ..... ..... under construction ....
+
+
+
+S-VALUES
+~~~~~~~~~
+  ..... See DUAL/ARCHIT/MAILBOX.LSP ...
+
+  The most important rule about suspended values is: NO MATTER HOW MANY VALUES
+  A FORM PRODUCES, YOU MUST EXPORT THEM VIA s-values AND BIND THEM VIA
+  suspended-value-bind.  This rule applies even when the form produces only one
+  value. To produce no values, use (S-VALUES NIL).  Without S-VALUES, all
+  suspendable forms always return one of the keywords :SUSPENDED or :SUSPENSION-
+  IGNORED and are evaluated for their side effects only.
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>   Obsolete documentation from  DUAL/ARCHIT/SPROGN.LSP
+>>>>>>>>>>>>>
+
+
+What is obsolete:
+
+  In a sense, it is no longer true that 'S-PROGN does not produce values'.
+  Now there are S-VALUES and SUSPENDED-VALUE-BIND.  See DUAL/ARCHIT/MAILBOX.LSP.
+
+  The macro S-PROGN is no longer the main compiler; it is a pre-processor.
+  The main compiler for S-LISP is now called S-PROGN-AUX (see DUAL/ARCHIT/
+  MAILBOX.LSP and =/SPROGN.LSP).  This, however, belongs to the domain of
+  the implementation and need not be documented in the external protocol.
+
+  Suspendable local-variable bindings are allowed in LET*.  For instance,
+  the following fragment is legal:
+    (s-progn host
+       (let* ((x [foo 1])
+              (y [foo 2])
+              (z (baz 7)))
+         (use x y z) ))
+
+  ONE (but not more) suspendable local-variable binding is allowed in LET.
+  Examples:
+    (s-progn host             ; legal
+       (let  ((x [foo 1])     ; legal
+              (y (baz 7)))    ; legal
+         (use x y) ))         ; legal
+
+    (s-progn host             ; illegal !
+       (let  ((x [foo 1])     ; illegal !
+              (y [foo 2]))    ; illegal !  <-- second suspended binding
+         (use x y) ))         ; illegal !
+
+
+  Check to see what is the final status of nested S-EVALs in value positions.
+  (The relevant function is CONSTRUCT-EQUIVALENT-FORM in DUAL/ARCHIT/SPROGN.LSP)
+  I have changed it several times and I am not sure about subtleties like:
+    [foo x [baz y [bar z]] w]
+
+
+  The PROCLAIM-CONSUMPTION facility has changed and the documentation does
+  not reflect the latest changes (e.g. :EXPLICIT-S-PROGN).
+  See DUAL/PROCLAIM.LSP, DUAL/CONSUM.LSP, and DUAL/ARCHIT/BRACKETS.LSP.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>  The interface section of SPROGN.LSP used to begin like this:
+
+;;;; This file does not define new concepts. It defines a powerful macro --
+;;;; S-PROGN -- which is useful for writing 'suspendable' programs.
+;;;; S-PROGN stands for 'suspendable PROGN' (cf. Chapter 9 in "Artificial
+;;;; Intelligence Programming" by Charniak et al.(1987) ).
+;;;;
+;;;; In fact, S-PROGN is a rudimentary compiler for 'suspendable' programs.
+;;;; The macro relies heavily on the suspended processes and the agenda
+;;;; defined in DUAL/ARCHIT/AGENDA.LSP.  More precisely, S-PROGN compiles
+;;;; suspendable programs into a stack-oriented language which is then
+;;;; interpreted by RUN-PROCESS defined in DUAL/ARCHIT/AGENDA.LSP.
+;;;;
+;;;; <skipped ...>
+;;;;
+;;;; There may be any number of suspended processes running in parallel.
+
+
+;;  ******************************************************
+;;  External protocol            *************************
+;;  ******************************************************
+;;
+;; SYMBOLS: s-progn, s-eval, *ignore-suspensions*,
+;;          *S-PROGN-recognized-functors*
+;;
+
+;; *S-PROGN-RECOGNIZED-FUNCTORS*
+;;
+;;   A constant that keeps the list of Common LISP special forms (and some
+;;   standard macros) which may appear inside a S-PROGN.
+;;   All 'suspendable' programs should be written in terms of these constructs.
+;;
+;;   In the current implementation, it is bound to the list:
+;;      (PROGN S-PROGN S-EVAL  SETQ SETF  IF
+;;       LET LET* FLET LABELS BLOCK  DOLIST DOTIMES )
+;;
+;;   The functors listed at the second line are subject to certain restrictions
+;;   (see the description of S-PROGN below for more details).
+;;   Future implementations may augment *S-PROGN-RECOGNIZED-FUNCTORS* as well
+;;   as relax some of the current restrictions.
+
+;; *IGNORE-SUSPENSIONS*
+;;
+;;   A varable that serves as a global flag commanding whether 'suspendable'
+;;   processes are in fact suspended or not.
+;;
+;;   When *IGNORE-SUSPENSIONS* is bound to NIL (the default), S-PROGN and the
+;;   the other 'suspension' functors generate code that consumes energy and
+;;   suspends the computation when energy is lacking.
+;;
+;;   When *IGNORE-SUSPENSIONS* is non-NIL, S-PROGN acts almost as an ordinary
+;;   PROGN and the other suspension functors act in such a way that the final
+;;   code does not mention any 'suspensions' at all and will execute in the
+;;   normal manner.
+;;
+;;   The phrase 'S-PROGN acts _almost_ as an ordinary PROGN' means that the
+;;   form    (s-progn carrier form1 form2 ... form_k)   will be macroexpanded
+;;   when *IGNORE-SUSPENSIONS* is non-NIL into the form:
+;;      (progn form1 form2 ... form_k :SUSPENSION-IGNORED)
+;;   That is, S-PROGN acts as an ordinary PROGN except that always returns
+;;   a special value -- the keyword :SUSPENSION-IGNORED.
+;;   (Rationale: when suspensions are not ignored, S-PROGN always returns
+;;    the keyword :SUSPENDED. Programmers are discouraged to depend on the
+;;    value produced by S-PROGN at all -- see "S-PROGN do not produce values".
+;;    Thus, if S-PROGN macroexpanded into an ordinary PROGN when suspensions
+;;    are ignored, it would have different semantics depending on the value
+;;    of *IGNORE-SUSPENSIONS*.)
+
+
+;; S-EVAL (consumption-form form)  -->  value_of_FORM
+;;
+;;   A macro that is one of the 'suspension functors'. Think of it as a
+;;   special form recognized by the S-PROGN compiler.
+;;
+;;   S-EVAL must appear within the lexical scope of an enclosing S-PROGN.
+;;   If used elsewhere, it signals an error.
+;;   Within the context of S-PROGN, S-EVAL is a syntactic marker that means
+;;   that FORM should be executed after consuming of certain amount of energy.
+;;   The exact amount is obtained by evaluating CONSUMPTION-FORM.
+;;
+;;   CONSUMPTION-FORM should be a 'simple' form, i.e. it may not contain
+;;   any 'suspensions' in it (see S-PROGN below).  Apart from that, it may
+;;   be arbitrary LISP form that evaluates to a number.  Typically, it is
+;;   either a 'raw' number or a call to CALCULATE-CONSUMPTION (see DUAL/ARCHIT/
+;;   BRACKETS.LSP).
+;;
+;;   FORM may be either 'simple' or 'suspendable' form.
+;;     -- If it is simple, it may be any LISP form whatsoever. In particular,
+;;        it is not limited to *S-PROGN-RECOGNIZED-FUNCTORS*.
+;;        (Still, it is a very bad idea to use CATCH, THROW, and the like.)
+;;    --  When FORM is a suspended form, it is subject to certain restrictions
+;;        documented below. See 'Functors that may appear inside S-PROGN'.
+;;
+;;   The interpretation of S-EVAL depends on the flag *IGNORE-SUSPENSIONS*.
+;;   When it is bound to NIL (the default), S-EVAL has the meaning described
+;;   above. When *IGNORE-SUSPENSIONS* is non-NIL,  (S-EVAL C-FORM FORM)
+;;   fizzles simply into  FORM  (and _not_  (EVAL FORM)).
+;;
+;;   Example: The construct
+;;     (s-progn host
+;;        (s-eval (calculate-consumption 'work-on)
+;;                (work-on stuff)) )
+;;
+;;   has roughly the following meaning when *IGNORE-SUSPENSIONS* is NIL:
+;;    (progn
+;;      (consume-energy-with-losses host
+;;          (calculate-consumption 'work-on))   ; see DUAL/ARCHIT/BRACKETS.LSP
+;;      (work-on stuff) )
+;;
+;;   ... and the following meaning when *IGNORE-SUSPENSIONS* is not NIL:
+;;    (progn
+;;      (work-on stuff)
+;;      :suspension-ignored )
+
+
+;; S-PROGN (carrier &body body)  -->  :SUSPENDED
+;;
+;;   A macro that is the main 'suspension functor'.
+;;   Think of it as a rudimentary compiler for 'suspendable' programs.
+;;   S-PROGN expands into calls to the functions defined in ARCHIT/AGENDA.LSP.
+;;   In the end, a call to S-PROGN produces one of three values:
+;;                                    NIL, :SUSPENDED, or :SUSPENSION-IGNORED.
+;;
+;;   The first argument to S-PROGN is evaluated, the rest are not.
+;;   The first argument -- CARRIER -- should evaluate to a suspended process
+;;   or an agent. If it doesn't, S-PROGN signals an error.  It is not
+;;   guaranteed that CARRIER is evaluated only once.
+;;   BODY is a list of LISP forms.
+;;
+;;   The interpretation of S-PROGN depends on the flag *IGNORE-SUSPENSIONS*.
+;;   When it is bound to NIL (the default), S-PROGN has the meaning described
+;;   below. When *IGNORE-SUSPENSIONS* is non-NIL, S-PROGN macroexpands into
+;;   an 'almost' ordinary PROGN.
+;;   In the following discussion, assume that *IGNORE-SUSPENSIONS* is NIL.
+;;
+;;   First of all, S-PROGN identifies the suspended process that will execute
+;;   the forms in BODY (see RUN-PROCESS and RUN-ALL-PROCESSES from DUAL/ARCHIT/
+;;   AGENDA.LSP).  If CARRIER is a suspended process, it is used directly.
+;;   If CARRIER is an agent, the corresponding suspended process is found (or
+;;   constructed) via a call to FIND-OR-MAKE-PROCESS (defined in ARCHIT/AGENDA).
+;;
+;;   When the relevant suspended process is identified, S-PROGN ensures that
+;;   all the forms in BODY will be evaluated in appropriate order and at
+;;   appropriate moments in time. The exact mechanism is implementation-
+;;   dependent but the basic idea is that S-PROGN macroexpands into calls to
+;;   the construct PUSH-TO-STACK (see DUAL/ARCHIT/AGENDA.LSP). Thus, the forms
+;;   in the BODY end up on the suspended process' stack.
+;;
+;;   Finally, S-PROGN returns the keyword :SUSPENDED. At this moment, none of
+;;   the forms in BODY has been evaluated. One needs to call RUN-PROCESS or
+;;   RUN-ALL-PROCESSES (see DUAL/ARCHIT/AGENDA.LSP) in order to carry them out.
+;;   (S-PROGN and RUN-PROCESS are analogous to the constructs DELAY and FORCE
+;;    found in many LISP and SCHEME programs.)
+;;
+;;
+;;*********   S-PROGN DO NOT PRODUCE VALUES    ***********
+;;
+;;   Suspended evaluation differs from normal LISP evaluation. The most
+;;   important difference is that S-PROGN (and hence all functions defined
+;;   on its basis) do not return any useful value. Rather, they return
+;;   the keyword :SUSPENDED. The 'real' values will be computed later,
+;;   long after the call to S-PROGN is over.
+;;
+;;   From that follows that suspended computations are useful mostly for their
+;;   side effects.  By the way, this matches well the specification of DUAL --
+;;   typical uses of S-PROGN involve things like sending a marker, creating
+;;   a link, etc.
+;;   (In a sense, S-LISP is closer to PASCAL than to LISP.  The primary way
+;;    for constructing composite pieces of code is concatenation rather than
+;;    nesting.)
+;;
+;;   From that follows also that defining 'suspendable' functions is not so
+;;   obvious. For example, the following definition will _not_ produce the
+;;   intended effect:
+;;
+;;     (defun suspended-combine-things (host thing1 thing2)         ; WRONG!!
+;;       (s-progn host                                              ; WRONG!!
+;;          (s-eval 0.5 (check-preconditions))
+;;          (s-eval 10 (combine  (s-eval 1 (prepare thing1))        ; WRONG!!
+;;                               (s-eval 1 (prepare thing2)))) ))   ; WRONG!!
+;;
+;;   Defined in this way, SUSPENDED-COMBINE-THINGS will always return :SUSPENDED
+;;   You should approach the problem by defining an ordinary function and
+;;   then calling PROCLAIM-CONSUMPTION to proclaim its consumption (see DUAL/
+;;   ARCHIT/BRACKETS.LSP).  In other words, you need something like:
+;;
+;;     (defun combine-things (thing1 thing2)
+;;       ;; DEFUN contains an implicit PROGN
+;;       (check-preconditions)
+;;       (combine (prepare thing1)
+;;                (prepare thing2)) )
+;;
+;;     (proclaim-consumption 'combine-things 12.5)
+;;
+;;   Now, the following code will have the intended effect:
+;;     (let (var)
+;;       (s-progn host
+;;         (setq var [combine-things thing1 thing2])  ; note the square brackets
+;;         [use-combined-value var] ))
+;;
+;;   Given this code, S-PROGN will produce (a sophisticated variant of) the
+;;   following macroexpansion:
+;;     (let (var)
+;;       (push-to-stack host (use-combined-value var))
+;;       (push-to-stack host (consume-energy-with-losses host
+;;                             (calculate-consumption 'use-combined-value)))
+;;       (push-to-stack host (setq var (combine-things thing1 thing2)))
+;;       (push-to-stack host (consume-energy-with-losses host
+;;                             (calculate-consumption 'combine-things)))
+;;       :suspended)
+;;
+;;   In effect of all this, HOST's stack is arranged in such a way that calling
+;;   (RUN-PROCESS HOST)  will result in evaluating COMBINE-THINGS and
+;;   USE-COMBINED-VALUE at the appropriate moments in time.
+;;   The file DUAL/INTRFACE/AGENDA.LSP provides a macroexpanding tool (called M)
+;;   which is useful for debugging PUSH-TO-STACK sequences.
+;;
+;;
+;;   If you really want to export a value out of a S-PROGN, there is a way to
+;;   to so by using the so-called 'mailbox technique'.  The trick is to store
+;;   the value in some place that may be destructively modified by SETF (e.g.
+;;   the CAR slot of a cons cell).  This 'mailbox' is exported and the receiver
+;;   of the value opens it after the suspended body of S-PROGN has run and put
+;;   the value into the mailbox.  For example:
+;;
+;;     (defun tricky-suspended-combine-things (host thing1 thing2)
+;;       (declare (values cons))   ; a mailbox is a cons (in this case)
+;;       (let ((mailbox (cons :suspended nil)))
+;;         (s-progn host
+;;            (s-eval 0.5 (check-preconditions))
+;;            (s-eval 10 (setf (car mailbox)           ; put value in MAILBOX
+;;                             (combine  (s-eval 1 (prepare thing1))
+;;                                       (s-eval 1 (prepare thing2))))) )
+;;         mailbox ))  ; export MAILBOX to the caller
+;;
+;;   Now the value in the mailbox can be used in this way:
+;;     (let (mailbox)
+;;       (s-progn host         ; This _must_ be the same host as in TRICKY-...
+;;          (setq mailbox      ; Request a value to be computed and put in mbox
+;;                [tricky-suspended-combine-things thing1 thing2])
+;;          [use-combined-value (car mailbox)] ))   ; open the mailbox
+;;
+;;   The mailbox technique will be hidden behind an abstraction barrier in
+;;   the future versions of the program.  The idea is to define two 'suspension
+;;   primitives' -- S-VALUES and SUSPENDED-VALUE-BIND. /*May use NTH from CLtL*/
+;;
+;;   See also the differentiation between 'value positions' and 'side-effect
+;;   positions' for S-EVAL documented below.
+;;
+;;
+;;*********   FUNCTORS THAT MAY APPEAR INSIDE S-PROGN   ***********
+;;
+;;   S-PROGN may be considered an translator for a subset of LISP.
+;;   This subset is described below. For convenience, let's call it S-LISP.
+;;
+;;   Many (but not all) of the special forms of Common LISP are also special
+;;   forms of S-LISP (see the constant *S-PROGN-RECOGNIZED-FUNCTORS*).
+;;   In addition, S-LISP has some additional special forms called 'suspension
+;;   functors'. Currently, there are two such functors: S-PROGN and S-EVAL.
+;;   Future versions of the program may define additional suspension functors.
+;;
+;;   Some form FORM is called to be a 'simple form' in S-LISP if it satisfies
+;;   either of the three conditions below:
+;;     -- FORM is not a cons (but a number, symbol, string, ...)
+;;     -- FORM is a cons whose CAR is the symbol QUOTE
+;;     -- FORM is a list which does not contain any suspension functors in it.
+;;
+;;   All other forms are called 'suspendable forms' (or 's-forms') in S-LISP.
+;;   In other words, s-forms are lists that contain at least one suspension
+;;   functor (i.e. S-EVAL or S-PROGN) in them.
+;;
+;;   Suspendable forms receive special treatment by S-PROGN while simple forms
+;;   are passed to the ordinary LISP evaluator.
+;;   Simple forms may contain any of the Common LISP special forms, functions,
+;;   and macros.  That is, they may use multiple values, loops, closures, etc.
+;;   In contrast, suspended forms are limited to the functors listed in
+;;   *S-PROGN-RECOGNIZED-FUNCTORS* and described below:
+;;
+;;   S-EVAL   -- This is the 'suspension primitive'. It is the linguistic
+;;               construct used in S-LISP to state that some form needs
+;;               certain amount of energy in order to be carried out.
+;;               (See the description of S-EVAL above.)
+;;
+;;               S-EVAL may appear in a 'value position' or in a 'side-effect
+;;               position'. In the former case, the value of the enclosed
+;;               form is used by subsequent computations while in the latter
+;;               the enclosed form is evaluated for its side effects only.
+;;               In both cases, S-PROGN arranges that the enclosed form will
+;;               be executed exactly when (and if) the necessary amount of
+;;               energy has been accumulated.
+;;
+;;               Example:
+;;                 (s-progn host
+;;                    (s-eval 0.1 (print "Begin"))          ; side-eff position
+;;                    (if (s-eval 1.0 (check-something))    ; value position
+;;                        (print "Yes")
+;;                        (print "No"))
+;;                    (s-eval 10 nil)   ; wait              ; side-eff position
+;;                    (setq x (s-eval 2 (make-new-stuff)))  ; value position
+;;                    (s-eval 0.1 (print "End")) )          ; side-eff position
+;;
+;;
+;;               The current implementation has the following limitation:
+;;               S-EVALs may not appear in the context of any special form
+;;               (except QUOTE) when this special form is in turn not at
+;;               'top level'.
+;;               For example, the constructions
+;;                  (if (s-eval ...) ...)
+;;                  (if (not (s-eval ...)) ...)
+;;                  (foo arg1 (s-eval 0.1 form) arg3)
+;;                  (foo arg1 (bar (s-eval 0.1 form)) arg3)
+;;               are legal while the following constructions are _not_ legal:
+;;                  (if (setq var (s-eval ...)) ...)
+;;                  (foo arg1 (if test (s-eval 0.1 form1) form2) arg3)
+;;
+;;
+;;               Nested S-EVALs are permitted. For example the form
+;;                 (s-eval 1 (fun (s-eval 2 arg1) (s-eval 3 arg2)))
+;;               is roughly equivalent to the following:
+;;                 (let (#:G38 #:G39)
+;;                   (s-eval 1 nil)         ; consumption for the overall form
+;;                   (s-eval 2 (setq #:G38 arg1))
+;;                   (s-eval 3 (setq #:G39 arg2))
+;;                   (fun #:G38 #:G39) )
+;;
+;;               Note that the order of consumptions is different from what
+;;               one might expect (1-2-3 instead of 2-3-1).
+;;
+;;   PROGN    -- This construct states that all the enclosed forms will be
+;;               (suspendedly) evaluated in order. All values produced
+;;               (including that of the last form) are discarded, so side
+;;               effects are the only thing that matters.
+;;
+;;   S-PROGN  -- A S-PROGN nested inside another S-PROGN is interpreted as
+;;               an ordinary PROGN provided the carriers of the two S-PROGNs
+;;               refer to the same suspended process.
+;;               If they don't, an error is signaled.
+;;               This reflects the fact that the specification of DUAL does
+;;               not allow one agent to interfere with the inner workings of
+;;               another one, leave alone intruding some forms to be executed
+;;               by its symbolic processor.
+;;
+;;               Example:
+;;                 (s-progn host           ; the host of everything is HOST
+;;                    ;; compute things
+;;                    (s-progn host                       ; this is legal
+;;                       ;; compute more things           ; this is legal
+;;                    )                                   ; this is legal
+;;                    (s-progn some-other-host          ;!! this is illegal
+;;                       ;; remotely compute things     ;!! this is illegal
+;;                    )                                 ;!! this is illegal
+;;                 )
+;;
+;;               S-PROGN must appear in a 'side-effect position' (see above).
+;;               It cannot be used in a 'value position'.
+;;               (Rationale: The value that is immediately returned by the
+;;                S-PROGN macro is always the keyword :SUSPENDED, which is not
+;;                what the programmer might expect.)
+;;
+;;   BLOCK    -- When this construct participates in a simple form (i.e. without
+;;               suspensions), it has its standard meaning as defined in
+;;               Common LISP. When meshed into a suspendable program, however,
+;;               BLOCK is legal only when there aren't any RETURN-FROM or RETURN
+;;               forms in its body. Such non-local exits are incompatible with
+;;               the notion of suspendable computation.
+;;               When there are no RETURNs, BLOCK acts like a simple PROGN.
+;;
+;;               (Rationale: Of course, banning the RETURNs defeats the purpose
+;;                of BLOCK. It has not been excluded from *S-PROGN-RECOGNIZED-
+;;                FUNCTORS*, however, because many standard macros wrap an
+;;                implicit BLOCK NIL around their bodies, just in case some form
+;;                in the body wants to do a non-local exit. When they don't,
+;;                the macro will work under S-PROGN.)
+;;
+;;   IF       -- This construct has the same interpretation as in Common LISP.
+;;               S-EVALs may participate both in the test clause (==> 'value
+;;               position') and the consequents (==> 'side-effect position').
+;;
+;;               Note that the combination of IF, PROGN, and macroexpansion
+;;               (see below), automatically brings within the reach of S-PROGN
+;;               a whole wealth of standard macros like COND, CASE,TYPECASE,etc.
+;;
+;;   SETQ     -- This construct has the same interpretation as in Common LISP.
+;;               S-EVALs may appear as top-level value-forms.
+;;
+;;               Examples:
+;;                 (setq var (s-eval 0.1 form))   is legal and is handled
+;;                      by converting it into  (s-eval 0.1 (setq var form)).
+;;                 (setq var1 form1 var2 (s-eval ...))   is legal.
+;;                 (setq var (fun (s-eval ...)))         is legal.
+;;                 (setq var (fun (if (s-eval ...)..)))  is illegal.
+;;
+;;   SETF     -- This construct has the same interpretation as in Common LISP.
+;;               S-EVALs may appear as top-level value-forms and must not
+;;               appear within place-forms.
+;;
+;;               Examples:
+;;                 (setf place (s-eval 0.1 form))   is legal and is handled
+;;                      by converting it into  (s-eval 0.1 (setf place form)).
+;;                 (setf place1 form1 place2 (s-eval ...))    is legal.
+;;                 (setf place (fun (s-eval ...)))            is legal.
+;;                 (setf place (fun (if test (s-eval..)..)))  is illegal.
+;;                 (setf (s-eval 0.1 place) form)             is illegal.
+;;
+;;   LET,     -- These constructs has the same interpretation as in Common LISP.
+;;   LET*        S-EVALs may appear in the body of LET but _not_ in the
+;;               variable-binding section.  Use explicit SETQ clauses in the
+;;               body to initialize LET variables with suspended forms.
+;;               the body. For example, the form below is illegal:
+;;                 (s-progn host
+;;                    (let ((x 'foo)                         ; this is legal
+;;                          (y (s-eval 0.1 (f a b c))) )   ;!! this is illegal
+;;                      (s-eval 2.8 (g x y)) ))              ; this is legal
+;;
+;;               The suspended initialization should be rewritten like this:
+;;                 (s-progn host
+;;                    (let ((x 'foo)
+;;                          (y nil) )
+;;                      (setq y (s-eval 0.1 (f a b c)))
+;;                      (s-eval 2.8 (g x y)) ))
+;;
+;;               If you want to be nice to the S-PROGN compiler, you may write:
+;;                      (s-eval 0.1 (setq y (f a b c)))
+;;
+;;   FLET     -- This construct has the same interpretation as in Common LISP.
+;;               S-EVALs may appear both in the local function definitions and
+;;               in the main body of FLET.  The only restriction is that
+;;               S-EVALs are not permitted as initialization forms of &OPTIONAL
+;;               and &KEY parameters.
+;;
+;;   LABELS   -- This construct has the same interpretation as in Common LISP.
+;;               S-EVALs may appear both in the local function definitions and
+;;               in the main body of LABELS. The only restriction is that
+;;               S-EVALs are not permitted as initialization forms of &OPTIONAL
+;;               and &KEY parameters.
+;;
+;;               Note that LABELS allows for recursive suspendable programs and
+;;               thus gives S-LISP the full expresive power of any other
+;;               programming language. In particular, cycles may be (and in
+;;               fact are) implemented by locally defined tail recursive funs.
+;;               For example, the following is equivalent to a DOTIMES cycle:
+;;                 (s-progn host
+;;                    (let ((var 0)
+;;                          (count (s-eval 0.1 count-form)) )
+;;                      (labels  ((recurse ()
+;;                                  (cond ((>= var count) nil)
+;;                                  (t  (s-eval 1 body-form1)
+;;                                      (s-eval 2 body-form2)
+;;                                      (setq var (+ 1 var))
+;;                                      (recurse)) )))
+;;                        (recurse) )
+;;                      (s-eval 0.2 (result-form)) ))
+;;
+;;   DOLIST   -- S-PROGN supports a limited version of the DOLIST macro.
+;;               S-EVALs may appear everywhere, but any GOs and RETURNs are
+;;               forbidden.
+;;
+;;   DOTIMES  -- S-PROGN supports a limited version of the DOTIMES macro.
+;;               S-EVALs may appear everywhere, but any GOs and RETURNs are
+;;               forbidden. (See the example of LABELS above.)
+;;
+;;   macros   -- If S-PROGN encounters a form whose CAR is a symbol that
+;;               satisfies MACRO-FUNCTION, it applies MACROEXPAND-1 to the
+;;               entire form and then starts over (see p.73 in CLtL2 or p. 57
+;;               in CLtL1). Thus, macros like COND, PUSH, and INCF may be used.
+;;
+;;               Note that macros whose macroexpansions contain some of
+;;               the forbidden special forms (see below) are not allowed.
+;;               In particular, this restriction applies to all iteration
+;;               macros like DO and LOOP since they macroexpand into TAGBODY.
+;;               (Limited versions of DOLIST and DOTIMES are supported by
+;;               translating into recursive local functions, see above.)
+;;               The same restriction applies to all macros that involve
+;;               unorthodox flow of control like PROG, WITH-OPEN-FILE, etc.
+;;               (Note that all these 'forbidden' constructs may appear
+;;                inside a S-PROGN provided they are 'simple forms', i.e.
+;;                they do not contain any suspension functors in their bodies.)
+;;
+;;
+;;*********   FUNCTORS THAT MAY *NOT* APPEAR INSIDE A S-PROGN   ***********
+;;
+;;   There are a number of Common LISP constructs that may not be used in
+;;   conjunction with S-EVAL. They may appear within a S-PROGN only if they
+;;   are 'simple forms', i.e. they do not contain any suspension functors
+;;   in them (see above).
+;;
+;;   The list of forbidden functors comprises mostly special forms and
+;;   macros that macroexpand into calls to such special forms. S-PROGN takes
+;;   a conservative position -- if some functor satisfies SPECIAL-FORM-P and
+;;   is not a member of *S-PROGN-RECOGNIZED-FUNCTORS*, it is forbidden.
+;;   Some (but by no means all) special forms that fall into this category
+;;   are listed below:
+;;
+;;   TAGBODY & GO   -- Jumps are not supported by S-PROGN, so TAGBODY and
+;;                     all macros on its basis are forbidden. This does not
+;;                     diminish the expressive power of S-LISP because it
+;;                     supports recursion. (See the example of LABELS above.)
+;;
+;;   RETURN-FROM    -- Lexical non-local exits are not supported by S-PROGN.
+;;   BLOCK             BLOCK is allowed only if does not contain any RETURNs
+;;                     (see above).
+;;
+;;   CATCH & THROW  -- Dynamic non-local exits are not supported either.
+;;   UNWIND-PROTECT
+;;
+;;   MULTIPLE-VALUE-xxx  -- S-PROGN does not produce even a single value (see
+;;                     above), not to mention multiple values.
+;;
+;;   FUNCTION       -- Closures does not mesh well with the current implementa-
+;;                     tion of S-PROGN (which uses closures itself) but might
+;;                     be supported in the future.
+;;
+;;
+;;   There are some special forms that could be easily supported by S-PROGN
+;;   but currently are not. These include MACROLET, GENERIC-FLET/LABELS, THE,
+;;   and DECLARE. The semantics of suspendable programs is complicated enough
+;;   without them, however, so I have decided to keep them away.
+;;
+;;
+;;***********   DEBUGGING  SUSPENDABLE  CODE   *************
+;;
+;;   Suspendable computation is undoubtedly the most convoluted and fragile
+;;   aspect of DUAL's implementation.  Its fragility is due to a large extent
+;;   to the heavy use of macros: S-PROGN, S-EVAL, PUSH-TO-STACK, [--], etc.
+;;   Peter Norvig (1992) advises to use macros only to describe one's _problem_
+;;   and to avoid them in describing the _solution_.  I wish I could follow
+;;   this advice but, alas, macros are inevitable when there are closures.
+;;
+;;   Like many translators, S-PROGN works relatively fine when given correct
+;;   source code but degrades rapidly on erroneous sources.  In addition, it
+;;   is often difficult to write correct source code in S-LISP because it
+;;   violates the intuitions of a LISP programmer.  To make things even worse,
+;;   closures are unitelligible when displayed at the terminal.
+;;
+;;   To cope with the second problem, DUAL supports a parallel stack in each
+;;   suspended process (see DUAL/ARCHIT/AGENDA.LSP) for the sole purpose of
+;;   debugging.  Whenever a closure is pushed to the main stack, its human-
+;;   readable equivalent is pushed to the auxiliary stack.  The two items
+;;   are later popped from their respective stacks in synchrony (unless an
+;;   error occurs during the evaluation of the closure from the main stack).
+;;   This doubles the amount of garbage generated by PUSH-TO-STACK. Therefore,
+;;   there is a means of switching this feature off.
+;;
+;;   Switching 'debuggability' on and off must be done at compile time.  One
+;;   of the 'compilation policies' documented in DUAL/START_ME.LSP is called
+;;   :DUAL-DEBUG.  When this policy is 'on' (i.e. :DUAL-DEBUG is on the
+;;   *FEATURES* list), each suspended process maintains a parallel stack for
+;;   debugging.  When :DUAL-DEBUG is off, the auxiliary stack is dropped out.
+;;
+;;   When debuggability is on, there is a primitive STEP facility for suspended
+;;   processes.  In addition, the form  (PROC AGENT) can be used to see the
+;;   stack of the suspended process running under AGENT.  Both STEP and PROC
+;;   are documented and implemented in DUAL/INTRFACE/AGENDA.LSP.
+;;
+;;   While writing symbolic routines for DUAL and AMBR agents, I have found
+;;   the following strategy useful:
+;;     1. Write the routine in plain LISP avoiding the 'forbidden' functors.
+;;     2. Decide which are the suspendable fragments and re-write them (still
+;;        in plain LISP) introducing local variables to store function values
+;;        when necessary.
+;;     3. Test and debug the plain LISP prototype.
+;;     4. Introduce S-EVALs (or square brackets) at the suspendable places and
+;;        wrap everything in a S-PROGN.
+;;     5. Set *IGNORE-SUSPENSIONS* (documented above) to T and test again.
+;;     6. Set *IGNORE-SUSPENSIONS* back to NIL and test again using the STEP
+;;        facility.  Work with a single isolated agent up to this stage.
+;;     7. Add more agents and test the relevant interactions.
+;;     8. Tune CONSUMPTION values of various operations (see DUAL/PROCLAIM.LSP).
+;;
+;;
+;;***********   COMMON  PITFALLS   ************
+;;
+;;   This portion of the documentation presents some 'obvious' but erroneous
+;;   pieces of code, explains why they do not work, and shows their correct
+;;   equivalents.
+;;
+;;   ---- ---- ----  Wrap hidden suspensions into a S-EVAL  ---- ---- ----
+;;
+;;   Suppose the function FOO is a suspendable function defined as follows:
+;;     (defun foo (x)
+;;       (s-progn host
+;;          (s-eval 0.2 (print x)) ))
+;;
+;;   Then the following code can easily lead to problems:
+;;     (s-progn host    ; WRONG!!!
+;;        (foo 1)       ; WRONG!!!  S-PROGN cannot detect the implicit suspensn.
+;;        (print 2)     ; WRONG!!!
+;;        (foo 3)       ; WRONG!!!  S-PROGN cannot detect the implicit suspensn.
+;;        (print 4) )   ; WRONG!!!
+;;
+;;   The intention of the programmer is to consume 0.2 units of energy, then
+;;   to print 1, then to print 2, then to consume other 0.2 units of energy,
+;;   then to print 3, and finally to print 4 and stop.  Instead, the form
+;;   above will immediately print 2 and 4, then it will consume 0.2 units of
+;;   energy, then print 1, then consume more energy, and finally print 3.
+;;
+;;   The problem is due to the short-sightedness of the S-PROGN compiler.
+;;   While analyzing the second S-PROGN it does not know that FOO contains
+;;   an implicit suspension in it.  The compiler treats the form (FOO 1)
+;;   as a 'simple' form and happily translates the whole body of S-PROGN into
+;;   a single closure on the stack.
+;;
+;;   The correct way to approach this situation is to give S-PROGN hints as
+;;   to which forms are suspendable.  This is most easily done by wrapping
+;;   them into S-EVALs with zero consumption.  (Alternatively, one could use
+;;   square brackets in most cases -- see DUAL/ARCHIT/BRACKETS.LSP.)
+;;     (s-progn host
+;;        (s-eval 0 (foo 1))     ; inform S-PROGN that this form is suspendable
+;;        (print 2)
+;;        (s-eval 0 (foo 3))     ; or  [0 foo 2]   or simply  [foo 2]
+;;        (print 4) )
+;;
+;;
+;;   ---- ---- ----  Store values returned by local functions  ---- ---- ----
+;;
+;;   (s-progn host                           ; WRONG!!!
+;;      (flet ((local-fun (x)                ; WRONG!!!
+;;               (s-eval 0.1 (+ 1 x)) ))     ; WRONG!!!
+;;        (print (local-fun 1))              ; WRONG!!!
+;;        (print (local-fun 2)) ))           ; WRONG!!!
+;;
+;;   Perhaps the programmer expects that this form will consume 0.1 units of
+;;   energy, then print 2, then consume other 0.1 units of energy, and finally
+;;   print 3.  Instead, it will immediately print the symbol :SUSPENDED twice
+;;   and then will consume 0.2 units of energy and stop.  What has gone wrong?
+;;
+;;   S-PROGN does not return values, remember.  The LOCAL-FUN in the example
+;;   above is defined in terms of S-PROGN and hence cannot return any useful
+;;   value.  Therefore, one should use the following piece of code:
+;;     (s-progn host
+;;        (let ((local-fun-result :not-computed-yet))
+;;          (flet ((local-fun (x)
+;;                   (setq local-fun-result             ; <-- sic
+;;                         (s-eval 0.1 (+ 1 x))) ))
+;;            (s-eval 0 (local-fun 1))       ; compute and store return-value
+;;            (print local-fun-result)       ; use stored value
+;;            (s-eval 0 (local-fun 2))       ; compute and store return-value
+;;            (print local-fun-result) )))   ; use stored value
+;;
+;;   It is instructive to step through this code by means of the stepper
+;;   (called ST) defined in DUAL/INTRFACE/AGENDA.LSP.
+;;
+;;   Compare with the 'mailbox' technique documented in the section 'S-PROGN
+;;   does not return values' above.
+;;
+;;   The inelegant technique of introducing a buffer variable can be avoided
+;;   in many (but not all) cases through the simpler form:
+;;     (s-progn host
+;;        (flet ((local-fun (x)
+;;                 (+ 1 x) ))                      ; LOCAL-FUN has simple body
+;;          (print (s-eval 0.1 (local-fun 1)))     ; consumption defined here
+;;          (print (s-eval 0.1 (local-fun 2))) ))  ; consumption defined here
+;;
+;;   The latter approach is to be preferred whenever possible.  And it is
+;;   possible when the body of the local function may be considered a symbolic
+;;   'step' (as opposed to a sequence of symbolic 'operations') -- see sections
+;;   3.2.5.2 and 3.2.5.4 in "DUAL Report #1".
+;;
+;;  ---- ---- ----  Cache index values within loops  ---- ---- ----
+;;
+;;   This portion of the documentation is under construction ...
+;;    ... introduce a variable to hold current index value on each iteration ...
+;;
+
+;;   See Exercise 9.4 in Charniak et al. (1987, p. 174) which has been the
+;;   starting point for all code in this file.
+;;
+;;;;;;;;;;;  End of the external protocol  ;;;;;;;;;;;;
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>   Obsolete documentation from  DUAL/ARCHIT/BRACKETS.LSP
+>>>>>>>>>>>>>
+
+;;;; This file defines a read-macro for S-EVAL.
+;;;; See ARCHIT/SPROGN.LSP for details on S-EVAL and S-PROGN.
+;;;;
+;;;; S-EVAL makes the code look clumsy. Therefore, I've defined a shorthand:
+;;;;   [0.1 fun arg1 arg2]  --->  (s-eval 0.1 (fun arg1 arg2))
+;;;;
+;;;; To take a more real example:
+;;;;   (s-progn host              --->   (s-progn host
+;;;;      [0.1 prepare x]                   (s-eval 0.1 (prepare x))
+;;;;      [2.0 work-on x (+ 1 x)]           (s-eval 2.0 (work-on x (+ 1 x)))
+;;;;      [10]       ; wait                 (s-eval 10 nil)
+;;;;      [0.3 cleanup] )                   (s-eval 0.3 (cleanup)) )
+;;;;
+;;;;
+;;;; In addition, this file supports a CONSUMPTION-TABLE that can keep the
+;;;; consumption of each particular operation. Thus, one could 'proclaim'
+;;;; that the consumption of PREPARE is 0.1, that of WORK-ON is 2.0, etc.
+;;;; Having done this at the beginning of the session, one can then write:
+;;;;   (s-progn host
+;;;;      [prepare x]
+;;;;      [work-on x (+ 1 x)] )
+;;;;
+;;;; This looks almost like ordinary lisp code but the reader (at compile
+;;;; time) will transform it into:
+;;;;   (s-progn host
+;;;;      (s-eval (calculate-consumption 'prepare x)
+;;;;              (prepare x))
+;;;;      (s-eval (calculate-consumption 'work-on x (+ 1 x))
+;;;;              (work-on x (+ 1 x))) )
+;;;;
+;;;; Later (at run time), CALCULATE-CONSUMPTION will retrieve the corresponding
+;;;; numbers from the CONSUMPTION-TABLE.
+;;;; Table entries may be constant numbers or whole formulas.
+;;;;
+;;;;   Let, for example, CONSUMPTION-TABLE contain the correspondences:
+;;;;      work-on -- 2.0
+;;;;      walk    -- (lambda (L) (+ 1.0 (* 0.2 (length L))))
+;;;;
+;;;;   Then the following macroexpansions could take place:
+;;;;      [WORK-ON X Y]           - ->   (S-EVAL 2.0 (WORK-ON X Y))
+;;;;      [WORK-ON U V]           - ->   (S-EVAL 2.0 (WORK-ON U V))
+;;;;      [WALK '(A B)]           - ->   (S-EVAL 1.4 (WALK '(A B))
+;;;;      [WALK '(U V W X Y Z)]   - ->   (S-EVAL 2.0 (WALK '(U V W X Y Z))
+;;;;      [WALK NIL]              - ->   (S-EVAL 1.0 (WALK NIL))
+;;;;
+;;;;
+;;;; The scheme described above is very flexible -- one can change consumptions
+;;;; at any time, even during the run of a suspended process.
+;;;; This is possible because consumptions are calculated at run time.
+;;;; The flip side of the coin, however, is that this slows down the program
+;;;; as the same calculations are repeated again and again.
+;;;; Alternatively, on can calculate consumptions at compile time, thus
+;;;; improving performance at the cost of flexibility.
+;;;;
+
+
+
+;;  ******************************************************
+;;  External protocol            *************************
+;;  ******************************************************
+;;
+;; SYMBOLS: #\[
+;;          calculate-consumption, proclaim-consumption
+;;
+;; Note also the global variable *CALCULATE-CONSUMPTION-AT-COMPILE-TIME*
+;; defined in DEFS.LSP.
+;; See the filer PROCLAIM.LSP for examples of PROCLAIM-CONSUMPTION.
+
+;; [ ... ]
+;;
+;;   A macro character that is a shorthand for S-EVAL (see ARCHIT/SPROGN.LSP).
+;;   The LISP reader is modified so that when it encounters an opening square
+;;   bracket it reads s-expressions until a corresponding closing bracket is
+;;   found. The product of this process will be called 'bracketed list' below.
+;;
+;;   There are two kinds of bracketed lists:
+;;     -- with explicit consumption -- they begin with a number: [0.1 f x y]
+;;     -- with implicit consumption -- they begin with a symbol: [f x y]
+;;   An error is signalled if a bracketed list does not begin with a number or
+;;   a symbol. An error is signalled also when there is a closing bracket
+;;   without corresponding opening one.
+;;
+;;   Both kinds of bracketed lists are converted into calls to S-EVAL.
+;;
+;;   When the consumption is explicit, it is put directly into the corresponding
+;;   place in S-EVAL:
+;;     [0.1 f x y]       -->   (s-eval 0.1 (f x y))
+;;     [0.1 f x (g y)]   -->   (s-eval 0.1 (f x (g y)))
+;;     [0.1 f [0.2 g x]] -->   (s-eval 0.1 (f (s-eval 0.2 (g x))))
+;;     [0.1 f]           -->   (s-eval 0.1 (f))
+;;     [0.1]             -->   (s-eval 0.1 nil)      ; useful for idle waits
+;;
+;;
+;;   When the consumption is implicit, i.e. when the bracketed list begins
+;;   with a symbol, then the actual consumption must be retrieved from the
+;;   'consumption table'. This can be done in two ways depending on the value
+;;   of the global variable *CALCULATE-CONSUMPTION-AT-COMPILE-TIME*.
+;;   When it is bound to T, the lookup in the consumption table is done at
+;;   compile time and the consumption is put into the corresponding place
+;;   in S-EVAL.
+;;   When *CALCULATE-CONSUMPTION-AT-COMPILE-TIME* is bound to NIL, the call
+;;   to S-EVAL contains a call to the function CALCULATE-CONSUMPTION that
+;;   calculates the consumption at run time.
+;;
+;;   For example, suppose that the consumption of the operation named F is
+;;   proclaimed in the 'consumption table' to be 0.25. Suppose also that
+;;   the value of *CALCULATE-CONSUMPTION-AT-COMPILE-TIME* is T.
+;;   Then the #\[ macro character will produce the following:
+;;     [f x y]           -->   (s-eval 0.25 (f x y))
+;;     [f x (g y)]       -->   (s-eval 0.25 (f x (g y)))
+;;     [f]               -->   (s-eval 0.25 (f))
+;;     []                signals an error
+;;     [0.1 f x y]       -->   (s-eval 0.1  (f x y))   ; explicit 0.1 overrides
+;;                                                     ; the default 0.25
+;;
+;;   Now suppose that *CALCULATE-CONSUMPTION-AT-COMPILE-TIME* is bound to NIL.
+;;   Then the same source form will be macroexpanded into the following:
+;;     [f x y]           -->   (s-eval (calculate-consumption 'f  ...)
+;;                                     (f x y))
+;;
+;;   The ellipsis stands for a 'encapsulated' description of the arguments --
+;;   see CALCULATE-CONSUMPTION for a more elaborated discussion.
+;;
+;;   Note that in this case certain portions of the bracketed list may be
+;;   evaluated twice -- first in the context of CALCULATE-CONSUMPTION and
+;;   second during the 'main' evaluation of the suspended form.
+;;   This could potentially lead to problems if some of the forms have side
+;;   effects.
+;;
+;;   Brackets may be nested. In some cases, however, this can lead to problems
+;;   when implicit consumptions are involved. These problems appear when
+;;   the inner S-EVAL is evaluated by the outer CALCULATE-CONSUMPTION -- this
+;;   leads to an error in S-EVAL since it cannot be evaluated outside a S-PROGN.
+;;
+;;   Examples:
+;;    [0.1 f x [0.2 g y]]  -->  (s-eval 0.1 (f x (s-eval 0.2 (g y))))  ; OK
+;;    [f x [0.2 g y]]      -->  (s-eval (calculate-consumption 'f x
+;;                                                   (s-eval ....))    ; not OK
+;;                                      (s-eval 0.2 (g y)) )
+;;    [0.1 f x [g y]]      -->  (s-eval 0.1 (s-eval (calculate-consumption 'g y)
+;;                                                  (g y)) )           ; OK
+;;
+
+;; CALCULATE-CONSUMPTION  (operation-name &rest encapsulated-args)  -->
+;;                                                            -->  consumption
+;;
+;;   A function that computes the consumption of a given operation by looking
+;;   into a 'consumption table'.
+;;   Calls to this function are generated by the macroexpansion of bracketed
+;;   list with implicit consumption when *CALCULATE-CONSUMPTION-AT-COMPILE-TIME*
+;;   has been set to NIL during the compilation of the bracketed list.
+;;   For example:
+;;     [f x y]   -->  (s-eval (calculate-consumption 'f #<closure> #<closure>)
+;;                            (f x y))
+;;
+;;   OPERATION-NAME should be a symbol although this is not checked.
+;;   (The check is done by the #\[ macro character.)
+;;   The rest ENCAPSULATED-ARGS must be closures -- functional objects that
+;;   take no arguments and that, when evaluated, produce the values of the
+;;   arguments to the original function call.
+;;   Closures are used instead of 'bare' LISP forms for two reasons. First,
+;;   this reduces the number of cases in which the arguments are evaluated
+;;   twice. Second, this enables CALCULATE-CONSUMPTION to be a function, not
+;;   a macro, and still to have access to the lexical environment of the
+;;   analysed function call.
+;;
+;;   CALCULATE-CONSUMPTION works according to the following algorithm:
+;;     1. First, the entry in the consumption table against the key
+;;        OPERATION-NAME is retrieved. There are three possible types
+;;        of consumptions:
+;;          a) NIL    -- OPERATION-NAME is not in the table;
+;;          b) number -- the consumption is a constant number
+;;          c) function -- the consumption depends not only on the operation
+;;                         itself but also on (some of) the operands.
+;;
+;;     2. If the consumption is NIL (i.e. the consumption table does not
+;;        contain information about OPERATION-NAME), the consumption is
+;;        taken to be zero by default. In this case, CALCULATE-CONSUMPTION
+;;        macroexpands into the number 0.0 . For instance:
+;;         (s-eval (calculate-consumption weird-op arg) (weird-op arg)) - ->
+;;                                          - ->   (s-eval 0.0 (weird-op arg))
+;;
+;;     3. If the consumption is a simple number, CALCULATE-CONSUMPTION macroexpds
+;;        into this number. The ENCAPSULATED-ARGS are not evaluated.
+;;        For instance (suppose 0.5 is the table value of the IF operation):
+;;          [if (test)        - ->   (s-eval 0.5 (if (test)
+;;              (print 'y)                           (print 'y)
+;;              (print 'n)]                          (print 'n)))
+;;
+;;        The consumption is calculated to be 0.5 (taken from the table) and
+;;        neither of the IF arguments is evaluated more than once.
+;;        (The arguments are encapsulated, passed to CALCULATE-CONSUMPTION, and
+;;         then the closures are discarded withot being evaluated.)
+;;
+;;     4. If the consumption is a function (more precisely, satisfies FUNCTIONP)
+;;        CALCULATE-CONSUMPTION applies this function on the ENCAPSULATED-ARGS as
+;;        if by the form   (apply table-fun encapsulated-args). The function
+;;        stored in the table should take as many arguments as the corresponding
+;;        operation and produce a floating point number -- the consumption.
+;;
+;;        Let's call the function stored in the table TABLE-FUN and the opera-
+;;        tion that serves as a key in that table OP.
+;;        Now, one can conceive TABLE-FUN as a formula for computing the
+;;        consumption of OP. This formula can take into account the complexity
+;;        of the operands in addition to the type of the operation itself.
+;;        To that end, TABLE-FUN may evaluate (some of) the arguments given
+;;        in the original call to OP -- they are evaluated twice in this case
+;;        (and only in this case) which may lead to certain problems discussed
+;;        below.
+;;
+;;        Example:
+;;         [pattern-match expr1 expr2]  - ->  (s-eval (calculate-consumption
+;;                                                        'pattern-match
+;;                                                        #<cl1> #<cl2>)
+;;                                               (pattern-match expr1 expr2))
+;;
+;;         Now suppose that TABLE-FUN is stored in the consumption table
+;;         under the key 'PATTERN-MATCH. Then, the call to CALCULATE-CONSUMPTION
+;;         shown above will result in applying TABLE-FUN to the closures
+;;         #<cl1> and #<cl2>. TABLE-FUN can then expand these closures (if
+;;         needed) to compute the consumption. For instance, TABLE-FUN may
+;;         look something like:
+;;           #'(lambda (closure1 closure2)
+;;               (declare (ignore closure2))
+;;               (+ 1.0 (* 0.2 (length (funcall closure1))) ))
+;;
+;;         That is, the consumption of the PATTERN-MATCH operation is equal
+;;         to 1.0 plus 0.2 times the length of the first expression being
+;;         matched. This expression is evaluated twice -- first to compute
+;;         its length (for the needs of the consumption formula), and second
+;;         during the pattern matching proper. The second argument to PATTERN-
+;;         MATCH will be evaluated only once. Thus, side effects will cause
+;;         problems in EXPR1 but are harmless in EXPR2.
+;;
+
+
+;; PROCLAIM-CONSUMPTION (operation-name table-entry)  -->  table-entry
+;;
+;;   A function for setting entries in the 'consumption table'.
+;;   OPERATION-NAME should be a symbol; if it isn't, an error is signalled.
+;;   TABLE-ENTRY should be one of the following:
+;;     -- NIL -- meaning that OPERATION-NAME should be excluded from the table.
+;;     -- number -- proclaiming that the consumption of the operation named by
+;;                  OPERATION-NAME is constant and is equal to that number.
+;;     -- function -- proclaiming that the consumption of the operation depends
+;;                    on the complexity of the arguments to that operation.
+;;                    FUNCTION should take the same number of arguments
+;;                    (including &optional, &key, and &rest) as the function
+;;                    denoted by OPERATION-NAME. In other words, the lambda
+;;                    lists of FUNCTION and (SYMBOL-FUNCTION OPERATION-NAME)
+;;                    should be the same. The type of the arguments is
+;;                    different, however, as FUNCTION receives only
+;;                    'encapsulated arguments' (i.e. closures).
+;;                    FUNCTION should produce a single-float number.
+;;
+;;   PROCLAIM-CONSUMPTION returns the new table entry for OPERATION-NAME.
+;;
+;;   Examples:
+;;     (proclaim-consumption 'if 0.5)  -->  0.5
+;;     ;; and now  (calculate-consumption 'if ...)  -->  0.5
+;;
+;;     (proclaim-consumption 'if nil)  -->  nil     ; disclaiming the old value
+;;     ;; and now  (calculate-consumption 'if ...)  -->  0.0
+;;
+;;     (proclaim-consumption 'length
+;;                 #'(lambda (encapsulated-sequence)
+;;                     (* 0.25 (length (funcall encapsulated-sequence))))) -->
+;;                                                     -->  #<closure ...>
+;;     ;; and now  (calculate-consumption 'length #<enclosed '(a b c)> )  --> 0.75
+;;
+;;
+;;   See the file PROCLAIM.LSP for more examples.
+
+;;
+;;;;;;;;;;;  End of the external protocol  ;;;;;;;;;;;;
+
+
+;;;;;;;  End of file DUAL/ARCHIT/SUSPEND.TXT

@@ -1,0 +1,68 @@
+
+SPREADING ACTIVATION  (excerpt)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+T=0.04, adding #$milk to WM.
+T=0.04, adding #$teapot to WM.
+T=0.22, adding #$cook-vessel to WM.
+T=0.22, adding #$liquid-holder to WM.
+T=0.24, adding #$beverage to WM.
+T=0.24, adding #$dairy-product to WM.
+T=0.34, adding #$cheese to WM.
+T=0.40, adding #$container to WM.
+T=0.76, adding #$food-holder to WM.
+T=0.98, adding #$plate to WM.
+T=1.04, adding #$drinkable-liquid to WM.
+T=1.06, adding #$liquid to WM.
+T=1.08, adding #$food to WM.
+T=1.42, adding #$cup to WM.
+T=1.64, adding #$cow to WM.
+T=1.84, adding #$baking-dish to WM.
+T=2.20, adding #$saucepan to WM.
+T=2.50, adding #$bottle to WM.
+T=2.68, adding #$non-drinkable-liquid to WM.
+T=4.70, adding #$glass to WM.
+T=5.80, adding #$soft-drink to WM.
+T=5.80, adding #$alcoholic-drink to WM.
+T=6.15, adding #$pan to WM.
+T=7.85, adding #$water to WM.
+T=8.25, adding #$ice to WM.
+T=40.40, removing #$alcoholic-drink from WM.
+
+;; Time  10.00, 209 agents in WM:  84 c,  75 i,  50 h (22+28+0)
+;;    9 clocks;  84 ag on agenda:  19 c,  21 i,  34 h (11+23+0), 10 nc
+
+
+-----  Retrieval of instances  (excerpt)
+
+T=0.34, adding #$milk-MTF to WM.
+T=0.42, adding #$tpot-WTP to WM.
+T=1.28, adding #$food-SFF to WM.
+T=1.40, adding #$cup-IHC to WM.
+T=1.80, adding #$dish-FDO to WM.
+T=2.34, adding #$tpot-ERW to WM.
+T=2.86, adding #$food-FDO to WM.
+T=7.80, adding #$water-WTP to WM.
+
+
+***************************************************************************
+
+MARKER PASSING  (excerpt)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+T=0.16, #<MRK MILK-CM1> received in MILK.
+T=0.68, #<MRK MILK-CM1> received in BEVERAGE.
+T=0.88, #<MRK MILK-CM1> received in DAIRY-PRODUCT.
+T=1.64, #<MRK MILK-MTF> received in MILK.
+T=1.68, #<MRK MILK-CM1> received in FOOD.
+T=1.70, #<MRK MILK-CM1> received in DRINKABLE-LIQUID.
+T=1.72, #<MRK MILK-CM1> and #<MRK MILK-MTF> intersected at MILK.
+T=3.12, #<MRK FOOD-SFF> received in FOOD.
+T=3.32, #<MRK MILK-CM1> received in LIQUID.
+T=3.42, #<MRK MILK-CM1> and #<MRK FOOD-SFF> intersected at FOOD.
+T=4.64, #<MRK FOOD-FDO> received in FOOD.
+T=4.90, #<MRK MILK-CM1> and #<MRK FOOD-FDO> intersected at FOOD.
+T=9.10, #<MRK WATER-WTP> received in WATER.
+T=10.35, #<MRK WATER-WTP> received in DRINKABLE-LIQUID.
+T=10.55, #<MRK MILK-CM1> and #<MRK WATER-WTP> intersected at DRINKABLE-LIQUID.
+

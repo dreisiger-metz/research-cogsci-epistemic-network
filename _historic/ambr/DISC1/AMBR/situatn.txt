@@ -1,0 +1,104 @@
+;;; -*- Mode: ASCII Text -*-
+
+;;; FILE:       AMBR/situatn.txt
+;;; VERSION:    2.2.2    ; see AMBR/VERSION.LSP
+;;; PURPOSE:    Documentation of 'situation agents' and their role in AMBR.
+;;; DEPENDS-ON: This is not a program file.
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    07-05-98 [2.2.2]  Used part of AMBR/CORRESP.LSP.
+;;; UPDATED:    14-08-98 -- The 'official release'
+;;; UPDATED:    ...
+
+
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;;;;   S I T U A T I O N S   AND   A F F I L I A T I O N   ;;;;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+This file clarifies the notions of 'situation agent' and 'affiliation of
+instances to situations'.  It introduces some terminology and documents
+the knowledge representation scheme as related to situations.
+
+The main LISP functions related to situations are AGENT-SITUATION and AFFILIATE-
+AGENT.  They are defined in AMBR/KREPRES.LSP and is used throughout the model.
+
+
+
+INSTANCE-AGENTS, CONCEPT-AGENTS, SITUATION-AGENTS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INSTANCE-AGENTS are agents representing _individual_ instances as opposed to
+CONCEPT-AGENTS which represent _classes_ of instances.
+For example, CHAIR-17 is an instance-agent while CHAIR is a concept-agent.
+Both kinds of agents are implemented by explicit LISP classes -- see
+file AMBR/AMBR_AG.LSP for the definitions of these classes.
+
+In contrast, SITUATION-AGENTS are _not_ a different kind of agents. Rather,
+they are ordinary instance-agents.  The sole thing that makes them somewhat
+special is the fact that they are instances of the agent SITUATION and have
+a :SITUATION tag among the fillers of their :TYPE slot.
+For example (see also the files in AMBR/KB directory):
+
+  (defagent  situation concept-agent         ; a concept-agent
+    :type    :concept  ...)
+
+  (defagent  SIT-WTP  instance-agent         ; an instance-agent with
+    :type    (:instance :situation)            ; a :situation tag which is
+    :inst-of situation ...)                    ; an :inst-of SITUATION
+
+  (defagent  water-WTP instance-agent        ; an affiliated instance-agent
+    :type    :instance
+    :situation  SIT-WTP ...)                 ; affiliated to SIT-WTP
+
+
+
+AFFILIATION OF INSTANCES TO SITUATIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+AMBR instance agents may be 'affiliated' to some situation.  There are two
+kinds of instance-agents with respect to their affiliation:
+  1. AFFILIATED INSTANCES    -- they belong to some particular situation ;
+  2. FREE-STANDING INSTANCES -- they do not belong to any situation.
+     Usually, the free-standing instances support some concept-agent in the
+     semantic memory (e.g. #$heat-source-is-hot, see AMBR/KB/SEMANTIC/*.LSP).
+
+The affiliation of each instance is denoted by a G-slot labeled :SITUATION
+(see section 4.3.4.1. in "DUAL Report #1" and file AMBR/PROCLAIM.LSP).
+The filler of this slot should be either NIL or a reference to a sit. agent.
+  + For free-standing instances, this slot is empty or missing.
+  + For affiliated instances, this slot is filled by a reference to the agent
+      standing for the respective situation.
+  + By definition, each situation agent is implicitly affiliated to itself.
+      The SITUATION slot is left empty to aviod circular flow of activation.
+
+The generic function AGENT-SITUATION defined in AMBR/KREPRES.LSP is used
+to retrieve the situation agent, if any, of a given instance agent.  It is
+aware of the special case about implicit self-affiliation of situation agents.
+
+An instance agent can be affiliated to at most one situation.  For multiple
+affiliations, one must use several instance-agents and C-COREF links.
+
+
+
+DECENTRALIZED REPRESENTATIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The introduction of situation-agents does not compromise the notion of
+_decentralized representations_ (4.2.4.2 in "DUAL Report #1").  It is the
+whole coalition of agents that represents a given situation.
+
+Yes, there is an individual agent of :type :situation which is referenced
+by :situation slots of individual members of a given coalition.  This agent,
+however, does not represent the situation as a whole.  Rather, it serves as a
+common reference to the spatio-temporal contiguity of the respective elements.
+
+The situation-agent need not have links pointing 'downward' to the agents
+representing individual objects and propositions.  It could have links to some
+of them but this is not necessary.  The links that are necessary are in the
+opposite direction -- from individual elements to the situation.  These links
+are constructed (theoretically) in two ways:
+  - by the perceptual mechanism -- when there is a new 'scene' to
+       perceive, a new situation-agent is created and all instance-agents
+       constructed henceforth are linked to it ;
+  - by the reasoning mechanism -- when elaborating an existing coalition, e.g.
+       via skolemization (AMBR/SKOLEM.LSP) or analogical transfer.
+
+
+;;;;;;; End of file AMBR/SITUATN.TXT

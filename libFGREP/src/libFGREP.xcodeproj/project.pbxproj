@@ -1,0 +1,137 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXFileReference section */
+		212CA0A50F2F372300A41526 /* ActivationFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivationFunction.cpp; sourceTree = "<group>"; };
+		212CA0A60F2F372300A41526 /* ActivationFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ActivationFunction.hpp; sourceTree = "<group>"; };
+		212CA0A70F2F372300A41526 /* FGREPNetworkTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FGREPNetworkTest.cpp; sourceTree = "<group>"; };
+		212CA0A80F2F372300A41526 /* FGREPNetworkTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FGREPNetworkTest.hpp; sourceTree = "<group>"; };
+		212CA0A90F2F372300A41526 /* MultilayerPerceptronNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultilayerPerceptronNetwork.cpp; sourceTree = "<group>"; };
+		212CA0AA0F2F372300A41526 /* MultilayerPerceptronNetwork.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MultilayerPerceptronNetwork.hpp; sourceTree = "<group>"; };
+		212CA0AB0F2F372300A41526 /* MultilayerPerceptronNetworkTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultilayerPerceptronNetworkTest.cpp; sourceTree = "<group>"; };
+		212CA0AC0F2F372300A41526 /* MultilayerPerceptronNetworkTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MultilayerPerceptronNetworkTest.hpp; sourceTree = "<group>"; };
+		212CA0BB0F2F381D00A41526 /* FGREPNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FGREPNetwork.cpp; sourceTree = "<group>"; };
+		212CA0BC0F2F381D00A41526 /* FGREPNetwork.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FGREPNetwork.hpp; sourceTree = "<group>"; };
+		2146D0910F2CA57E006EB11C /* Console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Console.cpp; sourceTree = "<group>"; };
+		2146D0920F2CA647006EB11C /* test-FGREP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "test-FGREP.cpp"; sourceTree = "<group>"; };
+		215C34AE0F1FE84600C25E22 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		215C34AF0F1FE84600C25E22 /* Perceptron.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Perceptron.hpp; sourceTree = "<group>"; };
+		215C34B00F1FE84600C25E22 /* Statistics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Statistics.cpp; sourceTree = "<group>"; };
+		215C34B10F1FE84600C25E22 /* Statistics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Statistics.hpp; sourceTree = "<group>"; };
+		215C34B20F1FE84600C25E22 /* StatisticsTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StatisticsTest.cpp; sourceTree = "<group>"; };
+		215C34B30F1FE8CA00C25E22 /* Exceptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Exceptions.hpp; sourceTree = "<group>"; };
+		215C34B40F1FEA2200C25E22 /* Neuron.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Neuron.hpp; sourceTree = "<group>"; };
+		215C34E90F20065700C25E22 /* Perceptron.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Perceptron.cpp; sourceTree = "<group>"; };
+		217FF8AB0F205A2900A0526E /* PerceptronTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerceptronTest.cpp; sourceTree = "<group>"; };
+		217FF8AC0F205A2900A0526E /* PerceptronTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PerceptronTest.hpp; sourceTree = "<group>"; };
+		217FF8AE0F205C5400A0526E /* NeuronTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NeuronTest.cpp; sourceTree = "<group>"; };
+		217FF8AF0F205C5400A0526E /* NeuronTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NeuronTest.hpp; sourceTree = "<group>"; };
+		219DEEED0F2ACDFE00DE1EFF /* DistributedRepresentationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DistributedRepresentationTest.cpp; sourceTree = "<group>"; };
+		219DEEEE0F2ACDFE00DE1EFF /* DistributedRepresentationTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DistributedRepresentationTest.hpp; sourceTree = "<group>"; };
+		219DEEEF0F2ACDFE00DE1EFF /* Exceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Exceptions.cpp; sourceTree = "<group>"; };
+		219DEEF00F2ACDFE00DE1EFF /* FGREPConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FGREPConsole.cpp; sourceTree = "<group>"; };
+		219DEEF10F2ACDFE00DE1EFF /* FGREPConsole.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FGREPConsole.hpp; sourceTree = "<group>"; };
+		21C5B82F0F24C131008F475F /* DistributedRepresentation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DistributedRepresentation.hpp; sourceTree = "<group>"; };
+		21D5FC070F25F93B00A5BB54 /* DistributedRepresentation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DistributedRepresentation.cpp; sourceTree = "<group>"; };
+		21D5FC080F25F93B00A5BB54 /* FeatureVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FeatureVector.cpp; sourceTree = "<group>"; };
+		21D5FC090F25F93B00A5BB54 /* FeatureVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FeatureVector.hpp; sourceTree = "<group>"; };
+		21D5FC0A0F25F93B00A5BB54 /* FeatureVectorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FeatureVectorTest.cpp; sourceTree = "<group>"; };
+		21D5FC0B0F25F93B00A5BB54 /* FeatureVectorTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FeatureVectorTest.hpp; sourceTree = "<group>"; };
+		21FAE9630F2028920021FEF2 /* Neuron.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Neuron.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		215C34A00F1FE80500C25E22 = {
+			isa = PBXGroup;
+			children = (
+				21FAE9630F2028920021FEF2 /* Neuron.cpp */,
+				215C34B40F1FEA2200C25E22 /* Neuron.hpp */,
+				215C34E90F20065700C25E22 /* Perceptron.cpp */,
+				215C34AF0F1FE84600C25E22 /* Perceptron.hpp */,
+				21D5FC080F25F93B00A5BB54 /* FeatureVector.cpp */,
+				21D5FC090F25F93B00A5BB54 /* FeatureVector.hpp */,
+				212CA0A90F2F372300A41526 /* MultilayerPerceptronNetwork.cpp */,
+				212CA0AA0F2F372300A41526 /* MultilayerPerceptronNetwork.hpp */,
+				21C5B82F0F24C131008F475F /* DistributedRepresentation.hpp */,
+				21D5FC070F25F93B00A5BB54 /* DistributedRepresentation.cpp */,
+				212CA0BB0F2F381D00A41526 /* FGREPNetwork.cpp */,
+				212CA0BC0F2F381D00A41526 /* FGREPNetwork.hpp */,
+				219DEEF00F2ACDFE00DE1EFF /* FGREPConsole.cpp */,
+				219DEEF10F2ACDFE00DE1EFF /* FGREPConsole.hpp */,
+				2146D0910F2CA57E006EB11C /* Console.cpp */,
+				215C34AE0F1FE84600C25E22 /* Makefile */,
+				219DEEEF0F2ACDFE00DE1EFF /* Exceptions.cpp */,
+				215C34B30F1FE8CA00C25E22 /* Exceptions.hpp */,
+				212CA0A50F2F372300A41526 /* ActivationFunction.cpp */,
+				212CA0A60F2F372300A41526 /* ActivationFunction.hpp */,
+				215C34B00F1FE84600C25E22 /* Statistics.cpp */,
+				215C34B10F1FE84600C25E22 /* Statistics.hpp */,
+				217FF8AE0F205C5400A0526E /* NeuronTest.cpp */,
+				217FF8AF0F205C5400A0526E /* NeuronTest.hpp */,
+				217FF8AB0F205A2900A0526E /* PerceptronTest.cpp */,
+				217FF8AC0F205A2900A0526E /* PerceptronTest.hpp */,
+				21D5FC0A0F25F93B00A5BB54 /* FeatureVectorTest.cpp */,
+				21D5FC0B0F25F93B00A5BB54 /* FeatureVectorTest.hpp */,
+				212CA0AB0F2F372300A41526 /* MultilayerPerceptronNetworkTest.cpp */,
+				212CA0AC0F2F372300A41526 /* MultilayerPerceptronNetworkTest.hpp */,
+				219DEEED0F2ACDFE00DE1EFF /* DistributedRepresentationTest.cpp */,
+				219DEEEE0F2ACDFE00DE1EFF /* DistributedRepresentationTest.hpp */,
+				212CA0A70F2F372300A41526 /* FGREPNetworkTest.cpp */,
+				212CA0A80F2F372300A41526 /* FGREPNetworkTest.hpp */,
+				215C34B20F1FE84600C25E22 /* StatisticsTest.cpp */,
+				2146D0920F2CA647006EB11C /* test-FGREP.cpp */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		215C34A20F1FE80500C25E22 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 215C34A50F1FE80500C25E22 /* Build configuration list for PBXProject "libFGREP" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 215C34A00F1FE80500C25E22;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		215C34A30F1FE80500C25E22 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		215C34A40F1FE80500C25E22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		215C34A50F1FE80500C25E22 /* Build configuration list for PBXProject "libFGREP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				215C34A30F1FE80500C25E22 /* Debug */,
+				215C34A40F1FE80500C25E22 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 215C34A20F1FE80500C25E22 /* Project object */;
+}

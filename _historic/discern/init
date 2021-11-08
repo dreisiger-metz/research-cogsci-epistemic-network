@@ -1,0 +1,12 @@
+lreps			;;; lrepfile
+sreps			;;; srepfile
+qasimu			;;; qafile
+hfmsimu			;;; hfmfile
+lexsimu			;;; lexfile
+7 8 6 7			;;; nslot, nword, ncase, nsent
+1 1 1 1			;;; chained, withlex, withhfm, displaying
+1 0 0 0			;;; babbling, print_mistakes, log_lexicon, ignore_stops
+3.0 1.0			;;; hfmsearch, subsearch
+2 10 0.0001 0.5		;;; tracenc, tsettle, epsilon, aliveact
+0.5 2.0 0.5 -0.1	;;; minact, maxact, gammaexc, gammainh
+0.15			;;; withinerr

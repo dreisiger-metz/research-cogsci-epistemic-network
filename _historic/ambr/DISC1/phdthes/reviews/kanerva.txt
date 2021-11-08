@@ -1,0 +1,77 @@
+
+To:      New Bulgarian University
+From:    Pentti Kanerva
+Subject: Alexander Petrov's Ph.D. thesis
+Date:    21 July 1998
+
+I have examined Alexander Petrov's Ph.D. thesis "A Dynamic Emergent
+Computational Model of Analogy-making Based on Decentralized
+Representations" and judge it to be of high quality, meeting the
+requirements for a doctoral dissertation.
+
+The thesis is a study of analogy as a problem in cognitive science.
+Its model of analogy-making is based on AMBR (Associative Memory-
+Based Reasoning) that runs on a cognitive simulation architecture
+DUAL, programmed in Lisp.  DUAL and AMBR were conceived by Petrov's
+thesis advisor Boicho Kokinov and emphasize parallel processing
+under decentralized control, in the vein of Hofstadter's Copycat
+and Minsky's Society of Mind.  They employ mechanisms found in other
+models of analogy-making (e.g., symbolic representation of situations
+as in Gentner's [et al.] SME and MAC/FAC, and search by constraint
+satisfaction as in Holyoak & Thagard's ACME and ARCS).
+
+As a graduate student at the New Bulgarian University, Petrov has
+worked with DUAL and AMBR, has become thoroughly familiar with them,
+and has contributed materially to their design.  In his thesis he
+challenges the idea that two subprocesses of analogy-making, retrieval
+or access and mapping, are separable cognitive modules as suggested
+by the structure of FAC/MAC.  `Retrieval' means identifying (in long-
+term memory) a whole situation--an analog--that corresponds to the
+one under consideration--the target--and `mapping' means identifying
+corresponding or analogical parts of the two wholes.  He argues,
+instead, that retrieval and mapping interact so that a partial result
+of mapping can influence retrieval, and he cites experimental evidence
+in support of the argument.  He then shows by simulation that an
+AMBR model retrieves better analogs from its long-term memory when
+retrieval interacts with mapping than when they happen strictly in
+sequence.  Although this does not prove how our brains in fact make
+analogies, it supports the idea that they may evolve toward the
+interactive design.
+
+The thesis stresses DUAL's hybrid architecture: the inclusion of both
+symbolic and connectionist processing.  However, these different kinds
+of processing cooperate rather than being integrated, and distributed
+representation is excluded, so that DUAL is a rather conventional
+kind of hybrid.  Recent research on distributed representation (e.g.,
+Hinton's semantic nets [old work], Smolensky's tensor products,
+Pollack's RAAM, Plate's Holographic Reduced Representation, Hummel &
+Holyoak's LISA, and my Spatter code) points to the possibility of
+a fundamental integration of symbolic and connectionist processing,
+with clear implications to analogy-making.  Compared to traditional
+representation, distributed representations are lifelike and should
+allow us to build models in which high-level cognition is emergent to
+much greater extent and in more subtle ways than it is in our present
+models.  Our models should at once become both simpler and truer.
+This possibility is overlooked in "Models of Analogy-Making" (p. 9)
+and in "Suggestions for Future Research" (p. 108).
+
+The style of writing is dramatized, with agents, coalitions,
+secretaries, winners, losers, and so forth.  Vivid images make
+writing accessible, but not without risks.  The danger is in being
+superficial, of implying more than one is entitled to say based on
+what one knows, of covering up incomplete thought or argument.  I
+did not find that to be the case here, but at times I was distracted
+by an image of an agent busy winning battles and being promoted when
+it was more helpful to think of a node in a graph.
+
+The thesis demonstrates good knowledge and understanding of modeling
+in cognitive science, and it includes original contributions to such
+modeling.  It is exceptionally well organized and clearly presented.
+It has the marks of the beginning of a productive scientific career.
+I warmly recommend its acceptance as thesis toward a doctoral degree
+in cognitive science.
+
+
+Pentti Kanerva, Ph.D.
+Swedish Institute of Computer Science
+

@@ -1,0 +1,19 @@
+animal	has-legs
+	has-tail
+	can-walk
+
+bird	has-wings
+	can-fly
+bird-1	is-green
+bird-2	is-yellow
+bird-3	is-black
+bird-4	is-brown
+
+dog	has-legs
+	has-tail
+	has-ears
+	can-walk
+	can-run
+dog-1	is-black
+dog-2	is-brown
+

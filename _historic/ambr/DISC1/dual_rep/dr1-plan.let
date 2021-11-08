@@ -1,0 +1,286 @@
+
+      ***********************************************************
+      ***   P L A N   F O R   'D U A L   R E P O R T   # 1'   ***
+      ***********************************************************
+
+From Alex Thu Sep 26 11:42 EET 1996
+
+Hi Boicho,
+
+I'm very glad that you have liked the text on DUAL. We will discuss it in
+greater detail when you come back.
+ 
+> I cannot see, however, how this text is going to help you in the
+> implementation business. You need some technical and very detailed
+> description. The text you have produced is good for a lond book or for your
+> dissertation, but you cannot use it even in a paper (you simply don't have
+> so much space there).
+
+I agree. However, the main purpose of the text you've read is to help us
+recruite students from FMI. This is the reason for its vagueness. More tech-
+nical and detailed material will follow immediately. The point is to give
+the poor newcomer some underlying intuitions before presenting the hard core.
+
+Here is the basic plan for my text-writing activities in the future.
+
+In the long run, I envisage the creation of a "DUAL report series" devoted
+entirely to DUAL, its applications and implementations. The text you have
+read is a fragment of DUAL Report #1. This report is intended to serve as an
+entry point to DUAL. Its title is "DUAL Basics". Here is the outline of the 
+projected text:
+
+  Section 1: Introduction
+     1.1. General framework 
+     1.2. Methodological notes -- architectures vs models, conception vs imple-
+          mentation, etc
+
+  Section 2: DUAL Architecture
+     2.1. Anatomy of DUAL -- the text you've read. It serves to introduce 
+          gently the basic terms, the overall complexity of DUAL, and to 
+          provoke interest on the part of the student.
+     2.2. DUAL at the microlevel -- in great detail, basis for the implementn.
+     2.3. DUAL at the mesolevel
+     2.4. DUAL at the macrolevel
+
+  Section 3: DUAL Implementation
+     Description of the basic programming objects (classes, methods, modules)
+     of the implementation. This is not a full specification of the implemen-
+     tation itself, this is its skeleton.
+
+
+I have written subsection 2.1. already. The hard-core, technical and detailed
+description of DUAL is to come in subsections 2.2.-2.4. I am writing them now.
+I use my text from Hamburg as background and only fill-in the details.
+
+> In other words, focus on the implementation to make progress  there.
+Section 3. will lay the foundation for the implementation. It is also envi-
+saged as an introductory text to the program -- what basic modules there are,
+what the connections between them are, what main implementational decisions
+are made, what basic CLOS-classes there are, etc.
+This same text will serve as (part of the) documentation of the program.
+
+
+In short, DUAL Report #1 will serve three main purposes:
+  -- To provide a sound and detailed description of the architecture;
+  -- To provide the general outline of the implementation;
+  -- To provide an introductory text for the people who consider joining the
+     DUAL research team. In particular, the text aims at students from FMI 
+     (who are familiar with programming concepts like 'module' and 'class'
+     and are ready to dive into the guts of the system).
+
+In addition, here are three purposes that DUAL Report #1 is *not* intended 
+to serve:
+  -- To cover *all* the aspects of the architecture -- this could be done
+     in subsequent reports (see below);
+  -- To defend DUAL on theoretical or experimental basis;
+  -- To compare our approach to others.
+
+
+Projected titles for subsequent DUAL Reports:
+  DR1: DUAL Basics
+  DR2: Connectionist aspect of DUAL. Constraint satisfaction.
+  DR3: Representation of knowledge in DUAL. Frames, inheritance, etc.
+  DR4: Marker Passing in DUAL.
+  ...: etc.
+
+
+As you see, this is too ambitious. On the other hand, I think only in this 
+way a solid foundation could be laid down. Time will show how much of this
+ambitious project will actually be carried out...
+
+ 
+I look forward to your comments.
+
+Alex
+---------------------------------------------------------------------------
+
+From boicho@pscs2.irmkant.rm.cnr.it Sun Sep 29 16:48 EET 1996
+
+Hi Sasho,
+
+Thank you for the detailed descriptions of your plans.
+
+Yes, it is very ambitious. I can see how seriously you would like to work
+on all aspects of DUAL, specification, implementation, popularization, etc.
+
+Having detailed documentation of all our ideas, as well as specifications of
+the program is VERY useful.
+
+The only aspect that I doubt is that if you put so much efforts on writing
+texts this will cut from your time for programming. Yes, some of the texts
+will be necessary for the programming, but others will not.
+
+So, I just want to be the devil's advocate and to suggest you to cut as
+much as possible the text writing and to increase the programming. If Dedre
+and Keith come, they will not read text, they will want to see the programs
+running.
+
+
+About the texts describing the theoretical ideas I would put them into two
+cathegories:
+- small ideas, improvements, issues, technical decisions, etc. - this is
+something that we need a DUAL series for, so that we do not forget our
+previous commitments and don't start discussing from the beginning. So,
+this should be texts that will be read by you and me (and possibly other
+people involved already in the project), so they have to be schematic and
+produced with as less efforts as possible.
+
+- the real good ideas which are already developed in a way should be PUBLISHED
+in papers (not only for internal use). These are aslo the texts which
+should be used for popularization of our ideas. They should also be read by
+our potential newcomers.
+
+You might think that this is not good because they will be too difficult to
+be understand for newcomers (I don't think that we are writing in a very
+sofisticated style and using your DUAL report 1, section 2.1 before, they
+should be able to understand almost everything). Your second argument might
+be that it is better to have one paper describing all aspects than 10 papers
+describing different aspects of DUAL. Not necessarily, different people have
+different interests, so one of these papers will be a better starting point
+for someone (starting with the aspect he/she is interested in - say analogical
+reasoning, context modeling, similarity, hybridization, etc.), while another
+will be more eager to read another one. Yes, finally we will need a complete
+description of DUAL and its applications, but it is very early for this, this
+could be a book.
+
+I am not saying that what you propose is not useful, on the contrary.
+However, it will be inproportionally time consuming.
+
+In short, what I would suggest based on your proposal is the following:
+- complete the basic description of DUAL for beginners, but shortly.
+- include in this description a guide to the many articles - which article
+describes which aspect, so that the newcomers have a map.
+- focus on the program specification and programming.
+
+This time I have to remind you about "think small and reduce your goals" :)
+
+Best wishes,
+Boicho
+
+---------------------------------------------------------------------------
+
+From apetrov@cogs Wed Oct  2 17:39 EET 1996
+
+Hi Boicho,
+
+I'm working on Section 2.2. of DUAL Report #1 -- the one describing
+DUAL at the Microlevel. I've made a plan of the text. There is plenty
+of things to say, and plenty of connections between them. It is very
+difficult to linearize and to decide what to say and when to say it.
+Therefore, I would like to consult with you about the plan below.
+
+
+                    "A good plan needs to be detailed enough to test,
+                     but cheap enough to throw away."
+                                                         Linda Flower
+
+
+(Now I begin to realize the *real* size of the DUAL project: the mere
+plan is about one page long! And this is only the microlevel, with
+things to be left out for further DUAL Reports...)
+
+This text is supposed to come after the presentation of the levels of
+analysis in DUAL. The latter is a two-page-long text that comes after
+the text on the biological analogy that you've read.
+
+* The text planned below is intended to be the real 'hard-core' speci-
+* fication of individual DUAL agents -- a systematic and comprehensive
+* specification in enough detail to serve as a basis for the implementatn
+
+
+Here is the plan itself:
+
+--------------< cut here >-------------
+
+ 2. DUAL ARCHITECTURE
+**********************
+
+ 2.1. Anatomy of DUAL
+======================
+ [This is already written, and you've read most of it.]
+
+ 2.2. DUAL at the Microlevel
+=============================
+ Introduction: D-agent -- basic structural and functional unit....
+ Microlevel deals with D-agents: their structure, types, etc....
+
+2.2.1. The Hybrid Nature of DUAL agents
+---------------------------------------
+ D-agents are hybrid in two ways.... Symb vs. conn; repres. vs. proc....
+ Give the 2x2 table... Introduce the DUAL symbol (black/white circle)...
+
+2.2.2. Interactions and Links
+-----------------------------
+ Introduce the term 'link'... Labels and weights... Networks (which will
+ be considered in detail at the mesolevel)... Introduce the node-and-link
+ diagrams...
+
+2.2.3. Symbolic Representation Scheme
+-------------------------------------
+ Frames, slots, and facets... Brief description of the links... (More
+ detailed description is postponed for a further DUAL Report.) Give the
+ general structure of a frame [Kokinov 89, fig.1]. Agent-level frames vs.
+ coalition-level frames...
+
+2.2.4. Connectionist Aspect of DUAL agents
+------------------------------------------
+ Detailed (but generic) description of the connectionist machinery [after
+ Rumelhart & McCl]. Input and output links, weights, activation function,
+ decay, spreading activation... Availability, accessibility (visibility),
+ and speed... Synchronous continuous operation... Localist connectionist
+ network... Associative relevance...
+
+2.2.5. Symbolic Processing
+--------------------------
+ Steps and (rigid) routines... Asynchronous discrete operation... Speed...
+ 'Energetic analogy'. Local memory... Agent-specific repertoire of
+ routines... Local marker passing...
+
+2.2.6. Temporary D-Agents and Links
+-----------------------------------
+ Why are they necessary? How and when are they created? How and
+ when are they destroyed?
+
+2.2.7. Interaction between the Symbolic and Conn. Aspects
+---------------------------------------------------------
+ How does the conn. aspect influence the symbolic one? How does the
+ symbolic influence the conn.?
+
+2.2.8. Heterogeneity of DUAL agents
+-----------------------------------
+ DUAL agents are heterogeneous. Different types of agents... Permanent
+ vs. temporary ones. Special-purpose agents [? too early ?]: goal node,
+ node- and link-constructors, MP-establishment, focus, ...
+ 
+2.2.9. Relation to other theories
+---------------------------------
+ [Hybrid] ... DUAL agents are similar to productions or rules in a pro-
+ duction system as they perform small and simple actions when certain
+ conditions hold. In addition, like nodes in semantic netwoks, DUAL
+ agents stand for things and are connected by labeled links. They,
+ however, contain both declarative and procedural knowledge and thus
+ are similar to frames or schemata. ...
+ Rules in a production system; nodes in a semantic network; nodes in a
+ connectionist network; codelets; Turing machines; frames; autonomous
+ cognitive agents; etc...
+ References to Holyoak, Hofstadter, Newell, Anderson, Rum&McCl, etc...
+
+2.2.10. Recapitulation
+----------------------
+ Brief summary of 2.2.1.--2.2.9.
+
+
+ 2.3. DUAL at the Mesolevel
+=============================
+ [...]
+
+--------------< cut here >-------------
+
+
+OK, that's it, Boicho. I'm afraid it's too long but this is the way it
+is. Don't bother to comment it extensively, if you don't have the time.
+
+Looking forward to your answer.
+
+Alex
+

@@ -1,0 +1,145 @@
+;;; -*- Mode: Lisp; Syntax: Common-Lisp; Package: AMBR -*-
+
+;;; FILE:       AMBR/intrface/coalitn.lsp
+;;; VERSION:    2.1    ; see AMBR/VERSION.LSP
+;;; PURPOSE:    Functions dealing with situations as a whole
+;;; DEPENDS-ON: DUAL, ambr/defs.lsp
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    15-05-97
+;;; UPDATED:    10-06-97 -- Adopted the new utility ADD-LINK.
+;;;                         Now using :T-LINK instead of :T-LINK1, etc.
+;;; UPDATED:    11-02-98 -- Changing the name to AMBR/INTRFACE/COALITN.LSP
+;;; UPDATED:    ...
+;;;;;;;;
+;;; TO DO:      Provide coalition-related facilities in DUAL/INTRFACE.
+
+
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   ;;;;;;;;     C O A L I T I O N   M A N A G E M E N T    ;;;;;;;;
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(in-package  "AMBR-INTERFACE")
+
+;;;; SYMBOLS: attach-coalition, detach-coalition, show-attachment,
+;;;;          count-active-members, ca,
+;;;;          retrieval-index, ri
+;;;;
+;;;; See *DEFAULT-T-LINK-WEIGHT* defined in AMBR/DEFS.LSP.
+;;;; See also *ATTACH-COALITION-VERBOSE* defined in AMBR/INTRFACE/DEFS.LSP.
+
+
+
+
+;;;;;;;;  Attaching and detaching (target) coalitions
+
+(defun attach-coalition (coalition
+                         &key (inhibited coalition)
+                              (verbose *attach-coalition-verbose*)
+                              (t-link-weight *default-t-link-weight*) )
+  "Attach each agent of COALITION to its 'parent' in the semantic memory."
+  (declare (type list coalition inhibited)
+           (type boolean verbose)
+           (type number t-link-weight) )
+  (let ((*add-link-verbose* verbose))   ; see DUAL/INTRFACE/VERBOSE.LSP
+    (dolist (agent coalition)
+       (let ((parent (get-filler-refs! agent :inst-of
+                                       nil   T)))   ; first filler elt only
+         (unless (or (null parent)
+                     (member parent inhibited))
+           (add-link parent :t-link agent t-link-weight)))
+       (dolist (S-slot (agent-S-slots agent))          ; handle S-slots, if any
+         (let ((coref (get-filler-refs! S-slot :c-coref nil T)))
+           (unless (or (null coref)
+                       (member coref inhibited))
+             (add-link coref :t-link (make-symref agent (slot-label S-slot))
+                                     t-link-weight)))) ))
+  (setq *target* coalition) )
+
+
+(defun detach-coalition (coalition
+                         &key (verbose *attach-coalition-verbose*) )
+  "Undo the effect of ATTACH-COALITION."
+  (flet ((undo-t-link (host symref)
+           (let ((*add-link-verbose* verbose))  ; see DUAL/INTRFACE/VERBOSE.LSP
+             (unless (null symref)
+               (remove-link host :t-link symref)))))
+    (dolist (agent coalition)
+      (undo-t-link (get-filler-refs! agent :inst-of nil T)    ; detach parent
+                   agent)
+      (dolist (S-slot (agent-S-slots agent))
+        (let ((coref (get-filler-refs! S-slot :c-coref nil T)))
+          (if (find coref coalition)
+              nil      ; within coalition
+              (undo-t-link coref (make-symref agent
+                                              (slot-label S-slot))) ))) )))
+
+
+;; SHOW-ATTACHMENT prints the list of agents that support a given agent.
+;; The first argument to SHOW-ATTACHMENT may be either an agent or a list
+;; thereof. If it is a list (a 'coalition'), then each member of the list
+;; is handled in turn. If the SUPPORTEE is a (single) agent, then the second
+;; optional argument may also be used -- it specifies a list of 'inhibited
+;; supporters', i.e. agents that are known to support the agent in question
+;; but that fact is not relevant at the moment.
+;; When SUPPORTEE is a list of agents, INHIBITED defaults to the same list.
+;; When SUPPORTEE is a single agent, INHIBITED defaults to the empty list.
+;; SHOW-ATTACHMENT returns no values.
+
+(defun show-attachment (supportee &optional (inhibited nil supplied-p) )
+  "Prints the list of agents that support SUPPORTEE."
+  (declare (type (or AMBR-agent list) supportee)
+           (type list inhibited) )
+  (etypecase  supportee
+    (AMBR-agent  (show-attachment-aux (list supportee)
+                                      (if supplied-p inhibited nil)))
+    (list        (show-attachment-aux supportee
+                                      (if supplied-p inhibited supportee))) ))
+
+(defun show-attachment-aux (coalition inhibited)
+  (declare (type list coalition inhibited))
+  (dolist (agent coalition)
+    (let ((supp-list (fan-in agent inhibited)))
+      (format t "~% ~25@S " agent)
+      (dolist (supp supp-list)
+         (format t " (~S ~,3F)"
+                   (conref-reference supp)
+                   (conref-weight supp)) )))
+   (values) )
+
+
+;;;;;;;;;  Indices showing the degree of activation of a given coalition
+
+(defun  count-active-members (coalition)
+  "Returns two values: active-count and total-count."
+  (declare (type list coalition)
+           (values integer integer) )
+  (let ((active-count 0)
+        (total-count 0) )
+    (dolist (agent coalition)
+      (incf total-count)
+      (when (agent-visible-p agent)
+        (incf active-count)) )
+    (values active-count total-count) ))
+
+
+(defun  retrieval-index (coalition)
+  "A number showing the overall degree of activation."
+  (let ((sum-act 0.0)
+        (denominator 0.5) )   ; cf. p.27 in Hummel & Holyoak's article on LISA
+    (dolist (agent coalition)
+      (incf denominator 1.0)
+      (incf sum-act (agent-activation agent)) )
+    (/ sum-act denominator) ))
+
+
+;;;; Shorthands
+
+(declaim (inline ca ri))
+
+(defun ca (coalition)
+  (count-active-members coalition))
+
+(defun ri (coalition)
+  (retrieval-index coalition))
+
+;;;;;;;;  End of file  AMBR/INTRFACE/COALITN.LSP

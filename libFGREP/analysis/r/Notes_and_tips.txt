@@ -1,0 +1,11 @@
+To generate a PDF file, type:
+
+  > pdf(file="outputfile.pdf", pointsize=9 [family="URWTimes"])
+  > plot_command(...)
+  > dev.off()
+
+
+For some neat plotting how-tos, see http://www2.warwick.ac.uk/fac/sci/moac/currentstudents/peter_cock/r/
+
+
+

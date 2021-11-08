@@ -1,0 +1,38 @@
+
+T=0.40, adding t-of-FDO-o to WM.
+T=0.42, adding in-FDO-do to WM.
+T=0.78, adding t-of-FDO-f to WM.
+T=0.80, adding oven-FDO to WM.
+T=0.84, adding high-t-FDO to WM.
+T=1.78, adding sit-FDO to WM.
+T=1.80, adding dish-FDO to WM.
+T=2.68, adding initst-FDO-1 to WM.
+T=2.86, adding food-FDO to WM.
+T=3.40, adding on-FDO to WM.
+T=6.60, adding goalst-FDO to WM.
+T=8.20, adding in-FDO-fo to WM.
+T=25.30, adding interst-FDO to WM.
+T=29.70, adding to-reach-FDO to WM.
+T=29.80, adding cause-FDO-t to WM.
+T=31.10, adding follows-FDO to WM.
+T=31.20, adding endst-FDO to WM.
+T=68.00, adding cause-FDO-i to WM.
+T=68.10, adding initst-FDO-2 to WM.
+
+
+T=74.00, #<PR INITST-CM1> received in INITST-CM1<-->INITST-FDO-1.
+T=74.60, #<PR LOW-T-CM1> received in LOW-T-CM1<-->HIGH-T-FDO.
+T=80.00, #<SkI MADE-OF-CM1> received in MADE-OF-CM1<-->CKVES-MD-METAL.
+T=80.50  made-of-CM1<-->ckves-md-metal begins skolemization.
+T=80.90, #<PR GOALST-CM1> received in GOALST-CM1<-->GOALST-FDO.
+T=81.20, #<PR SIT-CM1> received in SIT-CM1<==>SIT-FDO.
+T=81.90, #<SM1 MADE-OF-CM1<-->CKVES-MD-METAL> received in *MATERIAL-METAL-1.
+T=82.10, #<SM1 *MATERIAL-METAL-1> received in MADE-OF-CM1<-->CKVES-MD-METAL.
+T=82.80, *material-metal-1 affiliates to sit-FDO.
+T=84.20, #<SM2 MADE-OF-CM1<-->CKVES-MD-METAL> received in *MADE-OF-1.
+T=85.00, #<SM2 *MADE-OF-1> received in MADE-OF-CM1<-->CKVES-MD-METAL.
+T=87.60, *made-of-1 affiliates to sit-FDO.
+T=92.20, #<PR TO-REACH-CM1> received in TO-REACH-CM1<-->TO-REACH-FDO.
+T=135.40, #<PR MADE-OF-CM1> received in MADE-OF-CM1<-->*MADE-OF-1.
+T=136.20, #<PR MMETAL-CM1> received in MMETAL-CM1<-->*MATERIAL-METAL-1.
+T=156.00, #<PR MILK-CM1> received in MILK-CM1<==>FOOD-FDO.

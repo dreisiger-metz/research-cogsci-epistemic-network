@@ -1,0 +1,74 @@
+
+                        R E V I E W
+
+  of  "Extensions of DUAL and AMBR"  by Alexander Petrov,
+    thesis submitted as a partial fulfillment of the
+           requirements for a M.Sc. degree
+
+
+1. Scope
+~~~~~~~~~
+The work falls into the area of cognitive modeling.  It describes an
+extension of an existing cognitive architecture (DUAL) and a particular
+model buit on top of it for the purposes of analogy-making.
+
+
+2. Structure and content
+~~~~~~~~~~~~~~~~~~~~~~~~~
+The thesis is structured in 6 chapters.  Chapter 1 presents a short
+overview of the scope of the work and its goals.  Though the goals are
+specified following the advice of an AI authority (McDermott), it would
+be better if they would have been derived from some open problems
+discussed in the second chapter. (The McDermott's proposal addresses a
+work plan for building a thesis rather than a way of describing its
+goals.)
+
+Chapter 2 serves as an introduction to the problem domain discussing some
+well-known cognitive architectures and models of analogy-making.  The
+description is mainly based on comparison between DUAL and other well-known
+cognitive architectures.  It would be better if some more attention would
+have been paid to the description of the domain of cognitive modeling
+itself.  This would give the work more self-explanatory character and thus
+broaden its potential audience.
+
+Chapter 3 is a description of the DUAL architecture.  Clearly presenting
+such a complex thing is by no means an easy task.  The author has succeeded
+to present the general ideas and to clarify all the details about DUAL.  In
+some places, however, there is too much detail which makes it difficult to
+'see the forest behind the trees' (the author admits this too).
+
+Chapter 4 presents the main contributions of the work -- AMBR2.  This is
+intended to be an improved version of the previous model -- AMBR1.  I believe
+that this is so.  However, this should have been made clear by some
+experimental work.  Though the experiments shown in Chapter 5 prove the
+plausibility of AMBR2 as a cognitive model, a comparison with the results
+of AMBR1 (or other cognitive models) for the same domain would be more
+convincing.
+
+
+3. General evaluation
+~~~~~~~~~~~~~~~~~~~~~~
+The description of the material shows that the author masters well the area
+of cognitive modeling.  Furthermore it shows his additional knowledge in
+many related fields as Neural Networks, Knowledge Representation, and other
+AI classics.  The result presented in the thesis shows a real advance in
+the area of modeling the complex phenomenon of analogy-making.  Furthermore,
+the computer implementation developed by the author can be used not only to
+continue the line of research started with the present project but also as
+an experimental framework for other related projects.
+
+The mentioned above drawbacks are normal for such an ambitious project
+undertaken by a research student.  They do not undermine by any means the
+overall contributions of the author.
+
+Following these arguments I can certify that the submitted thesis fully
+complies with the requirements of the M.Sc. degree.
+
+
+18/07/1997
+
+Reviewer:    (signature)
+
+Associate Professor Zdravko Markov
+Institute of Information Technologies
+Bulgarian Academy of Sciences

@@ -1,0 +1,403 @@
+;;; -*- Mode: Lisp; Syntax: Common-Lisp; Package: AMBR -*-
+
+;;; FILE:       AMBR/expermt/mainexp1.lsp
+;;; VERSION:    1.0
+;;; PURPOSE:    Exploring the AMBR2 model -- main experiment of my M.Sc.Thesis
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; DEPENDS-ON: DUAL; dual/expermt/spread.lsp
+;;; CREATED:    30-6-97
+;;; UPDATED:    ...
+
+
+     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     ;;;;;;;;;;;    MAIN   A M B R 2   EXPERIMENT  1    ;;;;;;;;;;
+     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(in-package "AMBR")
+
+;;;; PURPOSE:   To explore the solutions of 6 target problems over 100 KBs.
+;;;;
+;;;; IND_VARS:  KB#,  target,  *time*
+;;;;
+;;;; DEP_VARS:  a long list (see below)
+;;;;
+;;;; OUTFILES:  "/home/alex/dual/programs/ambr2/expermt/data/exp1_???.dat"
+;;;;
+;;;; MAIN_FUN:  generate-data-file (KB-number)
+
+
+;;;;;;;;  EXPERIMENTAL DESIGN:
+;;;;
+;;;;  ...
+;;;;
+
+
+;;;;;;;   ******   EXPERIMENTS   ******
+
+(defparameter *outfile-name-prefix*
+              "/home/alex/dual/programs/ambr2/expermt/data/exp1_" )
+
+(defparameter *genKB-prefix*
+              "/home/alex/dual/programs/ambr2/kb/genkb/genkb" )
+
+(defparameter *LTM-file-name*
+              "/home/alex/dual/programs/.compiled/ambr2/kb/ltm.sparcf")
+
+(defparameter *target-file-name*
+              "/home/alex/dual/programs/.compiled/ambr2/kb/new_sit.sparcf")
+
+
+(defparameter *min-KB-number* 0)
+(defparameter *max-KB-number* 99)      ; 100 levels
+
+(defparameter *base-situations*              ; dependents
+    '(sit-A  sit-B  sit-C  sit-D  sit-E))
+
+(defparameter *target-situations*      ; 6 levels
+    '(sit-X  sit-Y1  sit-Y2  sit-Z  sit-U1  sit-U2))
+    ;; See also MOUNT-TARGET below
+
+
+
+(defvar *data-stream* *standard-output* )
+
+(defvar *KB-number* 0 )
+
+
+(defun generate-data-file (KB-number 
+                           &optional (file-name-prefix *outfile-name-prefix*))
+  (assert (<= *min-KB-number* KB-number *max-KB-number*))
+  (let ((filename (format nil "~A~3,'0D.dat" file-name-prefix KB-number)))
+    (with-open-file (file filename :direction :output)
+      (format t "~%Now writing data file ~A  " filename)
+      (finish-output *standard-output*)
+      (let ((*data-stream* file))
+        (dolist (target *target-situations*)
+          (if (eq (do-experiment KB-number target) :no-errors)
+              (format t "~%   Experiment with ~A successful." target)
+              (format t "~%   Experiment with ~A failed."     target))
+          (finish-output *standard-output*) )))
+    (format t "~%Fiished working on ~A  " filename)
+    (values) ))
+
+
+
+
+
+;;;;;;;   ******   INDIVIDUAL  EXPERIMENT  ******
+
+
+(defparameter  *number-of-periods* 15 )
+
+(defparameter  *cycles-per-period* 100 )
+
+
+(defun do-experiment (KB-number target)
+  (declare (type integer KB-number)
+	   (type symbol target) )
+  (ignore-errors
+    (initialize-experiment KB-number target)
+    (dotimes (k *number-of-periods*)
+      (reset-all-counters)
+      (dotimes (cycle *cycles-per-period*)
+        (main-dual-cycle))            ;;;  <----  the heavy load
+      (report-period) )
+    :no-errors ))
+  
+
+(defun initialize-experiment (KB-number target)
+  (clear-everything-in-DUAL)
+  (make-node-constructors *number-of-node-constructors*)
+  (let ((*load-verbose* nil))
+    (load *LTM-file-name*)
+    (load *target-file-name*)
+    (load (format nil "~A~3,'0D.lisp" *genKB-prefix* KB-number)) )
+  (setq *KB-number* KB-number)
+  (mount-target target)
+)
+
+
+(defun mount-target (target)
+  (setq *target* (symbol-value target))
+  (attach-coalition *target*)
+  (case target
+    (sit-X
+       (add-to-WM #$T-of-6     *goal*)
+       (add-to-WM #$hot-4      *goal*)
+       (add-to-WM #$water-4    *input*)
+       (add-to-WM #$bowl-2     *input*)
+       (add-to-WM #$in-5       *input*)
+       (add-to-WM #$made-of-4  *input* 1.0)
+       (add-to-WM #$mwood-4    *input* 1.0) )
+    (sit-Y1
+       (add-to-WM #$T-of-12    *goal*)
+       (add-to-WM #$hot-9      *goal*)
+       (add-to-WM #$milk-3     *input*)
+       (add-to-WM #$teapot-4   *input*)
+       (add-to-WM #$in-11      *input*)
+       (add-to-WM #$made-of-9  *input* 0.5)
+       (add-to-WM #$mmetal-9   *input* 0.5) )
+    (sit-Y2
+       (add-to-WM #$end-state-6 *goal*)
+       (add-to-WM #$cause-6    *goal*)
+       (add-to-WM #$milk-1     *input*)
+       (add-to-WM #$plate-3    *input*)
+       (add-to-WM #$t-of-7     *input*)
+       (add-to-WM #$hot-6      *input*)
+       (add-to-WM #$teapot-2   *input*)
+       (add-to-WM #$in-6       *input* 0.5)
+       (add-to-WM #$on-3       *input* 0.5) )
+    (sit-Z
+       (add-to-WM #$T-of-9     *goal*)
+       (add-to-WM #$hot-7      *goal*)
+       (add-to-WM #$water-6    *input*)
+       (add-to-WM #$glass-3    *input*)
+       (add-to-WM #$in-8       *input*)
+       (add-to-WM #$made-of-7  *input* 1.0)
+       (add-to-WM #$mglass-7   *input* 1.0) )
+    (sit-U1
+       (add-to-WM #$T-of-U1    *goal*)
+       (add-to-WM #$cold-U1    *goal*)
+       (add-to-WM #$milk-U1    *input*)
+       (add-to-WM #$teapot-U1  *input*)
+       (add-to-WM #$in-U1      *input*)
+       (add-to-WM #$made-of-U1 *input* 0.5)
+       (add-to-WM #$mmetal-U1  *input* 0.5) )
+    (sit-U2
+       (add-to-WM #$end-state-U2 *goal*)
+       (add-to-WM #$cause-U2   *goal*)
+       (add-to-WM #$milk-U2    *input*)
+       (add-to-WM #$fridge-U2  *input*)
+       (add-to-WM #$t-of-U2    *input*)
+       (add-to-WM #$cold-U2    *input*)
+       (add-to-WM #$teapot-U2  *input*)
+       (add-to-WM #$in-U2-1    *input* 0.5)
+       (add-to-WM #$in-U2-2    *input* 0.5) )
+))  ; mount-target
+
+
+
+
+;;;;;;  ******  REPORTING  RESULTS  *******
+;;
+;; Since there are too many variables, and keeping in mind that many
+;; statistical programs cannot read more than 72 columns, one conceptual
+;; 'snapshot' spills over three lines in the data file.
+;;
+
+(defun report-period ()
+  (print-line1)
+  (print-line2)
+  (print-line3)
+  (force-output *data-stream*)
+)
+
+;; LINE1:
+;;  ;; Independent variables
+;;    + TARGET (~3D)   -- target situation (see SUTUTATION-CODE below)
+;;    + KB#    (~3D)   -- genKB number
+;;    + TIME   (~5,1F) -- time since beginning of the simulation
+;;  ;; Counters of various events during this period
+;;    + MARK_X (~3D) -- number of marker intersections
+;;    + ADD_WM (~3D) -- number of _entity_ agents added to WM
+;;    + RMV_WM (~3D) -- number of _entity_ agents removed from WM
+;;    + MAKE_H (~3D) -- number of created hypotheses
+;;    + KILL_H (~3D) -- number of killed hypotheses
+;;    + EST_H  (~3D) -- number of established hypotheses
+;;    + RSGH_H (~3D) -- number of resigning hypotheses
+;;  ;; Snapshot of the current state of WM and *AGENDA*
+;;    + WM_SZ  (~3D)   -- number of agents in working memory
+;;    + WM_ACT (~6,3F) -- total activation of agents in WM
+;;    + CON#   (~3D)   -- number of active concept-agents
+;;    + INST#  (~3D)   -- number of active instance-agents
+;;    + EMBR#  (~3D)   -- number of embryo-hypotheses
+;;    + HYP#   (~3D)   -- number of mature-hypotheses
+;;    + PROC   (~3D)   -- number of agents whose symbolic processor is working
+
+(defun print-line1 ()
+  ;; Independent variables
+     (format *data-stream* "~%~3D ~3D ~5,1F"
+         (situation-code *target*)
+         *KB-number*
+         *time* )
+  ;; Counters
+     (format *data-stream* " ~3D ~3D ~3D ~3D ~3D ~3D ~3D"
+         *marker-intersection-counter*
+         *add-to-WM-counter*
+         *remove-from-WM-counter*
+         *make-agent-counter*
+         *kill-agent-counter*
+         *establish-hypothesis-counter*
+         *resign-hypothesis-counter* )
+  ;; Snapshot of the current state of WM and *AGENDA*
+     (format *data-stream* " ~3D ~6,3F ~3D ~3D ~3D ~3D ~3D"
+         (+ (WM-size *WM*) (WM-size *goal*) (WM-size *input*))
+         (+ (WM-total-act *WM*) (WM-total-act *goal*) (WM-total-act *input*))
+         (count-if #'concept-agent-p (WM-contents *WM*))
+         (+ (count-if #'instance-agent-p (WM-contents *WM*))
+            (WM-size *input*) (WM-size *goal*)) 
+         (count-if #'embryo-hypothesis-p (WM-contents *WM*))
+         (count-if #'mature-hypothesis-p (WM-contents *WM*))
+         (number-of-processes)  )
+) ; print-line1
+
+
+;; LINE2:
+;;  ;; All members, active members, and mapped members of each situation
+;;    + ALL_A  (~2D) -- number of agents in situation A
+;;    + ACT_A  (~2D) -- number of active members in situation A
+;;    + MAP_A  (~2D) -- number of mapped members in situation A
+;;    + ALL_B  (~2D) -- number of agents in situation B
+;;    + ACT_B  (~2D) -- number of active members in situation B
+;;    + MAP_B  (~2D) -- number of mapped members in situation B
+;;    + ALL_C  (~2D) -- number of agents in situation C
+;;    + ACT_C  (~2D) -- number of active members in situation C
+;;    + MAP_C  (~2D) -- number of mapped members in situation C
+;;    + ALL_D  (~2D) -- number of agents in situation D
+;;    + ACT_D  (~2D) -- number of active members in situation D
+;;    + MAP_D  (~2D) -- number of mapped members in situation D
+;;    + ALL_E  (~2D) -- number of agents in situation E
+;;    + ACT_E  (~2D) -- number of active members in situation E
+;;    + MAP_E  (~2D) -- number of mapped members in situation E
+;;    + ALL_T  (~2D) -- number of agents in the target situation
+;;    + ACT_T  (~2D) -- number of active members in the target situation
+;;    + MAP_T  (~2D) -- number of mapped members in the target situation
+;;  ;; Contents of the currently-dominating target mapping
+;;    + T0_MAP (~2D) -- number of correspondences that do not belong to any sit.
+;;    + TA_MAP (~2D) -- number of correspondences from situation A
+;;    + TB_MAP (~2D) -- number of correspondences from situation B
+;;    + TC_MAP (~2D) -- number of correspondences from situation C
+;;    + TD_MAP (~2D) -- number of correspondences from situation D
+;;    + TE_MAP (~2D) -- number of correspondences from situation E
+;;    + WINNER (~2D) -- the situation with highest count
+
+
+(defun print-line2 ()
+  (let ((mappings (collect-mappings)))  ; see AMBR2/INTRFACE/MAPPING
+    (terpri *data-stream*)
+    (flet ((do-one-situation (sit)
+             (format *data-stream* "~2D ~2D ~2D "
+                 (length sit)
+                 (count-active-members sit)
+                 (count-mapped-members (mapping-for-situation sit mappings)) )))
+      (do-one-situation sit-A)
+      (do-one-situation sit-B)
+      (do-one-situation sit-C)
+      (do-one-situation sit-D)
+      (do-one-situation sit-E) )
+    (format *data-stream* "~2D ~2D ~2D "
+        (length *target*)
+        (count-active-members *target*)
+        (count-mapped-members (mapping-for-target *target* mappings)) )
+    (print-line2-aux (mapping-for-target *target* mappings)) ))
+
+
+(defun print-line2-aux (target-mapping)
+  ;; See MAPPING-FOR-TARGET in AMBR2/INTRFACE/MAPPING.LSP
+  (let ((counts (vector 0 0 0 0 0 0)))   ; from-LTM,  sit-A - sit-E
+    (dolist (triple target-mapping)
+      (unless (null (second triple))
+        (incf (svref counts (situation-code (second triple)))) ))
+    (format *data-stream* "~2D ~2D ~2D ~2D ~2D ~2D "
+        (svref counts 0)  (svref counts 1)  (svref counts 2) 
+        (svref counts 3)  (svref counts 4)  (svref counts 5) )
+    (let* ((max-count  (reduce #'max counts :start 1))
+           (max-index1 (position max-count counts :start 1))
+           (max-index2 (position max-count counts :start 1 :from-end t))
+           (winner (if (eql max-index1 max-index2)
+                       max-index1
+                       9)) )    ; ambiguity
+      (format *data-stream* "~2D" 
+          winner )
+)))
+
+
+;; LINE3:
+;;  ;; Retrieval and mapping indices -- see AMBR2/INTRFACE/SITUATN and MAPPING
+;;    + RETI_A (~5,3F) -- retrieval index for situation A
+;;    + MAPI_A (~5,3F) -- mapping index for situation A
+;;    + RETI_B (~5,3F) -- retrieval index for situation B
+;;    + MAPI_B (~5,3F) -- mapping index for situation B
+;;    + RETI_C (~5,3F) -- retrieval index for situation C
+;;    + MAPI_C (~5,3F) -- mapping index for situation C
+;;    + RETI_D (~5,3F) -- retrieval index for situation D
+;;    + MAPI_D (~5,3F) -- mapping index for situation D
+;;    + RETI_E (~5,3F) -- retrieval index for situation E
+;;    + MAPI_E (~5,3F) -- mapping index for situation E
+;;    + RETI_T (~5,3F) -- retrieval index for the target situation
+;;    + MAPI_T (~5,3F) -- mapping index for the target situation
+
+
+(defun print-line3 ()
+  (let ((mappings (collect-mappings)))  ; see AMBR2/INTRFACE/MAPPING
+    (terpri *data-stream*)
+    (flet ((do-one-situation (sit)
+            (format *data-stream* "~5,3F ~5,3F "
+                (retrieval-index sit)
+                (mapping-index (mapping-for-situation sit mappings)) )))
+      (do-one-situation sit-A)
+      (do-one-situation sit-B)
+      (do-one-situation sit-C)
+      (do-one-situation sit-D)
+      (do-one-situation sit-E) )
+    (format *data-stream* "~5,3F ~5,3F"
+        (retrieval-index *target*)
+        (mapping-index (mapping-for-target *target* mappings)) )
+))
+
+
+
+;;;  *****   AUXILIARY   *****
+
+
+(defun situation-code (thing)
+  (declare (type (or list symbol DUAL-agent) thing))
+  (etypecase thing
+    (list  (cond                    ; coalition of agents
+      ((equal thing sit-A)  1 )
+      ((equal thing sit-B)  2 )
+      ((equal thing sit-C)  3 )
+      ((equal thing sit-D)  4 )
+      ((equal thing sit-E)  5 )
+      ((equal thing sit-X)  10)
+      ((equal thing sit-Y1) 11)
+      ((equal thing sit-Y2) 12)
+      ((equal thing sit-Z)  13)
+      ((equal thing sit-U1) 14)
+      ((equal thing sit-U2) 15)
+      (t                    0 ) ))
+    (symbol (case  thing            ; hook for the coalition
+      (sit-A   1 )
+      (sit-B   2 )
+      (sit-C   3 )
+      (sit-D   4 )
+      (sit-E   5 )
+      (sit-X   10)
+      (sit-Y1  11)
+      (sit-Y2  12)
+      (sit-Z   13)
+      (sit-U1  14)
+      (sit-U2  15)
+      (t       0 ) ))
+    (DUAL-agent  (cond              ; individual agent
+      ((member thing sit-A)   1 )
+      ((member thing sit-B)   2 )
+      ((member thing sit-C)   3 )
+      ((member thing sit-D)   4 )
+      ((member thing sit-E)   5 )
+      ((member thing sit-X)   10)
+      ((member thing sit-Y1)  11)
+      ((member thing sit-Y2)  12)
+      ((member thing sit-Z)   13)
+      ((member thing sit-U1)  14)
+      ((member thing sit-U2)  15)
+      (t                      0 ) )) ))
+
+
+(setq *kill-temp-agent-verbose* nil)
+(setq *add-link-verbose* nil)
+(setq *receive-symbol-verbose* nil)
+(setq *report-marker-intersection-verbose* nil)
+
+
+;;;;;;;;;;  End of file  AMBR/EXPERMT/MAINEXP1.LSP

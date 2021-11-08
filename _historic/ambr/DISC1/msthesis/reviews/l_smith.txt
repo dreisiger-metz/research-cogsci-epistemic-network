@@ -1,0 +1,32 @@
+  Review of Petrov  M.Sc. Thesis
+
+ "Extensions of DUAL and AMBR"
+
+  Review by Linda Smith
+
+
+     This thesis presents a thorough and scholarly review of theories of
+cognitive architecture and the modelling enterprise. The thesis work itself
+has a narrow and specific goal: to extend the existing model by developing
+a portable computer program and to perform simulations on analogy-making.
+The thesis also states that the goal is to develop new 'agents' (the
+primitive units in the model). The first two goals are clearly met. The
+third is not explicitly presented in the simulation or in the discussion
+of kinds of agents which is presented more generally and encyclopedically
+than a discussion of the contribution of this specific thesis.
+
+     The thesis is excellent in its consideration of its own limitations.
+Indeed, there is little to add in that regard or in the plans for future
+research. The specific simulation of problem solving presented is circum-
+scribed but well-done. It provides a demonstration proof of how successful
+applications of knowledge may be found for 'new' problems. A plus, perhaps,
+is the treatment of relational (structural) and similarity (object)
+properties of domains and targets in the same way. The early object-based
+matches and the subsequent relation-based matches fall out of the relative
+frequency of the two kinds of information in representations of problems
+rather than from two kinds of processes (as in Gentner). However, this
+could end up as being a negative depending on behavioral data. One wonders
+whether AMBR could successfully model structural alignment (perhaps as a
+priming of relations ?) and comparison effects found by Gentner.
+
+     Clearly deserving of a Masters in Science.

@@ -1,0 +1,466 @@
+
+> (g)
+;; T=0.50, adding #$ice-cube-icf to WM.
+;; T=0.62, adding #$in-ihc-wc to WM.
+;; T=1.24, adding #$high-t-ihc to WM.
+;; T=1.84, adding #$t-of-icf-i to WM.
+;; T=1.86, adding #$low-t-icf to WM.
+;; T=2.56, adding #$sit-icf to WM.
+;; T=3.02, adding #$water-ihc to WM.
+;; T=4.26, adding #$made-of-icf to WM.
+;; T=4.58, adding #$mglass-icf to WM.
+;; T=4.60, adding #$glass-icf to WM.
+;; T=5.85, adding #$on-icf-ig to WM.
+;; T=6.80, adding #$cup-ihc to WM.
+;; T=6.85, adding #$on-ihc to WM.
+;; T=6.90, adding #$initst-icf-1 to WM.
+;; T=8.15, adding #$sit-ihc to WM.
+;; T=8.20, adding #$imm-htr-ihc to WM.
+;; T=8.30, adding #$fridge-icf to WM.
+;; T=8.35, adding #$t-of-ihc-ih to WM.
+;; T=8.35, adding #$t-of-icf-f to WM.
+;; T=8.60, adding #$t-of-ihc-w to WM.
+;; T=8.60, adding #$in-icf-gf to WM.
+;; T=9.10, adding #$in-ihc-iw to WM.
+;; T=9.20, adding #$goalst-icf to WM.
+;; T=9.75, adding #$initst-ihc to WM.
+;; Time  10.00, 207 agents in WM:  98 c,  67 i,  42 h (22+20+0)
+;;   10 clocks;  70 ag on agenda:  14 c,  29 i,  18 h (6+12+0), 9 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.066 |  7 | -.902 |  1 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.130 | 11 | -.892 |  1 |    | sit-GP  | 0.017 |  2 | -.903 |  1 |   
+ | sit-MTF | 0.101 |  6 | -.813 |  2 |    | sit-BPF | 0.000 |  0 | -.999 |  0 |   
+ | sit-ICF | 0.189 | 13 | -.645 |  3 |    | sit-FDO | 0.034 |  3 | -.907 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.656 | 15 | -.174 |  8 |    | all WM  |117.26 |195 |       | 70 |
+
+
+> (g)
+;; T=10.80, adding #$in-icf-if to WM.
+;; T=14.10, adding #$saucer-ihc to WM.
+;; T=14.20, adding #$made-of-ihc to WM.
+;; T=14.25, adding #$mchina-ihc to WM.
+;; Time  20.00, 253 agents in WM: 101 c,  72 i,  80 h (23+57+0)
+;;   30 clocks;  64 ag on agenda:  11 c,  13 i,  30 h (6+24+0), 10 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.089 |  7 | -.693 |  4 |    | sit-BF  | 0.005 |  1 | -.999 |  0 |   
+ | sit-IHC | 0.343 | 14 | -.302 |  8 |    | sit-GP  | 0.014 |  2 | -.876 |  2 |   
+ | sit-MTF | 0.098 |  6 | -.714 |  4 |    | sit-BPF | 0.000 |  0 | -.999 |  0 |   
+ | sit-ICF | 0.232 | 14 | -.308 |  9 |    | sit-FDO | 0.034 |  3 | -.867 |  2 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.633 | 15 | 0.161 | 13 |    | all WM  |159.72 |241 |       | 64 |
+
+
+> (mt)
+ sit-icc         sit-ihc          1.09   mature
+ ice-cube-icc    ice-cube-icf     1.15   mature
+ coke-icc        water-ihc        1.21   mature
+ glass-icc       cup-ihc          0.93   mature
+ table-icc       <unmapped>       0.00   
+ in-icc-ic       in-ihc-wc        0.98   mature
+ in-icc-cg       in-ihc-wc        1.18   mature
+ on-icc          on-icf-ig        0.95   mature
+ t-of-icc        t-of-wtp-w       0.99   mature
+ low-t-icc       low-t-fridge     0.90   mature
+ made-of-icc     glass-md-gl      0.95   mature
+ mglass-icc      mglass-glass     0.90   mature
+ initst-icc      initst-icf-1     0.90   mature
+ endst-icc       sit-icf          0.93   mature
+ follows-icc     <unmapped>       0.00   
+> (g)
+;; T=21.00, adding #$goalst-ihc to WM.
+;; Time  30.00, 284 agents in WM: 100 c,  73 i, 111 h (29+82+0)
+;;   25 clocks;  72 ag on agenda:  10 c,  17 i,  37 h (9+28+0), 8 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.077 |  7 | -.642 |  5 |    | sit-BF  | 0.005 |  1 | -.999 |  0 |   
+ | sit-IHC | 0.398 | 15 | -.093 | 10 |    | sit-GP  | 0.013 |  2 | -.892 |  2 |   
+ | sit-MTF | 0.098 |  6 | -.703 |  4 |    | sit-BPF | 0.000 |  0 | -.999 |  0 |   
+ | sit-ICF | 0.244 | 14 | -.043 | 12 |    | sit-FDO | 0.033 |  3 | -.876 |  2 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.627 | 15 | 0.340 | 14 |    | all WM  |175.62 |272 |       | 72 |
+
+
+> (mt)
+ sit-icc         sit-ihc          1.34   mature
+ ice-cube-icc    ice-cube-icf     1.23   mature
+ coke-icc        water-ihc        1.35   mature
+ glass-icc       cup-ihc          1.18   mature
+ table-icc       glass-icf        0.86   mature
+ in-icc-ic       in-ihc-wc        0.99   mature
+ in-icc-cg       in-ihc-wc        1.15   mature
+ on-icc          on-icf-ig        1.01   mature
+ t-of-icc        t-of-wtp-w       1.00   mature
+ low-t-icc       low-t-icf        0.94   mature
+ made-of-icc     glass-md-gl      0.99   mature
+ mglass-icc      mglass-glass     0.99   mature
+ initst-icc      initst-icf-1     0.92   mature
+ endst-icc       sit-mtf          0.91   mature
+ follows-icc     <unmapped>       0.00   
+> (g)
+;; T=32.70, adding #$cause-ihc to WM.
+;; Time  40.00, 308 agents in WM: 102 c,  75 i, 131 h (34+97+0)
+;;   29 clocks;  65 ag on agenda:   8 c,  15 i,  33 h (11+22+0), 9 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.070 |  7 | -.702 |  5 |    | sit-BF  | 0.009 |  2 | -.999 |  0 |   
+ | sit-IHC | 0.508 | 16 | 0.396 | 13 |    | sit-GP  | 0.013 |  2 | -.906 |  2 |   
+ | sit-MTF | 0.093 |  6 | -.683 |  5 |    | sit-BPF | 0.000 |  0 | -.999 |  0 |   
+ | sit-ICF | 0.232 | 14 | -.068 | 12 |    | sit-FDO | 0.033 |  3 | -.841 |  3 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.636 | 15 | 0.519 | 14 |    | all WM  |190.60 |296 |       | 65 |
+
+
+> (mt)
+ sit-icc         sit-ihc          1.54   mature
+ ice-cube-icc    ice-cube-icf     1.26   mature
+ coke-icc        water-ihc        1.44   mature
+ glass-icc       cup-ihc          1.45   mature
+ table-icc       saucer-ihc       0.94   mature
+ in-icc-ic       in-ihc-iw        1.08   mature
+ in-icc-cg       in-ihc-wc        1.42   mature
+ on-icc          on-ihc           1.27   mature
+ t-of-icc        t-of-ihc-ih      1.00   mature
+ low-t-icc       high-t-ihc       1.01   mature
+ made-of-icc     made-of-ihc      1.05   mature
+ mglass-icc      mglass-glass     0.99   mature
+ initst-icc      initst-ihc       1.14   mature
+ endst-icc       sit-mtf          0.88   mature
+ follows-icc     <unmapped>       0.00   
+> (g)
+;; T=42.50, adding #$to-reach-ihc to WM.
+;; T=43.20, adding #$endst-ihc to WM.
+;; T=43.30, adding #$follows-ihc to WM.
+;; Time  50.00, 326 agents in WM: 108 c,  80 i, 138 h (27+111+0)
+;;   23 clocks;  55 ag on agenda:   6 c,   9 i,  33 h (14+19+0), 7 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.067 |  7 | -.769 |  5 |    | sit-BF  | 0.010 |  2 | -.943 |  1 |   
+ | sit-IHC | 0.770 | 19 | 1.044 | 15 |    | sit-GP  | 0.014 |  2 | -.929 |  2 |   
+ | sit-MTF | 0.076 |  6 | -.768 |  5 |    | sit-BPF | 0.000 |  0 | -.999 |  0 |   
+ | sit-ICF | 0.173 | 13 | -.209 | 12 |    | sit-FDO | 0.034 |  3 | -.875 |  3 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.667 | 15 | 1.053 | 15 |    | all WM  |201.70 |314 |       | 55 |
+
+
+> (mt)
+ sit-icc         sit-ihc          1.78   mature
+ ice-cube-icc    ice-cube-icf     1.14   mature
+ coke-icc        water-ihc        1.57   mature
+ glass-icc       cup-ihc          1.62   mature
+ table-icc       saucer-ihc       1.35   mature
+ in-icc-ic       in-ihc-iw        1.52   mature
+ in-icc-cg       in-ihc-wc        1.60   mature
+ on-icc          on-ihc           1.51   mature
+ t-of-icc        t-of-ihc-ih      1.34   mature
+ low-t-icc       high-t-ihc       1.28   mature
+ made-of-icc     made-of-ihc      1.50   mature
+ mglass-icc      mchina-ihc       1.30   mature
+ initst-icc      initst-ihc       1.46   mature
+ endst-icc       goalst-ihc       1.19   mature
+ follows-icc     cause-ihc        1.32   mature
+> (g)
+;; Time  60.00, 331 agents in WM: 111 c,  81 i, 139 h (24+115+0)
+;;   18 clocks;  26 ag on agenda:   1 c,   7 i,  18 h (14+4+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.067 |  7 | -.786 |  5 |    | sit-BF  | 0.011 |  2 | -.917 |  2 |   
+ | sit-IHC | 0.889 | 19 | 1.262 | 15 |    | sit-GP  | 0.014 |  2 | -.963 |  1 |   
+ | sit-MTF | 0.074 |  6 | -.823 |  5 |    | sit-BPF | 0.005 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.112 | 12 | -.550 | 11 |    | sit-FDO | 0.035 |  3 | -.897 |  3 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.694 | 15 | 1.262 | 15 |    | all WM  |203.13 |319 |       | 26 |
+
+
+> (mt)
+ sit-icc         sit-ihc          1.86   mature
+ ice-cube-icc    imm-htr-ihc      1.57   mature
+ coke-icc        water-ihc        1.62   mature
+ glass-icc       cup-ihc          1.67   mature
+ table-icc       saucer-ihc       1.49   mature
+ in-icc-ic       in-ihc-iw        1.65   mature
+ in-icc-cg       in-ihc-wc        1.63   mature
+ on-icc          on-ihc           1.60   mature
+ t-of-icc        t-of-ihc-ih      1.47   mature
+ low-t-icc       high-t-ihc       1.51   mature
+ made-of-icc     made-of-ihc      1.58   mature
+ mglass-icc      mchina-ihc       1.47   mature
+ initst-icc      initst-ihc       1.63   mature
+ endst-icc       goalst-ihc       1.24   mature
+ follows-icc     cause-ihc        1.37   mature
+> (g)
+;; T=61.20, #<PR COKE-ICC> received in COKE-ICC<==>WATER-IHC.
+;; T=64.70, #<PR SIT-ICC> received in SIT-ICC<==>SIT-IHC.
+;; T=65.60, #<PR IN-ICC-CG> received in IN-ICC-CG<-->IN-IHC-WC.
+;; T=68.00, #<PR GLASS-ICC> received in GLASS-ICC<==>CUP-IHC.
+;; Time  70.00, 312 agents in WM: 115 c,  82 i, 115 h (7+104+4)
+;;   14 clocks;  11 ag on agenda:   1 c,   1 i,   9 h (6+3+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.071 |  7 | -.820 |  6 |    | sit-BF  | 0.012 |  2 | -.948 |  2 |   
+ | sit-IHC | 1.116 | 19 | 1.393 | 15 |    | sit-GP  | 0.014 |  2 | -.968 |  1 |   
+ | sit-MTF | 0.077 |  6 | -.891 |  4 |    | sit-BPF | 0.006 |  1 | -.956 |  1 |   
+ | sit-ICF | 0.120 | 12 | -.672 | 11 |    | sit-FDO | 0.048 |  4 | -.924 |  2 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.744 | 15 | 1.393 | 15 |    | all WM  |196.67 |300 |       | 11 |
+
+
+> (g)
+;; T=77.90, #<PR ON-ICC> received in ON-ICC<-->ON-IHC.
+;; T=79.30, #<PR INITST-ICC> received in INITST-ICC<-->INITST-IHC.
+;; Time  80.00, 301 agents in WM: 119 c,  84 i,  98 h (5+87+6)
+;;    9 clocks;  10 ag on agenda:   0 c,   5 i,   5 h (3+2+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.075 |  7 | -.832 |  6 |    | sit-BF  | 0.013 |  2 | -.966 |  2 |   
+ | sit-IHC | 1.175 | 19 | 1.427 | 15 |    | sit-GP  | 0.015 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.087 |  6 | -.947 |  2 |    | sit-BPF | 0.007 |  1 | -.962 |  1 |   
+ | sit-ICF | 0.132 | 12 | -.786 |  7 |    | sit-FDO | 0.054 |  4 | -.924 |  2 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.768 | 15 | 1.427 | 15 |    | all WM  |197.07 |289 |       | 10 |
+
+
+> (g)
+;; T=81.10, #<PR IN-ICC-IC> received in IN-ICC-IC<-->IN-IHC-IW.
+;; T=86.40, #<PR MADE-OF-ICC> received in MADE-OF-ICC<-->MADE-OF-IHC.
+;; T=88.30, #<PR TABLE-ICC> received in TABLE-ICC<==>SAUCER-IHC.
+;; Time  90.00, 286 agents in WM: 119 c,  85 i,  82 h (2+71+9)
+;;    6 clocks;   4 ag on agenda:   1 c,   1 i,   2 h (1+1+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.082 |  7 | -.928 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.305 | 19 | 1.475 | 15 |    | sit-GP  | 0.016 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.093 |  6 | -.958 |  2 |    | sit-BPF | 0.007 |  1 | -.962 |  1 |   
+ | sit-ICF | 0.145 | 12 | -.942 |  4 |    | sit-FDO | 0.056 |  4 | -.881 |  3 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.821 | 15 | 1.475 | 15 |    | all WM  |195.12 |274 |       |  4 |
+
+
+> (g)
+;; T=91.40, #<PR ICE-CUBE-ICC> received in ICE-CUBE-ICC<==>IMM-HTR-IHC.
+;; T=91.40, #<PR LOW-T-ICC> received in LOW-T-ICC<-->HIGH-T-IHC.
+;; T=92.50, #<PR MGLASS-ICC> received in MGLASS-ICC<-->MCHINA-IHC.
+;; Time  99.99, 274 agents in WM: 119 c,  85 i,  70 h (0+58+12)
+;;    3 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.086 |  7 | -.960 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.383 | 19 | 1.516 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.098 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.989 |  1 |   
+ | sit-ICF | 0.152 | 12 | -.962 |  3 |    | sit-FDO | 0.058 |  4 | -.966 |  2 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.867 | 15 | 1.516 | 15 |    | all WM  |193.16 |262 |       |  0 |
+
+
+> (g 20)
+;; Time 120.00, 273 agents in WM: 120 c,  85 i,  68 h (0+56+12)
+;;    3 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.086 |  7 | -.961 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.383 | 19 | 1.519 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.099 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.991 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.059 |  4 | -.988 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.868 | 15 | 1.519 | 15 |    | all WM  |192.95 |261 |       |  0 |
+
+
+> (g 30)
+;; T=141.80, #<PR T-OF-ICC> received in T-OF-ICC<-->T-OF-IHC-IH.
+;; Time 150.00, 273 agents in WM: 120 c,  85 i,  68 h (0+55+13)
+;;    2 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.087 |  7 | -.962 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.406 | 19 | 1.542 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.099 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.990 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.060 |  4 | -.989 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.869 | 15 | 1.542 | 15 |    | all WM  |193.38 |261 |       |  0 |
+
+
+> (g 50)
+;; Time 200.00, 273 agents in WM: 120 c,  85 i,  68 h (0+55+13)
+;;    2 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.087 |  7 | -.962 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.405 | 19 | 1.541 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.099 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.990 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.060 |  4 | -.989 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.869 | 15 | 1.541 | 15 |    | all WM  |193.24 |261 |       |  0 |
+
+
+> (g 50)
+;; Time 250.00, 273 agents in WM: 120 c,  85 i,  68 h (0+55+13)
+;;    2 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.087 |  7 | -.962 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.405 | 19 | 1.541 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.099 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.990 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.060 |  4 | -.989 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.869 | 15 | 1.541 | 15 |    | all WM  |193.24 |261 |       |  0 |
+
+
+> (g 50)
+;; Time 300.00, 273 agents in WM: 120 c,  85 i,  68 h (0+55+13)
+;;    2 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.087 |  7 | -.962 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.405 | 19 | 1.541 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.099 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.990 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.060 |  4 | -.989 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.869 | 15 | 1.541 | 15 |    | all WM  |193.24 |261 |       |  0 |
+
+
+> (g 100)
+;; Time 400.00, 273 agents in WM: 120 c,  85 i,  68 h (0+55+13)
+;;    2 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.087 |  7 | -.962 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.405 | 19 | 1.541 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.099 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.990 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.060 |  4 | -.989 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.869 | 15 | 1.541 | 15 |    | all WM  |193.24 |261 |       |  0 |
+
+
+> (MT)
+ sit-icc         sit-ihc          1.93   winner
+ ice-cube-icc    imm-htr-ihc      1.82   winner
+ coke-icc        water-ihc        1.80   winner
+ glass-icc       cup-ihc          1.83   winner
+ table-icc       saucer-ihc       1.72   winner
+ in-icc-ic       in-ihc-iw        1.81   winner
+ in-icc-cg       in-ihc-wc        1.79   winner
+ on-icc          on-ihc           1.79   winner
+ t-of-icc        t-of-ihc-ih      1.78   winner
+ low-t-icc       high-t-ihc       1.75   winner
+ made-of-icc     made-of-ihc      1.78   winner
+ mglass-icc      mchina-ihc       1.73   winner
+ initst-icc      initst-ihc       1.80   winner
+ endst-icc       goalst-ihc       1.24   mature
+ follows-icc     follows-ihc      1.30   mature
+> (hyps #$endst-icc)
+ 1.235  m   2    endst-icc<-->goalst-ihc
+ 0.976  m   1    endst-icc<==>t-of-ihc-w
+ 1.174  m   2    endst-icc<-->endst-ihc
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (hyps #$follows-icc)
+ 1.214  m   2    follows-icc<-->cause-ihc
+ 1.298  m   1    follows-icc<-->follows-ihc
+ 1.239  m   1    follows-icc<-->to-reach-ihc
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (rt #$follows-icc)
+ 0.630  1.298  m  follows-icc<-->follows-ihc 
+ 0.080  1.239  m  follows-icc<-->to-reach-ihc 
+ 0.287  1.214  m  follows-icc<-->cause-ihc 
+#<RT FOLLOWS-ICC>
+> (rt #$endst-icc)
+ 0.919  1.235  m  endst-icc<-->goalst-ihc 
+ 0.077  1.174  m  endst-icc<-->endst-ihc 
+ 0.000  0.976  m  endst-icc<==>t-of-ihc-w 
+#<RT ENDST-ICC>
+> (g 100)
+;; T=469.40, #<PR ENDST-ICC> received in ENDST-ICC<-->GOALST-IHC.
+;; Time 500.00, 271 agents in WM: 120 c,  85 i,  66 h (0+52+14)
+;;    1 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.087 |  7 | -.962 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.475 | 19 | 1.602 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.100 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.990 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.061 |  4 | -.989 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.865 | 15 | 1.602 | 15 |    | all WM  |194.29 |259 |       |  0 |
+
+
+> (mt)
+ sit-icc         sit-ihc          1.94   winner
+ ice-cube-icc    imm-htr-ihc      1.82   winner
+ coke-icc        water-ihc        1.80   winner
+ glass-icc       cup-ihc          1.83   winner
+ table-icc       saucer-ihc       1.72   winner
+ in-icc-ic       in-ihc-iw        1.81   winner
+ in-icc-cg       in-ihc-wc        1.79   winner
+ on-icc          on-ihc           1.79   winner
+ t-of-icc        t-of-ihc-ih      1.76   winner
+ low-t-icc       high-t-ihc       1.75   winner
+ made-of-icc     made-of-ihc      1.78   winner
+ mglass-icc      mchina-ihc       1.73   winner
+ initst-icc      initst-ihc       1.80   winner
+ endst-icc       goalst-ihc       1.70   winner
+ follows-icc     to-reach-ihc     1.40   mature
+> (hyps #$follows-icc)
+ 1.165  m   2    follows-icc<-->cause-ihc
+ 1.212  m   1    follows-icc<-->follows-ihc
+ 1.400  m   1    follows-icc<-->to-reach-ihc
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (hyps #$endst-icc)
+ 1.696  WW  2    endst-icc<-->goalst-ihc
+ 0.570  m   1    endst-icc<==>t-of-ihc-w
+ 0.665  m   2    endst-icc<-->endst-ihc
+ 3 hyps (0 e + 2 m + 1 W)
+
+> (get-filler #$endst-icc<-->endst-ihc :type)
+(:LOSER :HYPOTH :CORR :TEMPORARY :MATURE)
+> (g 100)
+;; Time 600.00, 271 agents in WM: 120 c,  85 i,  66 h (0+52+14)
+;;    1 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.087 |  7 | -.962 |  3 |    | sit-BF  | 0.013 |  2 | -.981 |  2 |   
+ | sit-IHC | 1.474 | 19 | 1.607 | 15 |    | sit-GP  | 0.017 |  2 | -.999 |  0 |   
+ | sit-MTF | 0.100 |  6 | -.991 |  1 |    | sit-BPF | 0.008 |  1 | -.990 |  1 |   
+ | sit-ICF | 0.155 | 12 | -.961 |  3 |    | sit-FDO | 0.061 |  4 | -.989 |  1 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-ICC | 2.865 | 15 | 1.607 | 15 |    | all WM  |194.33 |259 |       |  0 |
+
+
+> (hyps #$follows-icc)
+ 1.169  m   2    follows-icc<-->cause-ihc
+ 1.160  m   1    follows-icc<-->follows-ihc
+ 1.441  m   1    follows-icc<-->to-reach-ihc
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (rt #$follows-icc)
+ 0.584  1.441  m  follows-icc<-->to-reach-ihc 
+ 0.000  1.169  m  follows-icc<-->cause-ihc 
+ 0.338  1.160  m  follows-icc<-->follows-ihc 
+#<RT FOLLOWS-ICC>
+> (ri (coa 'sit-icf))
+0.155
+0.081
+> (ri (coa 'sit-ihc))
+1.474
+0.770
+> 

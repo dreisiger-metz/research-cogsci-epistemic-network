@@ -1,0 +1,116 @@
+
+       Review of a Master's Thesis by A. A. Petrov on
+
+              "Extensions of DUAL and AMBR"
+
+
+Goals
+~~~~~~
+On page 6 of the thesis, Petrov presents five goals for his thesis
+project which are -- in a different order --
+   -- refining the conceptual structure of DUAL,
+   -- developing further the AMBR1 model,
+   -- running simulations,
+   -- creating a program which implements the new version of DUAL,
+   -- writing a program implementing the new AMBR2.
+
+I will review his thesis by asking how well these goals are reached.
+
+
+Refinement of DUAL
+~~~~~~~~~~~~~~~~~~~
+Since I do not know the details of that version of the DUAL architecture
+from which Petrov started, I am unable to evaluate how far his refinement
+progresses from this starting point and how large the scope of refinements
+really is.  What I can evaluate is the result, and that is a conceptually
+clear and highly differentiated presentation of a cognitive architecture
+with lots of features which can probably be shown to be very useful for
+different cognitive modeling tasks.
+
+The only negative point I want to mention here is that Petrov does not
+always give reasons for design decisions underlying his version of DUAL.
+Let me use as an example the 'teapot structure' introduced as an example
+in figure 3.3.1.  The agent representing knowledge about an individual
+teapot can point directly (by using the 'inst-of' slot) to the corresponding
+concept-agent. In order to reach the agent representing the teapot's
+specific colour, it must go via another agent which is an instance of the
+'color-of' concept-agent. There may be good reasons for such different
+access strategies, but Petrov does not tell us about them.
+
+This is an example only. I have similar problems with using activation
+integrals over time as values of variables having energy properties. Another
+example is that there are no reported reasons for not distinguishing between
+some kinds of declarative and procedural knowledge representations. The
+simple statement that the reasons given by others who favour such a
+distinction are not convincing is not enough.  This can be seen in connection
+with the fact that Petrov presents no typology of attached procedures in
+DUAL according to how they are triggered (if-needed, if-added, watchdogs,
+etc.).
+
+
+AMBR
+~~~~~
+The development of AMBR2 is based on an impressively broad knowledge of all
+existing theoretical approaches to retrieval and mapping processes in
+analogical thinking.  Petrov presents an excellent analysis of what has been
+developed and proposed in this field.  Starting with the results of his
+analysis, he gradually builds up AMBR2.  On this way, he takes into account
+lots of empirical results and shows how the already known phenomena can be
+explained by features he builds into his system.  The result is AMBR2 as a
+very differentiated and powerful system which fully takes into account all
+aspects of the current discussions and developments in research on analogical
+thinking as well as all known phenomena concerning retrieval and mapping in
+analogical thinking. This development is simply excellent.
+
+
+Simulations
+~~~~~~~~~~~~
+AMBR2 obviously has been implemented.  Petrov uses a small number of analogy
+tasks to collect simulation data which show that the system really does what
+it is supposed to do and that it is able to model human analogy-using behavior.
+It is shown that the whole conceptual machinery Petrov has built is really
+useful for explaining empirical phenomena in its domain.
+
+
+Implementation of DUAL and AMBR2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Here is the only really dark spot in the thesis.  In fact, it is really a
+deep hole.  Despite the fact that Petrov himself has named the development
+of the two computer implementations 'goals' of his thesis project, the
+thesis itself does not contain any information about the programs.  I am
+sure they exist; otherwise Petrov could not have generated the data he
+reports.  But the reader of the thesis gets no information about the
+structure of the programs, about the methods used to implement concurrent
+processes, about the techniques used to prevent the system from running
+into deadlocks, not even about the language used (LISP with or without CLOS,
+maybe a special language for concurrent programming like OZ, or what?).
+
+
+Style
+~~~~~~
+If there is a later revision of the text, Petrov should avoid positive
+self-evaluations.  His program is indeed very ambitious, but he should not
+say that himself several times.  Many aspects he takes into account are
+indeed very important, but he should not ......
+
+The first part of the text is highly redundant.  I did not count how often
+Petrov tells his reader that a DUAL agent does not know who is the sender
+of the messages it receives.  I suspect that several parts of the thesis
+have been written at different times, and that these parts have been put
+together on a computer later on without any control of unnecessary
+repetitions.
+
+
+SUMMATIVE EVALUATION
+~~~~~~~~~~~~~~~~~~~~~
+Petrov has done much more and achieved much more than what is normally
+expected in a thesis project.  The main results -- especially AMBR2 -- are
+excellent.  Unfortunately, the thesis is not free from a few dark spots
+which prevent me from porposing the best possible grade.
+
+
+Sofia, July 18, 1997
+
+    (signature)
+
+Werner H. Tack

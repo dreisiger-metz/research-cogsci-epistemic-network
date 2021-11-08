@@ -1,0 +1,228 @@
+
+        *********************************************************
+        ***     L E V E L S   O F   D E S C R I P T I O N     ***
+        *********************************************************
+
+
+From boicho@pscs2.irmkant.rm.cnr.it Thu Oct  3 14:01 EET 1996
+
+> In general, I think you tend to mix conceptual and implem. levels every
+> now and then, while I'm trying to keep them separate.
+> (The sentence above is an obvious (over)generalization. Here are some
+> concrete instances: You often say "in the current implementation...".
+> This is irrelevant to the conception, in my view. An implementation
+> should be implementation. In this case, the 'current implementation' is
+> in Golden CL for the IBM PC. The next implementation will be in CMU CL
+> for the Sun but this doesn't matter...)
+
+OK, there is a misunderstanding. When I speak of implementational level I
+never go down to the LISP code. I have never talked about how a particular
+function is coded in LISP. We can skip that level from our discussions for
+now. So when I say "in the current implementation" I never mean GCLISP, but
+what I mean are conceptual decisions which are, however, not so important
+and which I am not absolutely committed with. Which is not the case with
+many other decisions which I consider as essensial part of either DUAL or
+AMBR.
+
+
+So, there are at least three levels of what you call conceptual level:
+ -- the most general level of DUAL principles, structures, and mechanisms;
+ -- principles, structures, and mechanisms for human reasoning;
+ -- tentative small-scale decisions.
+
+I may claim that the third lavel should not exist, but it cannot. Otherwise
+you will have to describe every detail and no one will see the forest out of
+the trees, and secondly, you cannot make always firm decisions and call
+them principles. So, this is the "implementational level" that I speak
+about typically. So, please, don't close your ears when you hear "current
+implementation".
+
+Boicho
+
+---------------------------------------------------------------------------
+
+From alex Sun Oct  6 19:11 EET 1996
+
+Hi Boicho,
+
+I agree with everything you write. I will make some additional comments.
+
+You are absolutely right that there are at least two levels. (I omit the
+second item in your classification, the one about *human* stuff.) I would
+argue that there are more levels. On the other hand, I am aware that too
+many levels will lead to the phenomena you describe: 'no one will see the
+forest out of the trees.' Moreover, no one will ever bother to read all
+these hundreds of pages. (For example, I have not yet read *all* 'Godel,
+Escher, Bach'. You haven't either, as far as I know.)
+
+
+But... We should not sweep the 'implementational superficialities' under
+the carpet. Let me remind you of two cases:
+  1. Douglas Lenat's AM.
+     As you know, this work was acclaimed as a great success.
+     However, no one was able to *replicate* the program,
+     although Lenat has given in his thesis a complete listing
+     of all his heuristics. Finally, there was an article in
+     'Artif. Intell.' criticizing the style of Lenat's
+     publications (and the style of AI publications in general)
+     The authors of this article gave a number of examples
+     showing that AM was *not* built *entirely* in accord 
+     with the general principles stated in the introduction
+     of Lenat's thesis. Lenat's critics cited some paragraphs
+     from his text, say one from p.14 (principles) and one
+     from p.257 (appendix). The second passage contradicted
+     to the first. (We've found analogous passages about the
+     visual buffer from Kosslyn's book, remember.)
+
+     OK. Obviously, I do not want our work to be flawed like
+     this. I do not want to write on page 23 that '*all*
+     processing in DUAL is done locally' and then, buried
+     in some appendix to say: 'there is a special node, called
+     "focus" that monitors the state of the whole LTM (or WM,
+     that does not matter) and picks up the agent with max.
+     activation level.' 
+     This is the point where the 'conceptual' and the 'imple-
+     mentational' levels meet. And in practice, you know this
+     better than me, the boundary is fuzzy. What is more, it
+     is very difficult always to keep low-level decisions in
+     tune with the general principles proclaimed in the intro-
+     duction. 
+     The only way out, I think, is to put such annoying 
+     details on the table and to discuss them fairly. The
+     art is to be able to present the whole topic without
+     pushing the audience away.
+
+  2. Copycat
+     You told me about the reaction of some of the Gentner's
+     students who said that he liked CCat more *before* he
+     has actually seen the program. In there, there were too
+     many 'tentative small-scale decisions' that were omitted
+     from the publications in order not 'to hide the forest
+     behind the trees'. You get the point.
+
+
+OK. Enough arguments. To be more constructive, here is my
+notion of levels:
+
+  -1- Architectural level
+ -------------------------
+   As John Anderson says, a proposal for a cognitive arch. is
+in fact a *theory* about the structure of human cognition.
+So, when describing DUAL, there are (and should be) many things
+that are left unspecified. There must be no contradictions, 
+however.
+
+
+  -2- Model, theoretical level
+ -------------------------------
+   On top of DUAL, we define particular models. They fill in
+part of the gaps that were left unspecified at the archit. lev.
+On the other hand, this is still a theoretical level, so there
+are still things that are left unspecified. It is important
+that everything at level -2- is in absolute agreement with
+everything at level -1-. There should be no compromise with
+this dictum, even if this force us to weaken some of the 
+claims at level -1-.
+
+  -3- Model, empirical level
+ ----------------------------
+   Here, one specifies the model until the end. The goal is to
+achieve a working artefact (in our case, a computer program).
+The details about GCLisp or CMUCL or C++ are still irrelevant
+here. What is relevant is, for example, to say that the decay
+rate is d=0.13. Once having a working model, you experiment
+with it (hence 'empirical level'). These experiments include
+a sensitivity analysis, i.e. observations about the values
+of parameters that yield the desired behavior.
+
+  -4- Programming level
+ -----------------------
+   This is the level of lisp code, CLOS classes, etc.
+
+
+
+Our misunderstanding evidently stems out of inconsistent use
+of terms. I tend to use the same term 'conceptual level' for
+levels -1-, -2-, and partially for level -3-.  I use the
+term 'implementational level' for -4- and the rest of -3-. 
+You, as far as I get it, use 'conceptual' for -1- and part
+of -2-; 'implementational' -- for -3- and the rest of -2-.
+You seem to leave level -4- out of board (i.e. without a 
+specific term).
+
+In short, there is great terminological mess. Here is my
+proposal for a unified terminology:
+
+  -- 'conceptual level' -- general theoretical decisions
+     about the architecture and the models built on top of it.
+     When necessary, this level could be further specialized:
+     + 'architectural conceptual level'
+     + 'AMBR/PEAN/whatever_model conceptual level'
+
+  -- 'implementational level' -- important small-scale deci-
+     sions like the exact vocabulary of link labels or
+     the exact connectivity in the visual array.
+
+  -- 'realizational level' -- (Anderson's term, I think)
+     details like parameter values, representations of an
+     example problem, etc.
+
+  -- 'programming level' -- Lisp code.
+
+
+I wait for your comments on the aforementioned terminology.
+I will not use it unless you approve it. After all, termino-
+logies are just that -- conventions that should be refined
+until they are shared by everyone.
+  
+
+> So, please, don't close your ears when you hear "current 
+> implementation".
+
+You can bet I won't. :-)
+
+
+Alex
+
+----------------------------------------------------------------------------
+
+From boicho@pscs2.irmkant.rm.cnr.it Mon Oct  7 10:07 EET 1996
+
+Hi Sasho,
+
+Yes, there was a big mess, but now I think we are on our way to resolve it.
+
+Just one short comment.
+
+There are two independent dimensions in the problems we are discussing.
+(I cannot produce the graph in the e-mail, but you can imagine it).
+- theoretical/methodological level: architecture - model
+- level of specification: principles, conceptual description,
+specification, parameters, programming code
+
+The general cognitive architecture has also its specification and
+programming code which could and should be independent from the one
+of the model (AMBR, PEAN, etc.).
+
+So, my suggestion is to make this two dimensional picture clear in the text
+an then to try to describe every slot.
+
+As for the terminology I would suggest the following levels (to keep the
+terms as close as possible to their conventional use):
+- "main principles"
+- "conceptual specification"
+- "implementational specification"
+- "parameters"
+- "code/program"
+I hope they are enough self explanatory, so that you can recognise what
+is what.
+
+I think that this discussion was very useful for our future presentations
+of DUAL, AMBR, PEAN, etc.
+
+Let me know whether you agree with the current version of the terminology
+and with the "two dimensions" proposal.
+
+Best,
+Boicho
+

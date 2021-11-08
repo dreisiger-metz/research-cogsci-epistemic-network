@@ -1,0 +1,203 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXFileReference section */
+		213570960E9DF9A40094031C /* LoggerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoggerTest.cpp; sourceTree = "<group>"; };
+		213570970E9DF9A40094031C /* LoggerTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LoggerTest.hpp; sourceTree = "<group>"; };
+		213B4CE10ECD5B1F00A16A8A /* Manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Manager.hpp; sourceTree = "<group>"; };
+		215886AE0EC91CD8000E3663 /* Exceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Exceptions.cpp; sourceTree = "<group>"; };
+		215886AF0EC91CD8000E3663 /* Exceptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Exceptions.hpp; sourceTree = "<group>"; };
+		215886B00EC91CD8000E3663 /* HypothesisAgent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HypothesisAgent.cpp; sourceTree = "<group>"; };
+		215886B10EC91CD8000E3663 /* HypothesisAgent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HypothesisAgent.hpp; sourceTree = "<group>"; };
+		215886B20EC91CD8000E3663 /* LongTermMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LongTermMemory.cpp; sourceTree = "<group>"; };
+		215886B30EC91CD8000E3663 /* LongTermMemory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LongTermMemory.hpp; sourceTree = "<group>"; };
+		215886B40EC91CD8000E3663 /* Messages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Messages.cpp; sourceTree = "<group>"; };
+		215886B50EC91CD8000E3663 /* Messages.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Messages.hpp; sourceTree = "<group>"; };
+		216420AE0ECA68D100EC9D5A /* AMBRTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AMBRTest.hpp; sourceTree = "<group>"; };
+		216420AF0ECA6A1F00EC9D5A /* AMBRTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AMBRTest.cpp; sourceTree = "<group>"; };
+		217606150E939436006E6D11 /* Agent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Agent.cpp; sourceTree = "<group>"; };
+		217606160E939436006E6D11 /* Agent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Agent.hpp; sourceTree = "<group>"; };
+		217606170E939436006E6D11 /* AgentTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgentTest.cpp; sourceTree = "<group>"; };
+		217606180E939436006E6D11 /* AgentTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AgentTest.hpp; sourceTree = "<group>"; };
+		2176061A0E939436006E6D11 /* AMBR.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AMBR.hpp; sourceTree = "<group>"; };
+		2176061B0E939436006E6D11 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		2176061C0E939436006E6D11 /* Reference.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Reference.cpp; sourceTree = "<group>"; };
+		2176061D0E939436006E6D11 /* Reference.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Reference.hpp; sourceTree = "<group>"; };
+		2176061E0E939436006E6D11 /* Slot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Slot.cpp; sourceTree = "<group>"; };
+		2176061F0E939436006E6D11 /* Slot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Slot.hpp; sourceTree = "<group>"; };
+		217606200E939436006E6D11 /* SlotTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlotTest.cpp; sourceTree = "<group>"; };
+		217606210E939436006E6D11 /* SlotTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlotTest.hpp; sourceTree = "<group>"; };
+		217A42800E9B0BAB00AEF7A6 /* ConceptAgent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConceptAgent.cpp; sourceTree = "<group>"; };
+		217A42810E9B0BAC00AEF7A6 /* ConceptAgent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConceptAgent.hpp; sourceTree = "<group>"; };
+		217A42820E9B0BAC00AEF7A6 /* InstanceAgent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InstanceAgent.cpp; sourceTree = "<group>"; };
+		217A42830E9B0BAC00AEF7A6 /* InstanceAgent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InstanceAgent.hpp; sourceTree = "<group>"; };
+		2187653A0EA56C2C0085F29A /* AMBR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AMBR.cpp; sourceTree = "<group>"; };
+		2187653B0EA56C2C0085F29A /* AMBRLogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AMBRLogger.cpp; sourceTree = "<group>"; };
+		2187653C0EA56C2C0085F29A /* AMBRLogger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AMBRLogger.hpp; sourceTree = "<group>"; };
+		21972E430E9DA13500A8EE86 /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		21972E440E9DA13500A8EE86 /* Logger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Logger.hpp; sourceTree = "<group>"; };
+		21D766200E94715F0004C864 /* libAMBR++_3.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "libAMBR++_3.xcclassmodel"; sourceTree = "<group>"; };
+		21D766210E9475140004C864 /* libAMBR++_2.xcclassmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcclassmodel; path = "libAMBR++_2.xcclassmodel"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* libAMBR++ */ = {
+			isa = PBXGroup;
+			children = (
+				213B4CE10ECD5B1F00A16A8A /* Manager.hpp */,
+				2187653A0EA56C2C0085F29A /* AMBR.cpp */,
+				2176061A0E939436006E6D11 /* AMBR.hpp */,
+				215886AE0EC91CD8000E3663 /* Exceptions.cpp */,
+				215886AF0EC91CD8000E3663 /* Exceptions.hpp */,
+				215886B40EC91CD8000E3663 /* Messages.cpp */,
+				215886B50EC91CD8000E3663 /* Messages.hpp */,
+				217606150E939436006E6D11 /* Agent.cpp */,
+				217606160E939436006E6D11 /* Agent.hpp */,
+				217A42800E9B0BAB00AEF7A6 /* ConceptAgent.cpp */,
+				217A42810E9B0BAC00AEF7A6 /* ConceptAgent.hpp */,
+				217A42820E9B0BAC00AEF7A6 /* InstanceAgent.cpp */,
+				217A42830E9B0BAC00AEF7A6 /* InstanceAgent.hpp */,
+				215886B00EC91CD8000E3663 /* HypothesisAgent.cpp */,
+				215886B10EC91CD8000E3663 /* HypothesisAgent.hpp */,
+				2176061C0E939436006E6D11 /* Reference.cpp */,
+				2176061D0E939436006E6D11 /* Reference.hpp */,
+				2176061E0E939436006E6D11 /* Slot.cpp */,
+				2176061F0E939436006E6D11 /* Slot.hpp */,
+				215886B20EC91CD8000E3663 /* LongTermMemory.cpp */,
+				215886B30EC91CD8000E3663 /* LongTermMemory.hpp */,
+				21972E430E9DA13500A8EE86 /* Logger.cpp */,
+				21972E440E9DA13500A8EE86 /* Logger.hpp */,
+				2187653B0EA56C2C0085F29A /* AMBRLogger.cpp */,
+				2187653C0EA56C2C0085F29A /* AMBRLogger.hpp */,
+				2176061B0E939436006E6D11 /* Makefile */,
+				216420AF0ECA6A1F00EC9D5A /* AMBRTest.cpp */,
+				216420AE0ECA68D100EC9D5A /* AMBRTest.hpp */,
+				217606170E939436006E6D11 /* AgentTest.cpp */,
+				217606180E939436006E6D11 /* AgentTest.hpp */,
+				217606200E939436006E6D11 /* SlotTest.cpp */,
+				217606210E939436006E6D11 /* SlotTest.hpp */,
+				213570960E9DF9A40094031C /* LoggerTest.cpp */,
+				213570970E9DF9A40094031C /* LoggerTest.hpp */,
+				21D766210E9475140004C864 /* libAMBR++_2.xcclassmodel */,
+				21D766200E94715F0004C864 /* libAMBR++_3.xcclassmodel */,
+			);
+			name = "libAMBR++";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		D28A88AD04BDD90700651E21 /* libAMBR++ */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1DEB918F08733D9F0010E9CD /* Build configuration list for PBXLegacyTarget "libAMBR++" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			dependencies = (
+			);
+			name = "libAMBR++";
+			passBuildSettingsInEnvironment = 1;
+			productName = "libAMBR++";
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB919308733D9F0010E9CD /* Build configuration list for PBXProject "libAMBR++" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* libAMBR++ */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D28A88AD04BDD90700651E21 /* libAMBR++ */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB919008733D9F0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "libAMBR++";
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB919108733D9F0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "libAMBR++";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1DEB919408733D9F0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Debug;
+		};
+		1DEB919508733D9F0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB918F08733D9F0010E9CD /* Build configuration list for PBXLegacyTarget "libAMBR++" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB919008733D9F0010E9CD /* Debug */,
+				1DEB919108733D9F0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB919308733D9F0010E9CD /* Build configuration list for PBXProject "libAMBR++" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB919408733D9F0010E9CD /* Debug */,
+				1DEB919508733D9F0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

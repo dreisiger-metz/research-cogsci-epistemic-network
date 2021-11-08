@@ -1,0 +1,40 @@
+/AMBR.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/AMBR.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/AMBRLogger.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/AMBRLogger.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/AMBRTest.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/AMBRTest.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Agent.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Agent.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/AgentTest.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/AgentTest.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/ConceptAgent.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/ConceptAgent.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Exceptions.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Exceptions.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/HypothesisAgent.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/HypothesisAgent.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/InstanceAgent.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/InstanceAgent.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Logger.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Logger.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/LoggerTest.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/LoggerTest.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/LongTermMemory.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/LongTermMemory.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Makefile.linux/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Makefile.osx/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Manager.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Messages.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Messages.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Reference.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Reference.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Slot.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/Slot.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/SlotTest.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/SlotTest.hpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+/test-AMBR++.cpp/1.1.1.1/Thu Mar 12 05:54:51 2009//
+D/build////
+D/libAMBR++.xcodeproj////
+D/libAMBR++_2.xcclassmodel////
+D/libAMBR++_3.xcclassmodel////

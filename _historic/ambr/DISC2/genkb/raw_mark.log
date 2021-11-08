@@ -1,0 +1,487 @@
+
+> (verbose 'add-to-wm '(concept-agent) :set)
+(#<STANDARD-CLASS CONCEPT-AGENT #xE5A7BC>)
+> (g)
+;; T=0.04, adding #$milk to WM.
+;; T=0.04, adding #$teapot to WM.
+;; T=0.04, adding #$in to WM.
+;; T=0.04, adding #$made-of to WM.
+;; T=0.04, adding #$material-metal to WM.
+;; T=0.04, adding #$temperature-of to WM.
+;; T=0.04, adding #$low-temp to WM.
+;; T=0.06, adding #$situation to WM.
+;; T=0.08, adding #$material to WM.
+;; T=0.10, adding #$temper-qualifier to WM.
+;; T=0.12, adding #$physprop-rel to WM.
+;; T=0.18, adding #$in-touch-with to WM.
+;; T=0.22, adding #$cook-vessel to WM.
+;; T=0.22, adding #$liquid-holder to WM.
+;; T=0.24, adding #$beverage to WM.
+;; T=0.24, adding #$dairy-product to WM.
+;; T=0.24, adding #$goal-state to WM.
+;; T=0.26, adding #$init-state to WM.
+;; T=0.26, adding #$high-temp to WM.
+;; T=0.34, adding #$cheese to WM.
+;; T=0.34, adding #$physprop-qualifier to WM.
+;; T=0.40, adding #$container to WM.
+;; T=0.50, adding #$to-reach to WM.
+;; T=0.64, adding #$state to WM.
+;; T=0.72, adding #$end-state to WM.
+;; T=0.76, adding #$food-holder to WM.
+;; T=0.82, adding #$physprop-attr to WM.
+;; T=0.92, adding #$phys/spat-rel to WM.
+;; T=0.96, adding #$medium-temp to WM.
+;; T=0.98, adding #$plate to WM.
+;; T=1.04, adding #$physical-property to WM.
+;; T=1.04, adding #$drinkable-liquid to WM.
+;; T=1.06, adding #$liquid to WM.
+;; T=1.06, adding #$is-goal to WM.
+;; T=1.08, adding #$food to WM.
+;; T=1.16, adding #$fridge to WM.
+;; T=1.20, adding #$bin-phys-rel to WM.
+;; T=1.38, adding #$color-of to WM.
+;; T=1.38, adding #$shape-of to WM.
+;; T=1.42, adding #$material-china to WM.
+;; T=1.42, adding #$cup to WM.
+;; T=1.52, adding #$problem-description to WM.
+;; T=1.54, adding #$color to WM.
+;; T=1.54, adding #$shape-qualifier to WM.
+;; T=1.56, adding #$material-glass to WM.
+;; T=1.56, adding #$material-wood to WM.
+;; T=1.56, adding #$material-stone to WM.
+;; T=1.62, adding #$result to WM.
+;; T=1.64, adding #$cow to WM.
+;; T=1.66, adding #$inter-state to WM.
+;; T=1.84, adding #$baking-dish to WM.
+;; T=1.88, adding #$physical-relation to WM.
+;; T=1.92, adding #$thing to WM.
+;; T=2.08, adding #$oven to WM.
+;; T=2.16, adding #$attached-to to WM.
+;; T=2.16, adding #$on to WM.
+;; T=2.20, adding #$saucepan to WM.
+;; T=2.44, adding #$unary-phys-rel to WM.
+;; T=2.50, adding #$bottle to WM.
+;; T=2.60, adding #$crockery to WM.
+;; T=2.62, adding #$supports to WM.
+;; T=2.68, adding #$non-drinkable-liquid to WM.
+;; T=2.78, adding #$kitch-equipmt to WM.
+;; T=2.80, adding #$artifact to WM.
+;; T=2.82, adding #$box/bag to WM.
+;; T=2.82, adding #$goal/result to WM.
+;; T=2.82, adding #$object to WM.
+;; T=2.84, adding #$cause-like-rel to WM.
+;; T=2.92, adding #$cause to WM.
+;; T=3.00, adding #$problem to WM.
+;; T=3.02, adding #$problem-solution to WM.
+;; T=3.78, adding #$material-clay to WM.
+;; T=4.70, adding #$glass to WM.
+;; T=5.80, adding #$soft-drink to WM.
+;; T=5.80, adding #$alcoholic-drink to WM.
+;; T=5.90, adding #$hot-plate to WM.
+;; T=5.95, adding #$heat-source to WM.
+;; T=6.15, adding #$pan to WM.
+;; T=6.25, adding #$ice-cube to WM.
+;; T=7.10, adding #$fluid to WM.
+;; T=7.85, adding #$water to WM.
+;; T=7.90, adding #$episode to WM.
+;; T=8.25, adding #$ice to WM.
+;; T=8.65, adding #$material-ice to WM.
+;; T=9.30, adding #$artificial-thing to WM.
+;; Time  10.00, 209 agents in WM:  84 c,  75 i,  50 h (22+28+0)
+;;    9 clocks;  84 ag on agenda:  19 c,  21 i,  34 h (11+23+0), 10 nc
+
+|  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |
++---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+| sit-WTP | 0.217 | 14 | -.614 |  3 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |
+| sit-IHC | 0.070 |  4 | -.803 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |
+| sit-MTF | 0.148 |  8 | -.629 |  3 |    | sit-BPF | 0.006 |  1 | -.999 |  0 |
+| sit-ICF | 0.056 |  4 | -.897 |  1 |    | sit-FDO | 0.280 | 12 | -.376 |  5 |
+| sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.068 |  5 | -.883 |  1 |
+| sit-SFF | 0.085 |  8 | -.649 |  3 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |
++---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+| SIT-CM1 | 2.640 | 11 | 0.220 |  9 |    | all WM  |136.40 |202 |       | 84 |
+
+> (g)
+;; Time  20.00, 237 agents in WM:  83 c,  74 i,  80 h (21+59+0)
+;;   18 clocks;  61 ag on agenda:  11 c,  10 i,  31 h (4+27+0), 9 nc
+
+> (verbose 'remove-from-wm 'concept-agent)
+(#<STANDARD-CLASS CONCEPT-AGENT #xE5A7BC>)
+> (g 30)
+;; T=32.00, adding #$follows to WM.
+;; T=39.70, adding #$logical-relation to WM.
+;; T=40.40, removing #$alcoholic-drink from WM.
+;; Time  50.00, 289 agents in WM:  84 c,  76 i, 129 h (30+99+0)
+;;   41 clocks;  32 ag on agenda:   5 c,   8 i,  16 h (10+6+0), 3 nc
+
+
+****************************************************************************
+
+> (verbose 'add-to-wm 'instance-agent)
+(#<STANDARD-CLASS INSTANCE-AGENT #xE5A898>)
+> (verbose 'remove-from-wm 'instance-agent)
+(#<STANDARD-CLASS INSTANCE-AGENT #xE5A898>)
+> (g)
+;; T=0.04, adding #$sit-cm1 to WM.
+;; T=0.04, adding #$initst-cm1 to WM.
+;; T=0.04, adding #$goalst-cm1 to WM.
+;; T=0.16, adding #$to-reach-cm1 to WM.
+;; T=0.22, adding #$low-t-fridge to WM.
+;; T=0.30, adding #$ckves-md-metal to WM.
+;; T=0.32, adding #$mmetal-ckves to WM.
+;; T=0.34, adding #$milk-mtf to WM.
+;; T=0.40, adding #$made-of-ihc to WM.
+;; T=0.40, adding #$plate-md-china to WM.
+;; T=0.40, adding #$mmetal-wtp to WM.
+;; T=0.40, adding #$t-of-fdo-o to WM.
+;; T=0.40, adding #$t-of-icf-i to WM.
+;; T=0.42, adding #$tpot-wtp to WM.
+;; T=0.42, adding #$in-fdo-do to WM.
+;; T=0.46, adding #$low-t-mtf to WM.
+;; T=0.52, adding #$t-of-sff-fd to WM.
+;; T=0.54, adding #$low-t-sff to WM.
+;; T=0.56, adding #$in-sff-sf to WM.
+;; T=0.58, adding #$mmetal-erw to WM.
+;; T=0.64, adding #$fridge-is-cold to WM.
+;; T=0.78, adding #$t-of-fdo-f to WM.
+;; T=0.80, adding #$oven-fdo to WM.
+;; T=0.84, adding #$high-t-fdo to WM.
+;; T=0.86, adding #$t-of-mtf-m to WM.
+;; T=0.98, adding #$in-bpf-pf to WM.
+;; T=1.06, adding #$made-of-wtp to WM.
+;; T=1.28, adding #$mchina-plate to WM.
+;; T=1.28, adding #$food-sff to WM.
+;; T=1.40, adding #$cup-ihc to WM.
+;; T=1.40, adding #$mchina-ihc to WM.
+;; T=1.78, adding #$sit-fdo to WM.
+;; T=1.80, adding #$dish-fdo to WM.
+;; T=2.34, adding #$made-of-erw to WM.
+;; T=2.34, adding #$tpot-erw to WM.
+;; T=2.68, adding #$initst-fdo-1 to WM.
+;; T=2.76, adding #$sit-wtp to WM.
+;; T=2.78, adding #$high-t-wtp to WM.
+;; T=2.86, adding #$food-fdo to WM.
+;; T=3.38, adding #$t-of-wtp-w to WM.
+;; T=3.40, adding #$on-fdo to WM.
+;; T=3.44, adding #$t-of-wtp-t to WM.
+;; T=4.18, adding #$ice-cube-icf to WM.
+;; T=4.18, adding #$low-t-icf to WM.
+;; T=5.60, adding #$sit-mtf to WM.
+;; T=5.65, adding #$fridge-mtf to WM.
+;; T=5.65, adding #$hplate-wtp to WM.
+;; T=5.70, adding #$t-of-mtf-f to WM.
+;; T=5.70, adding #$t-of-wtp-p to WM.
+;; T=5.95, adding #$on-wtp to WM.
+;; T=6.15, adding #$sit-icf to WM.
+;; T=6.15, adding #$htsrc-is-hot to WM.
+;; T=6.45, adding #$high-t-htsrc to WM.
+;; T=6.60, adding #$goalst-fdo to WM.
+;; T=7.75, adding #$high-t-ihc to WM.
+;; T=7.75, adding #$in-wtp to WM.
+;; T=7.80, adding #$initst-wtp-1 to WM.
+;; T=7.80, adding #$in-erw-wt to WM.
+;; T=7.80, adding #$water-wtp to WM.
+;; T=7.90, adding #$initst-mtf-1 to WM.
+;; T=7.95, adding #$goalst-mtf to WM.
+;; T=8.00, adding #$sit-sff to WM.
+;; T=8.00, adding #$t-of-sff-fr to WM.
+;; T=8.00, adding #$fridge-sff to WM.
+;; T=8.05, adding #$salt-sff to WM.
+;; T=8.20, adding #$in-fdo-fo to WM.
+;; T=8.25, removing #$in-fdo-fo from WM.
+;; T=8.30, adding #$in-fdo-fo to WM.
+;; T=8.60, adding #$sit-erw to WM.
+;; T=9.45, adding #$goalst-wtp to WM.
+
+;; Time  10.00, 209 agents in WM:  84 c,  75 i,  50 h (22+28+0)
+;;    9 clocks;  84 ag on agenda:  19 c,  21 i,  34 h (11+23+0), 10 nc
+
+> (g 20)
+;; T=18.75, removing #$sit-erw from WM.
+;; T=25.30, adding #$interst-fdo to WM.
+;; T=26.40, removing #$goalst-mtf from WM.
+;; T=26.80, removing #$initst-mtf-1 from WM.
+;; T=29.70, adding #$to-reach-fdo to WM.
+;; T=29.80, adding #$cause-fdo-t to WM.
+
+;; Time  30.00, 260 agents in WM:  83 c,  75 i, 102 h (28+74+0)
+;;   38 clocks;  62 ag on agenda:   8 c,  12 i,  32 h (8+24+0), 10 nc
+
+> (g 50)
+;; T=31.10, adding #$follows-fdo to WM.
+;; T=31.20, adding #$endst-fdo to WM.
+;; T=33.50, removing #$in-erw-wt from WM.
+;; T=68.00, adding #$cause-fdo-i to WM.
+;; T=68.10, adding #$initst-fdo-2 to WM.
+
+;; Time  80.00, 269 agents in WM:  93 c,  78 i,  98 h (4+92+2)
+;;    9 clocks;   4 ag on agenda:   0 c,   1 i,   2 h (1+1+0), 1 nc
+
+
+****************************************************************************
+****************************************************************************
+****************************************************************************
+
+> (verbose 'receive-symbol '(marker))
+(#<STANDARD-CLASS MARKER #xE1C10C>)
+> (verbose 'report-marker-intersection t)
+T
+> (g)
+;; T=0.14, #<MRK T-OF-CM1> received in TEMPERATURE-OF.
+;; T=0.14, #<MRK LOW-T-CM1> received in LOW-TEMP.
+;; T=0.16, #<MRK IN-CM1> received in IN.
+;; T=0.16, #<MRK MILK-CM1> received in MILK.
+;; T=0.16, #<MRK TPOT-CM1> received in TEAPOT.
+;; T=0.22, #<MRK MADE-OF-CM1> received in MADE-OF.
+;; T=0.30, #<MRK MMETAL-CM1> received in MATERIAL-METAL.
+;; T=0.56, #<MRK LOW-T-CM1> received in TEMPER-QUALIFIER.
+;; T=0.64, #<MRK TPOT-CM1> received in COOK-VESSEL.
+;; T=0.64, #<MRK SIT-CM1> received in SITUATION.
+;; T=0.64, #<MRK T-OF-CM1> received in PHYSPROP-REL.
+;; T=0.68, #<MRK MILK-CM1> received in BEVERAGE.
+;; T=0.68, #<MRK INITST-CM1> received in INIT-STATE.
+;; T=0.72, #<MRK GOALST-CM1> received in GOAL-STATE.
+;; T=0.74, #<MRK IN-CM1> received in IN-TOUCH-WITH.
+;; T=0.78, #<MRK MADE-OF-CM1> received in PHYSPROP-REL.
+;; T=0.84, #<MRK TPOT-CM1> received in LIQUID-HOLDER.
+;; T=0.84, #<MRK MMETAL-CM1> received in MATERIAL.
+;; T=0.88, #<MRK MILK-CM1> received in DAIRY-PRODUCT.
+;; T=1.10, #<MRK LOW-T-CM1> received in PHYSPROP-QUALIFIER.
+;; T=1.20, #<MRK T-OF-CM1> received in PHYSICAL-PROPERTY.
+;; T=1.28, #<MRK LOW-T-FRIDGE> received in LOW-TEMP.
+;; T=1.34, #<MRK LOW-T-CM1> and #<MRK LOW-T-FRIDGE> intersected at #$low-temp.
+;; T=1.34, #<MRK MMETAL-CM1> received in PHYSPROP-QUALIFIER.
+;; T=1.34, #<MRK CKVES-MD-METAL> received in MADE-OF.
+;; T=1.42, #<MRK MADE-OF-CM1> and #<MRK CKVES-MD-METAL> intersected at #$made-of.
+;; T=1.46, #<MRK T-OF-CM1> received in BIN-PHYS-REL.
+;; T=1.48, #<MRK TPOT-CM1> received in FOOD-HOLDER.
+;; T=1.50, #<MRK TO-REACH-CM1> received in TO-REACH.
+;; T=1.50, #<MRK MMETAL-CKVES> received in MATERIAL-METAL.
+;; T=1.56, #<MRK MMETAL-CM1> and #<MRK MMETAL-CKVES> intersected at #$material-metal.
+;; T=1.56, #<MRK MMETAL-WTP> received in MATERIAL-METAL.
+;; T=1.58, #<MRK IN-CM1> received in PHYS/SPAT-REL.
+;; T=1.64, #<MRK PLATE-MD-CHINA> received in MADE-OF.
+;; T=1.64, #<MRK MILK-MTF> received in MILK.
+;; T=1.66, #<MRK T-OF-FDO-O> received in TEMPERATURE-OF.
+;; T=1.66, #<MRK TPOT-WTP> received in TEAPOT.
+;; T=1.68, #<MRK INITST-CM1> received in STATE.
+;; T=1.68, #<MRK MILK-CM1> received in FOOD.
+;; T=1.68, #<MRK MADE-OF-IHC> received in MADE-OF.
+;; T=1.70, #<MRK TPOT-CM1> received in CONTAINER.
+;; T=1.70, #<MRK MILK-CM1> received in DRINKABLE-LIQUID.
+;; T=1.70, #<MRK T-OF-CM1> and #<MRK T-OF-FDO-O> intersected at #$temperature-of.
+;; T=1.72, #<MRK MILK-CM1> and #<MRK MILK-MTF> intersected at #$milk.
+;; T=1.72, #<MRK GOALST-CM1> received in STATE.
+;; T=1.74, #<MRK TPOT-CM1> and #<MRK TPOT-WTP> intersected at #$teapot.
+;; T=1.76, #<MRK T-OF-ICF-I> received in TEMPERATURE-OF.
+;; T=1.80, #<MRK MADE-OF-CM1> received in PHYSICAL-PROPERTY.
+;; T=1.84, #<MRK IN-FDO-DO> received in IN.
+;; T=1.86, #<MRK MADE-OF-CM1> and #<MRK PLATE-MD-CHINA> intersected at #$made-of.
+;; T=1.90, #<MRK T-OF-SFF-FD> received in TEMPERATURE-OF.
+;; T=1.92, #<MRK IN-CM1> and #<MRK IN-FDO-DO> intersected at #$in.
+;; T=1.94, #<MRK LOW-T-MTF> received in LOW-TEMP.
+;; T=1.98, #<MRK MADE-OF-CM1> received in BIN-PHYS-REL.
+;; T=1.98, #<MRK LOW-T-CM1> and #<MRK LOW-T-MTF> intersected at #$low-temp.
+;; T=2.00, #<MRK FRIDGE-IS-COLD> received in TEMPERATURE-OF.
+;; T=2.02, #<MRK MMETAL-CM1> and #<MRK MMETAL-WTP> intersected at #$material-metal.
+;; T=2.04, #<MRK T-OF-CM1> and #<MRK T-OF-ICF-I> intersected at #$temperature-of.
+;; T=2.04, #<MRK MMETAL-ERW> received in MATERIAL-METAL.
+;; T=2.14, #<MRK LOW-T-SFF> received in LOW-TEMP.
+;; T=2.18, #<MRK IN-SFF-SF> received in IN.
+;; T=2.30, #<MRK MADE-OF-CM1> and #<MRK MADE-OF-IHC> intersected at #$made-of.
+;; T=2.34, #<MRK MMETAL-CM1> and #<MRK MMETAL-ERW> intersected at #$material-metal.
+;; T=2.34, #<MRK T-OF-FDO-F> received in TEMPERATURE-OF.
+;; T=2.34, #<MRK LOW-T-CM1> and #<MRK LOW-T-SFF> intersected at #$low-temp.
+;; T=2.40, #<MRK T-OF-CM1> and #<MRK T-OF-SFF-FD> intersected at #$temperature-of.
+;; T=2.42, #<MRK HIGH-T-FDO> received in HIGH-TEMP.
+;; T=2.46, #<MRK IN-CM1> and #<MRK IN-SFF-SF> intersected at #$in.
+;; T=2.52, #<MRK T-OF-MTF-M> received in TEMPERATURE-OF.
+;; T=2.64, #<MRK MADE-OF-WTP> received in MADE-OF.
+;; T=2.64, #<MRK TPOT-CM1> received in CONTAINER.
+;; T=2.66, #<MRK T-OF-CM1> and #<MRK FRIDGE-IS-COLD> intersected at #$temperature-of.
+;; T=2.66, #<MRK INITST-CM1> received in SITUATION.
+;; T=2.70, #<MRK MADE-OF-CM1> and #<MRK MADE-OF-WTP> intersected at #$made-of.
+;; T=2.82, #<MRK CUP-IHC> received in CUP.
+;; T=2.84, #<MRK OVEN-FDO> received in OVEN.
+;; T=2.92, #<MRK T-OF-CM1> and #<MRK T-OF-FDO-F> intersected at #$temperature-of.
+;; T=2.98, #<MRK HIGH-T-FDO> received in TEMPER-QUALIFIER.
+;; T=2.98, #<MRK MCHINA-IHC> received in MATERIAL-CHINA.
+;; T=3.00, #<MRK IN-BPF-PF> received in IN.
+;; T=3.04, #<MRK LOW-T-CM1> and #<MRK HIGH-T-FDO> intersected at #$temper-qualifier.
+;; T=3.04, #<MRK T-OF-CM1> received in PHYSICAL-RELATION.
+;; T=3.12, #<MRK IN-CM1> and #<MRK IN-BPF-PF> intersected at #$in.
+;; T=3.12, #<MRK FOOD-SFF> received in FOOD.
+;; T=3.12, #<MRK MILK-CM1> received in OBJECT.
+;; T=3.16, #<MRK IN-CM1> received in BIN-PHYS-REL.
+;; T=3.22, #<MRK T-OF-CM1> and #<MRK T-OF-MTF-M> intersected at #$temperature-of.
+;; T=3.32, #<MRK MILK-CM1> received in LIQUID.
+;; T=3.32, #<MRK SIT-FDO> received in SITUATION.
+;; T=3.32, #<MRK T-OF-CM1> received in PHYSICAL-RELATION.
+;; T=3.40, #<MRK SIT-CM1> and #<MRK SIT-FDO> intersected at #$situation.
+;; T=3.42, #<MRK DISH-FDO> received in BAKING-DISH.
+;; T=3.42, #<MRK MILK-CM1> and #<MRK FOOD-SFF> intersected at #$food.
+;; T=3.52, #<MRK GOALST-CM1> received in SITUATION.
+;; T=3.64, #<MRK INITST-CM1> and #<MRK SIT-FDO> intersected at #$situation.
+;; T=3.68, #<MRK MCHINA-PLATE> received in MATERIAL-CHINA.
+;; T=3.90, #<MRK TPOT-ERW> received in TEAPOT.
+;; T=3.96, #<MRK TPOT-CM1> and #<MRK TPOT-ERW> intersected at #$teapot.
+;; T=4.06, #<MRK SIT-FDO> and #<MRK GOALST-CM1> intersected at #$situation.
+;; T=4.08, #<MRK MCHINA-IHC> received in MATERIAL.
+;; T=4.14, #<MRK MMETAL-CM1> and #<MRK MCHINA-IHC> intersected at #$material.
+;; T=4.14, #<MRK MADE-OF-ERW> received in MADE-OF.
+;; T=4.20, #<MRK MADE-OF-CM1> and #<MRK MADE-OF-ERW> intersected at #$made-of.
+;; T=4.28, #<MRK CUP-IHC> received in LIQUID-HOLDER.
+;; T=4.34, #<MRK HIGH-T-WTP> received in HIGH-TEMP.
+;; T=4.40, #<MRK TPOT-CM1> and #<MRK CUP-IHC> intersected at #$liquid-holder.
+;; T=4.44, #<MRK MADE-OF-CM1> received in PHYSICAL-RELATION.
+;; T=4.48, #<MRK OVEN-FDO> received in KITCH-EQUIPMT.
+;; T=4.58, #<MRK INITST-FDO-1> received in INIT-STATE.
+;; T=4.60, #<MRK SIT-WTP> received in SITUATION.
+;; T=4.64, #<MRK FOOD-FDO> received in FOOD.
+;; T=4.68, #<MRK SIT-CM1> and #<MRK SIT-WTP> intersected at #$situation.
+;; T=4.72, #<MRK INITST-CM1> and #<MRK INITST-FDO-1> intersected at #$init-state.
+;; T=4.84, #<MRK HIGH-T-WTP> received in TEMPER-QUALIFIER.
+;; T=4.90, #<MRK INITST-CM1> and #<MRK SIT-WTP> intersected at #$situation.
+;; T=4.90, #<MRK MILK-CM1> and #<MRK FOOD-FDO> intersected at #$food.
+;; T=4.92, #<MRK LOW-T-CM1> and #<MRK HIGH-T-WTP> intersected at #$temper-qualifier.
+;; T=5.15, #<MRK CUP-IHC> received in CROCKERY.
+;; T=5.15, #<MRK GOALST-CM1> and #<MRK SIT-WTP> intersected at #$situation.
+;; T=5.15, #<MRK DISH-FDO> received in COOK-VESSEL.
+;; T=5.15, #<MRK MCHINA-PLATE> received in MATERIAL.
+;; T=5.20, #<MRK T-OF-WTP-W> received in TEMPERATURE-OF.
+;; T=5.25, #<MRK MMETAL-CM1> and #<MRK MCHINA-PLATE> intersected at #$material.
+;; T=5.25, #<MRK TPOT-CM1> and #<MRK DISH-FDO> intersected at #$cook-vessel.
+;; T=5.25, #<MRK T-OF-CM1> and #<MRK T-OF-WTP-W> intersected at #$temperature-of.
+;; T=5.30, #<MRK MILK-CM1> received in THING.
+;; T=5.35, #<MRK ON-FDO> received in ON.
+;; T=5.45, #<MRK MADE-OF-CM1> received in PHYSICAL-RELATION.
+;; T=5.55, #<MRK T-OF-WTP-T> received in TEMPERATURE-OF.
+;; T=5.60, #<MRK T-OF-CM1> and #<MRK T-OF-WTP-T> intersected at #$temperature-of.
+;; T=6.25, #<MRK OVEN-FDO> received in ARTIFACT.
+;; T=6.30, #<MRK LOW-T-ICF> received in LOW-TEMP.
+;; T=6.35, #<MRK LOW-T-CM1> and #<MRK LOW-T-ICF> intersected at #$low-temp.
+;; T=6.55, #<MRK ON-FDO> received in IN-TOUCH-WITH.
+;; T=6.70, #<MRK IN-CM1> and #<MRK ON-FDO> intersected at #$in-touch-with.
+;; T=7.00, #<MRK FRIDGE-MTF> received in FRIDGE.
+;; T=7.00, #<MRK CUP-IHC> received in CONTAINER.
+;; T=7.10, #<MRK SIT-MTF> received in SITUATION.
+;; T=7.10, #<MRK T-OF-MTF-F> received in TEMPERATURE-OF.
+;; T=7.15, #<MRK ICE-CUBE-ICF> received in ICE-CUBE.
+;; T=7.15, #<MRK T-OF-CM1> and #<MRK T-OF-MTF-F> intersected at #$temperature-of.
+;; T=7.15, #<MRK TPOT-CM1> and #<MRK CUP-IHC> intersected at #$container.
+;; T=7.20, #<MRK SIT-CM1> and #<MRK SIT-MTF> intersected at #$situation.
+;; T=7.30, #<MRK ON-FDO> received in SUPPORTS.
+;; T=7.35, #<MRK INITST-CM1> and #<MRK SIT-MTF> intersected at #$situation.
+;; T=7.40, #<MRK T-OF-WTP-P> received in TEMPERATURE-OF.
+;; T=7.45, #<MRK IN-CM1> received in PHYSICAL-RELATION.
+;; T=7.50, #<MRK T-OF-CM1> and #<MRK T-OF-WTP-P> intersected at #$temperature-of.
+;; T=7.55, #<MRK GOALST-CM1> and #<MRK SIT-MTF> intersected at #$situation.
+;; T=7.65, #<MRK FRIDGE-MTF> received in KITCH-EQUIPMT.
+;; T=7.65, #<MRK HTSRC-IS-HOT> received in TEMPERATURE-OF.
+;; T=7.80, #<MRK OVEN-FDO> received in OBJECT.
+;; T=7.80, #<MRK T-OF-CM1> and #<MRK HTSRC-IS-HOT> intersected at #$temperature-of.
+;; T=7.90, #<MRK SIT-ICF> received in SITUATION.
+;; T=7.95, #<MRK SIT-CM1> and #<MRK SIT-ICF> intersected at #$situation.
+;; T=8.05, #<MRK ON-WTP> received in ON.
+;; T=8.10, #<MRK HPLATE-WTP> received in HOT-PLATE.
+;; T=8.15, #<MRK INITST-CM1> and #<MRK SIT-ICF> intersected at #$situation.
+;; T=8.20, #<MRK MILK-CM1> and #<MRK OVEN-FDO> intersected at #$object.
+;; T=8.20, #<MRK HIGH-T-HTSRC> received in HIGH-TEMP.
+;; T=8.45, #<MRK GOALST-CM1> and #<MRK SIT-ICF> intersected at #$situation.
+;; T=8.60, #<MRK HIGH-T-HTSRC> received in TEMPER-QUALIFIER.
+;; T=8.65, #<MRK ICE-CUBE-ICF> received in ICE.
+;; T=8.70, #<MRK LOW-T-CM1> and #<MRK HIGH-T-HTSRC> intersected at #$temper-qualifier.
+;; T=8.70, #<MRK ON-FDO> received in PHYS/SPAT-REL.
+;; T=8.75, #<MRK FRIDGE-MTF> received in ARTIFACT.
+;; T=8.75, #<MRK GOALST-FDO> received in GOAL-STATE.
+;; T=8.90, #<MRK GOALST-CM1> and #<MRK GOALST-FDO> intersected at #$goal-state.
+;; T=8.90, #<MRK IN-CM1> and #<MRK ON-FDO> intersected at #$phys/spat-rel.
+;; T=9.10, #<MRK ON-WTP> received in IN-TOUCH-WITH.
+;; T=9.10, #<MRK WATER-WTP> received in WATER.
+;; T=9.20, #<MRK HPLATE-WTP> received in HEAT-SOURCE.
+;; T=9.25, #<MRK IN-CM1> and #<MRK ON-WTP> intersected at #$in-touch-with.
+;; T=9.35, #<MRK FRIDGE-SFF> received in FRIDGE.
+;; T=9.50, #<MRK T-OF-SFF-FR> received in TEMPERATURE-OF.
+;; T=9.50, #<MRK IN-WTP> received in IN.
+;; T=9.55, #<MRK T-OF-CM1> and #<MRK T-OF-SFF-FR> intersected at #$temperature-of.
+;; T=9.60, #<MRK IN-CM1> and #<MRK IN-WTP> intersected at #$in.
+;; T=9.60, #<MRK SIT-SFF> received in SITUATION.
+;; T=9.70, #<MRK INITST-WTP-1> received in INIT-STATE.
+;; T=9.70, #<MRK ON-WTP> received in SUPPORTS.
+;; T=9.70, #<MRK SIT-CM1> and #<MRK SIT-SFF> intersected at #$situation.
+;; T=9.75, #<MRK IN-ERW-WT> received in IN.
+;; T=9.80, #<MRK INITST-CM1> and #<MRK INITST-WTP-1> intersected at #$init-state.
+;; T=9.90, #<MRK FRIDGE-SFF> received in KITCH-EQUIPMT.
+;; T=9.90, #<MRK HPLATE-WTP> received in KITCH-EQUIPMT.
+;; T=9.90, #<MRK INITST-MTF-1> received in INIT-STATE.
+;; T=9.95, #<MRK HIGH-T-IHC> received in HIGH-TEMP.
+;; T=9.95, #<MRK IN-CM1> and #<MRK IN-ERW-WT> intersected at #$in.
+
+;; Time  10.00, 209 agents in WM:  84 c,  75 i,  50 h (22+28+0)
+;;    9 clocks;  84 ag on agenda:  19 c,  21 i,  34 h (11+23+0), 10 nc
+
+> (g)
+;; T=10.05, #<MRK INITST-CM1> and #<MRK SIT-SFF> intersected at #$situation.
+;; T=10.05, #<MRK HPLATE-WTP> received in THING.
+;; T=10.05, #<MRK GOALST-MTF> received in GOAL-STATE.
+;; T=10.20, #<MRK GOALST-CM1> and #<MRK GOALST-MTF> intersected at #$goal-state.
+;; T=10.20, #<MRK FRIDGE-MTF> received in OBJECT.
+;; T=10.30, #<MRK MILK-CM1> and #<MRK HPLATE-WTP> intersected at #$thing.
+;; T=10.35, #<MRK WATER-WTP> received in DRINKABLE-LIQUID.
+;; T=10.35, #<MRK INITST-CM1> and #<MRK INITST-MTF-1> intersected at #$init-state.
+;; T=10.40, #<MRK HIGH-T-IHC> received in TEMPER-QUALIFIER.
+;; T=10.40, #<MRK GOALST-CM1> and #<MRK SIT-SFF> intersected at #$situation.
+;; T=10.45, #<MRK LOW-T-CM1> and #<MRK HIGH-T-IHC> intersected at #$temper-qualifier.
+;; T=10.45, #<MRK IN-FDO-FO> received in IN.
+;; T=10.55, #<MRK IN-CM1> and #<MRK IN-FDO-FO> intersected at #$in.
+;; T=10.55, #<MRK MILK-CM1> and #<MRK WATER-WTP> intersected at #$drinkable-liquid.
+;; T=10.60, #<MRK MILK-CM1> and #<MRK FRIDGE-MTF> intersected at #$object.
+;; T=10.65, #<MRK ICE-CUBE-ICF> received in OBJECT.
+;; T=10.85, #<MRK SIT-ERW> received in SITUATION.
+;; T=10.90, #<MRK FRIDGE-SFF> received in ARTIFACT.
+;; T=11.00, #<MRK FRIDGE-MTF> received in ARTIFICIAL-THING.
+;; T=11.15, #<MRK ON-WTP> received in PHYS/SPAT-REL.
+;; T=11.45, #<MRK IN-CM1> and #<MRK ON-WTP> intersected at #$phys/spat-rel.
+;; T=11.50, #<MRK GOALST-WTP> received in GOAL-STATE.
+;; T=11.65, #<MRK GOALST-CM1> and #<MRK GOALST-WTP> intersected at #$goal-state.
+;; T=11.85, #<MRK SIT-CM1> and #<MRK SIT-ERW> intersected at #$situation.
+;; T=12.00, #<MRK MILK-CM1> and #<MRK ICE-CUBE-ICF> intersected at #$object.
+;; T=12.00, #<MRK HPLATE-WTP> received in ARTIFACT.
+;; T=12.15, #<MRK INITST-CM1> and #<MRK SIT-ERW> intersected at #$situation.
+;; T=12.50, #<MRK FRIDGE-SFF> received in OBJECT.
+;; T=12.50, #<MRK GOALST-CM1> and #<MRK SIT-ERW> intersected at #$situation.
+;; T=13.25, #<MRK FRIDGE-SFF> received in ARTIFICIAL-THING.
+;; T=13.65, #<MRK MILK-CM1> and #<MRK FRIDGE-SFF> intersected at #$object.
+;; T=13.70, #<MRK FRIDGE-MTF> received in THING.
+;; T=14.05, #<MRK MILK-CM1> and #<MRK FRIDGE-MTF> intersected at #$thing.
+;; T=14.90, #<MRK HPLATE-WTP> received in OBJECT.
+;; T=15.35, #<MRK MILK-CM1> and #<MRK HPLATE-WTP> intersected at #$object.
+;; T=15.70, #<MRK HPLATE-WTP> received in ARTIFICIAL-THING.
+;; T=16.90, #<MRK FRIDGE-SFF> received in THING.
+;; T=17.25, #<MRK MILK-CM1> and #<MRK FRIDGE-SFF> intersected at #$thing.
+
+;; Time  20.00, 237 agents in WM:  83 c,  74 i,  80 h (21+59+0)
+;;   18 clocks;  61 ag on agenda:  11 c,  10 i,  31 h (4+27+0), 9 nc
+
+> (g 30)
+;; T=20.70, #<MRK HPLATE-WTP> received in THING.
+;; T=27.50, #<MRK INTERST-FDO> received in INTER-STATE.
+;; T=28.70, #<MRK INTERST-FDO> received in STATE.
+;; T=28.80, #<MRK INITST-CM1> and #<MRK INTERST-FDO> intersected at #$state.
+;; T=29.30, #<MRK GOALST-CM1> and #<MRK INTERST-FDO> intersected at #$state.
+;; T=31.70, #<MRK TO-REACH-FDO> received in TO-REACH.
+;; T=31.90, #<MRK TO-REACH-CM1> and #<MRK TO-REACH-FDO> intersected at #$to-reach.
+;; T=31.90, #<MRK CAUSE-FDO-T> received in CAUSE.
+;; T=33.00, #<MRK ENDST-FDO> received in END-STATE.
+;; T=33.40, #<MRK ENDST-FDO> received in STATE.
+;; T=33.50, #<MRK CAUSE-FDO-T> received in CAUSE-LIKE-REL.
+;; T=33.60, #<MRK INITST-CM1> and #<MRK ENDST-FDO> intersected at #$state.
+;; T=34.00, #<MRK GOALST-CM1> and #<MRK ENDST-FDO> intersected at #$state.
+;; T=34.10, #<MRK FOLLOWS-FDO> received in FOLLOWS.
+;; T=34.50, #<MRK CAUSE-FDO-T> received in FOLLOWS.
+;; T=36.50, #<MRK FOLLOWS-FDO> received in CAUSE-LIKE-REL.
+;; T=40.60, #<MRK CAUSE-FDO-T> received in CAUSE-LIKE-REL.
+
+;; Time  50.00, 289 agents in WM:  84 c,  76 i, 129 h (30+99+0)
+;;   41 clocks;  32 ag on agenda:   5 c,   8 i,  16 h (10+6+0), 3 nc
+

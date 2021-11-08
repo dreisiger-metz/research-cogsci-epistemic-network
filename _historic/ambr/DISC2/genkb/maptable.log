@@ -1,0 +1,107 @@
+
+;; Time  20.00, 237 agents in WM:  83 c,  74 i,  80 h (21+59+0)
+
+ sit-cm1         sit-fdo          1.24   mature
+ milk-cm1        milk-mtf         1.10   mature
+ tpot-cm1        tpot-wtp         1.09   mature
+ in-cm1          in-fdo-do        0.98   mature
+ t-of-cm1        t-of-fdo-o       1.21   mature
+ low-t-cm1       low-t-fridge     1.05   mature
+ made-of-cm1     ckves-md-metal   1.05   mature
+ mmetal-cm1      mmetal-wtp       1.02   mature
+ initst-cm1      initst-fdo-1     0.89   mature
+ goalst-cm1      <unmapped>       0.00   
+ to-reach-cm1    <unmapped>       0.00
+
+
+;; Time  50.00, 289 agents in WM:  84 c,  76 i, 129 h (30+99+0)
+
+ sit-cm1         sit-fdo          1.56   mature
+ milk-cm1        oven-fdo         1.27   mature
+ tpot-cm1        tpot-wtp         1.46   mature
+ in-cm1          in-fdo-do        1.37   mature
+ t-of-cm1        t-of-fdo-o       1.29   mature
+ low-t-cm1       high-t-fdo       1.56   mature
+ made-of-cm1     made-of-wtp      1.51   mature
+ mmetal-cm1      mmetal-wtp       1.44   mature
+ initst-cm1      initst-fdo-1     1.41   mature
+ goalst-cm1      goalst-fdo       1.42   mature
+ to-reach-cm1    to-reach-fdo     1.18   mature
+
+
+;; Time  99.99, 241 agents in WM:  95 c,  81 i,  65 h (0+60+5)
+
+ sit-cm1         sit-fdo          1.89   winner
+ milk-cm1        food-fdo         1.45   mature
+ tpot-cm1        oven-fdo         1.36   mature
+ in-cm1          in-fdo-do        1.33   mature
+ t-of-cm1        t-of-fdo-f       1.54   mature
+ low-t-cm1       high-t-fdo       1.78   winner
+ made-of-cm1     *made-of-1       1.23   mature
+ mmetal-cm1      *material-metal-1  1.47   mature
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.76   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+
+
+;; Time 150.00, 240 agents in WM:  99 c,  80 i,  61 h (0+54+7)
+
+ sit-cm1         sit-fdo          1.91   winner
+ milk-cm1        food-fdo         1.60   mature
+ tpot-cm1        dish-fdo         1.38   mature
+ in-cm1          in-fdo-do        1.31   mature
+ t-of-cm1        t-of-fdo-f       1.55   mature
+ low-t-cm1       high-t-fdo       1.79   winner
+ made-of-cm1     *made-of-1       1.76   winner
+ mmetal-cm1      *material-metal-1  1.73   winner
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.77   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+
+
+;; Time 200.00, 247 agents in WM: 102 c,  84 i,  61 h (0+53+8)
+
+ sit-cm1         sit-fdo          1.91   winner
+ milk-cm1        food-fdo         1.76   winner
+ tpot-cm1        dish-fdo         1.51   mature
+ in-cm1          on-fdo           1.37   mature
+ t-of-cm1        t-of-fdo-f       1.60   mature
+ low-t-cm1       high-t-fdo       1.79   winner
+ made-of-cm1     *made-of-1       1.77   winner
+ mmetal-cm1      *material-metal-1  1.73   winner
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.77   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+
+===========================================================================
+
+
+ Target           T = 20            T = 50           T = 100
+---------------------------------------------------------------------
+ sit-cm1          sit-fdo           sit-fdo          sit-fdo
+ milk-cm1         milk-mtf          oven-fdo         food-fdo
+ tpot-cm1         tpot-wtp          tpot-wtp         oven-fdo
+ in-cm1           in-fdo-do         in-fdo-do        in-fdo-do
+ t-of-cm1         t-of-fdo-o        t-of-fdo-o       t-of-fdo-f
+ low-t-cm1        low-t-fridge      high-t-fdo       high-t-fdo
+ made-of-cm1      ckves-md-metal    made-of-wtp      *made-of-1
+ mmetal-cm1       mmetal-wtp        mmetal-wtp       *material-metal-1
+ initst-cm1       initst-fdo-1      initst-fdo-1     initst-fdo-1
+ goalst-cm1       <unmapped>        goalst-fdo       goalst-fdo
+ to-reach-cm1     <unmapped>        to-reach-fdo     to-reach-fdo
+
+
+ Target           T = 150           T = 200
+---------------------------------------------------------------------------
+ sit-cm1          sit-fdo           sit-fdo
+ milk-cm1         food-fdo          food-fdo
+ tpot-cm1         dish-fdo          dish-fdo
+ in-cm1           in-fdo-do         on-fdo
+ t-of-cm1         t-of-fdo-f        t-of-fdo-f
+ low-t-cm1        high-t-fdo        high-t-fdo
+ made-of-cm1      *made-of-1        *made-of-1
+ mmetal-cm1       *material-metal-1 *material-metal-1
+ initst-cm1       initst-fdo-1      initst-fdo-1
+ goalst-cm1       goalst-fdo        goalst-fdo
+ to-reach-cm1     to-reach-fdo      to-reach-fdo
+

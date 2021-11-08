@@ -1,0 +1,5 @@
+ 60K	20090204--1933--topology
+ 25G	20090314--1416--percepts
+ 37M	20090403--0558--rogers-mcclelland
+129M	20090404--2151--miikkulainen
+ 40M	20090409--1535--rogers-mcclelland-full

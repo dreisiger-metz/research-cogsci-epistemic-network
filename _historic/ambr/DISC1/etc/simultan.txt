@@ -1,0 +1,54 @@
+
+   S I M U L T A N E O U S   H I G H - L E V E L   A C T I V I T I E S
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"People often perform several complex actions simultaneously (e.g. driving
+a car and talking [...]). [...]
+ Although I am not aware of any formal experimental study of the possibility
+of several mappings running in parallel [...], there is some interesting
+introspective evidence that makes such an assumption plausible (Hadamard,
+1945) [...]"
+                                                      [Kokinov 1994, p. 262]
+
+
+--------------  p. 123 of (Baddeley, 1990)  -----------------------
+   Spelke, Hirst, and Neisser (1976) studied the effect of practice on the
+capacity of two subjects to read stories and write words to dictation
+simultaneously. After 20 weeks of practice the subjects could not only
+comprehend the story while copying but could even write down the semantic
+category to which the word belonged. In another study, Hirst et al. (1980)
+had their subjects read aloud while copying short sentences, and were still
+able to do the task when the reading was switched from stories to much
+denser and more demanding encyclopaedia passages. Hirst et al. suggest on
+the basis of this finding that subjects are not performing the task by
+switching attention rapidly between reading and writing, but it is not clear
+that this is ruled out; although the encyclopaedia articles may be less
+redundant than the stories, even difficult prose does involve a good deal of
+predictability, which could allow an attention-switching strategy to operate.
+
+   While these may sound like dramatic demonstrations, most of us can perform
+complex tasks such as driving and speaking simultaneously with little apparent
+interference, although one does tend to stop talking when a difficult traffic
+situation develops. This phenomenon was studied in rather more detail by
+Brown, Tichner, and Simmonds (1969) in a study that was concerned with the
+possible averse effects of telephoning while driving. Subjects were required
+to hear and verify sentences from the syntactic reasoning test [...] Subjects
+were required to drive around a course on an airfield that was laid out to
+have a number of "gates" between two sticks. Some of the gates were wide
+enough, but some were too narrow to negotiate without hitting the sticks.
+As Table 6.1. shows, the concurrent reasoning task appeared to have no effect
+on the subjects' capacity to steer between gaps that were large enough, but
+did impair judgement as to whether to accept the gap or not.
+---------------------------------------------------------------------
+
+Bibliography:
+~~~~~~~~~~~~~
+ -- Baddeley, A. (1990) "Human Memory: Theory and Practice", Allyn and Bacon.
+ -- Spelke, E.S., Hirst, W., & Nesser, U. (1976) "Skills of divided attention"
+            in Cognition, 4, 215-230
+ -- Hirst, W., Spelke, E.S., Reaves, C.C., Caharack, G., & Neisser, U. (1980)
+    "Dividing attention without alternation or automaticity"
+            in Journal of Exp. Psy.: General, 109, 98-117
+ -- Brown, I.D., Tickner, A.H., & Simmonds, D.C.V. (1969) "Interference
+    between concurrent tasks of driving and telephoning"
+            in Journal of Applied Psychology, 53, 419-424

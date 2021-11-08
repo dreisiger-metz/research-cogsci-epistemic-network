@@ -1,0 +1,54 @@
+;;; -*- Mode: ASCII Text -*-
+
+;;; FILE:       AMBR/kb/episodic/sit_list.txt
+;;; VERSION:    3.0.0    ; see AMBR/KB/VERSION.LSP
+;;; PURPOSE:    List of files comprising the episodic portion of AMBR's LTM.
+;;; DEPENDS-ON: This is not a program file.
+;;; PROGRAMMER: Alexander Alexandrov Petrov  (apetrov@cogs.nbu.acad.bg)
+;;; CREATED:    01-06-98 [3.0.0]
+;;; UPDATED:    28-06-98
+;;; UPDATED:    ...
+
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;;;;;;;   L I S T   O F   A L L   S I T U A T I O N S   ;;;;;;;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+See file AMBR/KB/DEFSYS.LSP and AMBR/KB/VERSION.LSP for more details.
+See file AMBR/KB/SEMANTIC/FILELIST.TXT for introduction to semantic files.
+
+
+BASE SITUATIONS
+=================================================================
+base sit BF :  22   Bowl on a Fire burns out.
+base sit BPF:  23   Butter on a Plate in a Fridge.
+base sit ERW:  17   Egg in Red Water.
+base sit FDO:  21   Food on a Dish in an Oven.
+base sit GP :  22   Glass on a hot Plate breaks.
+base sit GWB:  15   Glass in a Wooden Box.
+base sit ICF:  21   Ice Cube in a glass in a Fridge.
+base sit IHC:  19   Imm.Heater in a Cup with water.
+base sit MTF:  21   Milk in a Teapot in a Fridge.
+base sit SFF:  26   Salt in Food on a plate in a Fridge.
+base sit STC:  17   Sugar in Tea in a Cup.
+base sit WTP:  23   Water in a Teapot on a hot Plate.
+-------------------------
+all base sit: 247 agents
+
+
+TARGET SITUATIONS
+=================================================================
+targ sit ICC:  15   Ice Cube in Coke. What will happen?
+targ sit CM1:  11   How to Cool Milk in a teapot?
+targ sit CM2:  13   Milk in a teapot in a fridge. What is the goal?
+targ sit EHW:  15   Egg in Hot Water in a teapot. What will happen?
+targ sit HM1:  11   How to Heat Milk in a teapot?
+targ sit HM2:  11   Milk in a teapot on a plate. What will happen?
+targ sit SF1:  11   How to Salt Food on a plate?
+targ sit SF2:  11   Salt in Food on a plate. What will happen?
+targ sit WB1:  11   How to heat Water in a wooden Bowl?
+targ sit WG1:  13   How to heat Water in a Glass?
+
+
+;;;;;;; End of file AMBR/KB/EPISODIC/SIT_LIST.TXT

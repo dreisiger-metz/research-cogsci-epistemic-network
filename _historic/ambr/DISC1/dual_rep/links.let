@@ -1,0 +1,59 @@
+
+From boicho@pscs2.irmkant.rm.cnr.it Sun Sep 29 18:49 EET 1996
+
+Just a brief (I hope) reply on the links issue.
+
+Yes, I agree that there are a lot of issues that need discussion.
+
+About the connectionist processing: In the current implementation there is
+a function which takes an agent an returns the list of all links and their
+weights which the connectionist machine should use. So, we can specify this
+function in various ways. I cannot remember now exactly, but I think that
+at present it takes all the links as they are which means that they are doubled
+as you say. But the solution of taking the maximal weight seems better for me.
+
+>Let us turn now to the symbolic aspect. What is the label of a link
+>from a (special) slot of an agent to some slot of another agent? And
+>does it make sense to speak in terms of links at all while discussing
+>the symbolic aspect?
+
+The label of the link is the name of the facet. Maybe I cannot get the
+point very well.
+
+The zero links are not a good solution as you mention because of the learning.
+Not only that zero links should be dropped, but also in a frame emerging
+from the initally loose interactions between agents you will need to gradually
+streghten the links between the agent and its special slots. So, this slots
+should vary and its weight should have an impact of the processing.
+
+Bye for now,
+Boicho
+-------------------------------------------------------------------
+
+From boicho@pscs2.irmkant.rm.cnr.it Mon Sep 30 10:14 EET 1996
+
+>
+>> The label of the link is the name of the facet. Maybe I cannot get the
+>> point very well.
+>
+>Then, what is the difference between the following two links:
+>
+>  foo:
+>    instance-of: baz
+>
+>and
+>
+>  foo:
+>    slot-1:
+>      instance-of: baz
+
+There is no difference between these two links, from my point of view.
+Simply, in the first case the link is between micro-agents, and in the
+second between their parts, but the meaning of the link is the same.
+However, at a more detailed level, I agree that there are subtle differences
+in the processing (e.g. the markers pass trough the header slots only;
+the property inheritance is done using the specialised slots' links, etc),
+but let keep this at the implementational level, otherwise the conceptual
+level will become too cumbersome.
+
+Boicho

@@ -1,0 +1,814 @@
+Welcome to Allegro CL for Windows
+Version: 3.0.2 Release: 15-Jan-97 18:56
+Copyright (C) 1992-1997, Franz Inc., Berkeley, CA, USA.
+All rights reserved.
+
+;; Assuming the DEFSYSTEM definitions of DUAL, AMBR, and LTM are loaded
+;; automatically (see DUAL/README.TXT and DUAL/DEFSYS.LSP for details).
+
+;; Loading the LTM system, which requires DUAL and AMBR....
+> (operate-on-system "ltm" :load)
+
+;; <A series of load messages skipped...>
+
+;; DUAL cognitive architecture, ver. 1.1.2 of 24 July 1998.
+;; (c) Boicho Kokinov and Alexander Petrov 
+;;     Cognitive Science Department 
+;;     New Bulgarian University 
+;;     {kokinov,apetrov}@cogs.nbu.acad.bg
+
+;; Associative Memory-Based Reasoning (AMBR).
+;; Version 2.2.2 of 24 July 1998.
+;; (c) Boicho Kokinov and Alexander Petrov 
+;;     Cognitive Science Department 
+;;     New Bulgarian University 
+;;     {kokinov,apetrov}@cogs.nbu.acad.bg
+
+;; Knowledge base version 3.0.0 of 24 July 1998.
+;; (c) Boicho Kokinov and Alexander Petrov 
+;;     Cognitive Science Department 
+;;     New Bulgarian University 
+;;     {kokinov,apetrov}@cogs.nbu.acad.bg
+
+
+;; Loading the KB variant #50 and the target problem manually ...
+;; Loading from #P"D:\\DUAL\\Ambr\\KB\\genKB\\genkb050.lsp"
+;; Loading from #P"D:\\DUAL\\Ambr\\KB\\Episodic\\t_CM1.lsp"
+
+;; The real transcript begins below.
+;; '>' is the prompt of Allegro Common Lisp. All lines beginning with '>' are
+;; typed by the user.  Note the interface functions G, MT (mapping table),
+;; VERBOSE, SHOW-COA, HYPS, MFR etc. See AMBR/INTRFACE/REPORT.LSP for details.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+> (attach-target)
+;; Error: Call to undefined function ATTACH-TARGET in #<function 0 #x1146070>
+
+;; Returning to Top Level
+> (setq *package* (find-package "AMBR"))
+#<package AMBR #xEA0204>
+> (attach-target)
+
+;;; Target is #<coa SIT-CM1> -- How to Cool Milk in a teapot?
+;;; *TIME* = 0.00, 10 NCs, 2 agents on *goal*, 5 on *input*.
+NIL
+
+> (g)
+;; Time  10.00, 209 agents in WM:  84 c,  75 i,  50 h (22+28+0)
+;;    9 clocks;  84 ag on agenda:  19 c,  21 i,  34 h (11+23+0), 10 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.217 | 14 | -.614 |  3 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.070 |  4 | -.803 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.148 |  8 | -.629 |  3 |    | sit-BPF | 0.006 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.056 |  4 | -.897 |  1 |    | sit-FDO | 0.280 | 12 | -.376 |  5 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.068 |  5 | -.883 |  1 |   
+ | sit-SFF | 0.085 |  8 | -.649 |  3 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.640 | 11 | 0.220 |  9 |    | all WM  |136.40 |202 |       | 84 |
+
+
+> (show-coa 'sit-fdo)
+ 1.069  oven-fdo          1.025  0.119
+ 0.807  t-of-fdo-o        0.710  0.314
+ 0.737  sit-fdo           0.653  0.201
+ 0.643  high-t-fdo        0.539  0.010
+ 0.581  in-fdo-do         0.490  0.275
+ 0.533  dish-fdo          0.456  0.021
+ 0.472  t-of-fdo-f        0.376  0.148
+ 0.327  food-fdo          0.264  0.041
+ 0.257  initst-fdo-1      0.203  0.000
+ 0.242  on-fdo            0.196  0.000
+ 0.114  goalst-fdo        0.088  0.000
+ 0.102  in-fdo-fo         0.079  0.000
+ 0.000  shape-of-fdo      0.019  0.000
+ 0.000  rectang-fdo       0.019  0.000
+ 0.000  initst-fdo-2      0.027  0.000
+ 0.000  interst-fdo       0.060  0.000
+ 0.000  endst-fdo         0.026  0.000
+ 0.000  to-reach-fdo      0.047  0.000
+ 0.000  follows-fdo       0.028  0.000
+ 0.000  cause-fdo-i       0.018  0.000
+ 0.000  cause-fdo-t       0.043  0.000
+12
+> (g)
+;; Time  20.00, 237 agents in WM:  83 c,  74 i,  80 h (21+59+0)
+;;   18 clocks;  61 ag on agenda:  11 c,  10 i,  31 h (4+27+0), 9 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.251 | 14 | -.146 |  8 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.060 |  4 | -.761 |  3 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.133 |  8 | -.602 |  4 |    | sit-BPF | 0.005 |  1 | -.908 |  1 |   
+ | sit-ICF | 0.048 |  4 | -.824 |  2 |    | sit-FDO | 0.267 | 12 | -.172 |  7 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.057 |  4 | -.523 |  5 |   
+ | sit-SFF | 0.061 |  8 | -.740 |  3 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.606 | 11 | 0.187 |  9 |    | all WM  |141.27 |230 |       | 61 |
+
+
+> (verbose 'add-to-wm (coa 'sit-fdo))
+(#<coa SIT-FDO>)
+> (show-coa 'sit-fdo)
+ 1.048  oven-fdo          0.983  0.162
+ 0.839  t-of-fdo-o        0.752  0.370
+ 0.654  sit-fdo           0.558  0.133
+ 0.621  high-t-fdo        0.533  0.016
+ 0.509  in-fdo-do         0.419  0.218
+ 0.488  dish-fdo          0.398  0.020
+ 0.415  t-of-fdo-f        0.339  0.119
+ 0.309  food-fdo          0.244  0.038
+ 0.283  initst-fdo-1      0.224  0.028
+ 0.235  on-fdo            0.181  0.000
+ 0.113  goalst-fdo        0.086  0.000
+ 0.097  in-fdo-fo         0.073  0.000
+ 0.000  shape-of-fdo      0.017  0.000
+ 0.000  rectang-fdo       0.017  0.000
+ 0.000  initst-fdo-2      0.025  0.000
+ 0.000  interst-fdo       0.059  0.000
+ 0.000  endst-fdo         0.024  0.000
+ 0.000  to-reach-fdo      0.049  0.000
+ 0.000  follows-fdo       0.030  0.000
+ 0.000  cause-fdo-i       0.017  0.000
+ 0.000  cause-fdo-t       0.041  0.000
+12
+> (mt)
+ sit-cm1         sit-fdo          1.24   mature
+ milk-cm1        milk-mtf         1.10   mature
+ tpot-cm1        tpot-wtp         1.09   mature
+ in-cm1          in-fdo-do        0.98   mature
+ t-of-cm1        t-of-fdo-o       1.21   mature
+ low-t-cm1       low-t-fridge     1.05   mature
+ made-of-cm1     ckves-md-metal   1.05   mature
+ mmetal-cm1      mmetal-wtp       1.02   mature
+ initst-cm1      initst-fdo-1     0.89   mature
+ goalst-cm1      <unmapped>       0.00   
+ to-reach-cm1    <unmapped>       0.00   
+> (g)
+;; T=25.30, adding #$interst-fdo to WM.
+;; T=29.70, adding #$to-reach-fdo to WM.
+;; T=29.80, adding #$cause-fdo-t to WM.
+;; Time  30.00, 260 agents in WM:  83 c,  75 i, 102 h (28+74+0)
+;;   38 clocks;  62 ag on agenda:   8 c,  12 i,  32 h (8+24+0), 10 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.268 | 14 | -.041 |  9 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.060 |  4 | -.704 |  4 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.093 |  6 | -.578 |  5 |    | sit-BPF | 0.005 |  1 | -.924 |  1 |   
+ | sit-ICF | 0.046 |  4 | -.867 |  2 |    | sit-FDO | 0.339 | 15 | 0.123 |  8 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.049 |  4 | -.596 |  5 |   
+ | sit-SFF | 0.058 |  8 | -.624 |  5 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.608 | 11 | 0.476 | 10 |    | all WM  |153.37 |253 |       | 62 |
+
+
+> (hyps #$sit-cm1)
+ 1.386  m   9    sit-cm1<==>sit-fdo
+ 1.009  m   7 *  sit-cm1<==>sit-wtp
+ 0.608  m   1 *  sit-cm1<==>sit-erw
+ 0.694  m   3    sit-cm1<==>sit-mtf
+ 0.527  m   1 *  sit-cm1<==>sit-sff
+ 1.008   e  1 *  sit-cm1<=1=>sit-sff
+ 1.011   e  1    sit-cm1<=2=>sit-sff
+ 0.878   e  1    sit-cm1<=3=>sit-sff
+ 0.736   e  1 *  sit-cm1<==>sit-icf
+ 0.751   e  1    sit-cm1<=1=>sit-icf
+ 0.905   e  1    sit-cm1<-->sit-wtp
+ 11 hyps (6 e + 5 m + 0 W)
+
+> (mfr #$sit-cm1<==>sit-fdo)
+(defagent  sit-cm1<==>sit-fdo   mature-hypoth-agent
+  "Created by T-OF-CM1<-->T-OF-FDO-O at time 6.35."
+  :type      (:hypoth :corr :temporary :mature)
+  :t-link    ((sit-cm1<==>sit-wtp -0.300)
+              (situation<==>situation 0.300)
+              (sit-cm1<==>sit-mtf -0.300)
+              (sit-cm1<==>sit-erw -0.300)
+              (sit-cm1<==>sit-sff -0.300)
+              (initst-cm1<-->sit-fdo -0.300)
+              (goalst-cm1<-->sit-fdo -0.300)
+              (sit-cm1<==>sit-icf -0.300) )
+  :slot1   
+    :type      (:aspect)
+    :c-coref   (sit-cm1 0.300)
+  :slot2   
+    :type      (:aspect)
+    :c-coref   (sit-fdo 0.300)
+  :slot3   
+    :type      (:aspect)
+    :c-coref   ((t-of-cm1<-->t-of-fdo-o 0.300)
+                (situation 0.400)
+                (t-of-cm1<-->t-of-fdo-f 0.300)
+                (low-t-cm1<-->high-t-fdo 0.300)
+                (in-cm1<-->in-fdo-do 0.300)
+                (milk-cm1<==>oven-fdo 0.300)
+                (tpot-cm1<-->dish-fdo 0.300)
+                (initst-cm1<-->initst-fdo-1 0.300)
+                (in-cm1<-->in-fdo-fo 0.300) )
+  :slot4   
+    :type      (:aspect)
+    :c-coref   (sit-cm1 0.100)
+)
+
+> *time*
+30.000
+> (g 20)
+;; T=31.10, adding #$follows-fdo to WM.
+;; T=31.20, adding #$endst-fdo to WM.
+;; Time  50.00, 289 agents in WM:  84 c,  76 i, 129 h (30+99+0)
+;;   41 clocks;  32 ag on agenda:   5 c,   8 i,  16 h (10+6+0), 3 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.309 | 14 | 0.175 | 10 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.062 |  4 | -.767 |  4 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.069 |  6 | -.757 |  4 |    | sit-BPF | 0.006 |  1 | -.937 |  1 |   
+ | sit-ICF | 0.044 |  4 | -.777 |  4 |    | sit-FDO | 0.527 | 17 | 0.517 |  9 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.039 |  3 | -.728 |  4 |   
+ | sit-SFF | 0.061 |  8 | -.672 |  6 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.665 | 11 | 1.011 | 11 |    | all WM  |176.03 |282 |       | 32 |
+
+
+> (mt)
+ sit-cm1         sit-fdo          1.56   mature
+ milk-cm1        oven-fdo         1.27   mature
+ tpot-cm1        tpot-wtp         1.46   mature
+ in-cm1          in-fdo-do        1.37   mature
+ t-of-cm1        t-of-fdo-o       1.29   mature
+ low-t-cm1       high-t-fdo       1.56   mature
+ made-of-cm1     made-of-wtp      1.51   mature
+ mmetal-cm1      mmetal-wtp       1.44   mature
+ initst-cm1      initst-fdo-1     1.41   mature
+ goalst-cm1      goalst-fdo       1.42   mature
+ to-reach-cm1    to-reach-fdo     1.18   mature
+> (show-coa 'sit-fdo)
+ 1.508  oven-fdo          1.593  0.297
+ 1.158  high-t-fdo        1.119  0.227
+ 1.123  t-of-fdo-o        1.072  0.414
+ 1.036  sit-fdo           0.970  0.229
+ 0.890  t-of-fdo-f        0.806  0.250
+ 0.802  in-fdo-do         0.707  0.371
+ 0.764  dish-fdo          0.666  0.063
+ 0.763  initst-fdo-1      0.674  0.183
+ 0.644  food-fdo          0.553  0.076
+ 0.569  goalst-fdo        0.484  0.187
+ 0.423  on-fdo            0.344  0.015
+ 0.389  to-reach-fdo      0.327  0.115
+ 0.245  follows-fdo       0.194  0.000
+ 0.207  in-fdo-fo         0.160  0.012
+ 0.204  endst-fdo         0.160  0.000
+ 0.173  cause-fdo-t       0.134  0.000
+ 0.170  interst-fdo       0.131  0.000
+ 0.000  shape-of-fdo      0.025  0.000
+ 0.000  rectang-fdo       0.025  0.000
+ 0.000  initst-fdo-2      0.058  0.000
+ 0.000  cause-fdo-i       0.056  0.000
+17
+> (hyps #$made-of-cm1)
+ 0.660  m   1    made-of-cm1<-->ckves-md-metal
+ 0.641  m   1    made-of-cm1<-->plate-md-china
+ 0.666  m   1    made-of-cm1<-->made-of-ihc
+ 1.511  m   1    made-of-cm1<-->made-of-wtp
+ 0.640  m   1    made-of-cm1<-->made-of-erw
+ 5 hyps (0 e + 5 m + 0 W)
+
+> (g 20)
+;; T=68.00, adding #$cause-fdo-i to WM.
+;; T=68.10, adding #$initst-fdo-2 to WM.
+;; Time  70.00, 276 agents in WM:  88 c,  78 i, 110 h (6+104+0)
+;;   22 clocks;   5 ag on agenda:   2 c,   2 i,   1 h (1+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.328 | 14 | 0.200 | 10 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.064 |  4 | -.816 |  3 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.072 |  6 | -.757 |  5 |    | sit-BPF | 0.006 |  1 | -.941 |  1 |   
+ | sit-ICF | 0.043 |  4 | -.857 |  3 |    | sit-FDO | 0.620 | 19 | 0.520 |  8 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.040 |  3 | -.781 |  3 |   
+ | sit-SFF | 0.063 |  8 | -.744 |  5 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.715 | 11 | 1.111 | 11 |    | all WM  |171.89 |269 |       |  5 |
+
+
+> (mt)
+ sit-cm1         sit-fdo          1.62   mature
+ milk-cm1        oven-fdo         1.12   mature
+ tpot-cm1        tpot-wtp         1.48   mature
+ in-cm1          in-fdo-do        1.28   mature
+ t-of-cm1        t-of-fdo-f       1.34   mature
+ low-t-cm1       high-t-fdo       1.61   mature
+ made-of-cm1     made-of-wtp      1.54   mature
+ mmetal-cm1      mmetal-wtp       1.48   mature
+ initst-cm1      initst-fdo-1     1.53   mature
+ goalst-cm1      goalst-fdo       1.58   mature
+ to-reach-cm1    to-reach-fdo     1.56   mature
+> (rt #$made-of-wtp)
+The rating table of #$made-of-wtp is empty. (Not authorized.)
+NIL
+> (rt #$made-of-cm1)
+ 0.898  1.540  m  made-of-cm1<-->made-of-wtp 
+ 0.000  0.643  m  made-of-cm1<-->made-of-ihc 
+ 0.000  0.629  m  made-of-cm1<-->made-of-erw 
+ 0.028  0.625  m  made-of-cm1<-->ckves-md-metal (:need-skolemiz)
+ 0.000  0.618  m  made-of-cm1<-->plate-md-china (:need-skolemiz)
+#<RT MADE-OF-CM1>
+> (g 15)
+;; T=74.00, #<PR INITST-CM1> received in INITST-CM1<-->INITST-FDO-1.
+;; T=74.60, #<PR LOW-T-CM1> received in LOW-T-CM1<-->HIGH-T-FDO.
+;; T=80.00, #<SkI MADE-OF-CM1> received in MADE-OF-CM1<-->CKVES-MD-METAL.
+;; T=80.50, #$made-of-cm1<-->ckves-md-metal begins skolemization.
+;; T=80.90, #<PR GOALST-CM1> received in GOALST-CM1<-->GOALST-FDO.
+;; T=81.20, #<PR SIT-CM1> received in SIT-CM1<==>SIT-FDO.
+;; T=81.90, #<SM1 MADE-OF-CM1<-->CKVES-MD-METAL> received in *MATERIAL-METAL-1.
+;; T=82.10, #<SM1 *MATERIAL-METAL-1> received in MADE-OF-CM1<-->CKVES-MD-METAL.
+;; T=82.80, #$*material-metal-1 affiliates to #$sit-fdo.
+;; T=84.20, #<SM2 MADE-OF-CM1<-->CKVES-MD-METAL> received in *MADE-OF-1.
+;; T=85.00, #<SM2 *MADE-OF-1> received in MADE-OF-CM1<-->CKVES-MD-METAL.
+;; Time  85.00, 259 agents in WM:  93 c,  80 i,  86 h (1+81+4)
+;;    6 clocks;   4 ag on agenda:   0 c,   2 i,   1 h (1+0+0), 1 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.214 | 14 | -.595 |  9 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.062 |  4 | -.826 |  3 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.081 |  6 | -.922 |  2 |    | sit-BPF | 0.006 |  1 | -.957 |  1 |   
+ | sit-ICF | 0.047 |  4 | -.922 |  2 |    | sit-FDO | 0.862 | 20 | 0.858 |  9 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.035 |  3 | -.723 |  3 |   
+ | sit-SFF | 0.066 |  8 | -.834 |  4 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.809 | 11 | 1.064 | 11 |    | all WM  |164.79 |252 |       |  4 |
+
+
+> (mt)
+ sit-cm1         sit-fdo          1.87   winner
+ milk-cm1        food-fdo         1.27   mature
+ tpot-cm1        oven-fdo         1.19   mature
+ in-cm1          in-fdo-do        1.36   mature
+ t-of-cm1        t-of-fdo-f       1.51   mature
+ low-t-cm1       high-t-fdo       1.77   winner
+ made-of-cm1     made-of-ihc      0.87   mature
+ mmetal-cm1      mmetal-erw       0.89   mature
+ initst-cm1      initst-fdo-1     1.67   winner
+ goalst-cm1      goalst-fdo       1.71   winner
+ to-reach-cm1    to-reach-fdo     1.72   mature
+> (show-coa 'sit-fdo)
+ 2.312  sit-fdo           3.193  2.019
+ 2.100  high-t-fdo        2.682  1.512
+ 1.777  oven-fdo          2.047  0.347
+ 1.444  initst-fdo-1      1.507  0.756
+ 1.286  t-of-fdo-o        1.287  0.448
+ 1.256  goalst-fdo        1.245  0.763
+ 1.190  t-of-fdo-f        1.162  0.338
+ 1.158  dish-fdo          1.122  0.277
+ 1.074  food-fdo          1.020  0.251
+ 0.969  in-fdo-do         0.895  0.377
+ 0.849  *material-metal-1   0.762  0.762
+ 0.765  on-fdo            0.676  0.138
+ 0.739  to-reach-fdo      0.645  0.275
+ 0.419  follows-fdo       0.340  0.000
+ 0.390  in-fdo-fo         0.318  0.072
+ 0.324  endst-fdo         0.258  0.000
+ 0.304  interst-fdo       0.242  0.000
+ 0.277  cause-fdo-t       0.218  0.000
+ 0.167  cause-fdo-i       0.129  0.000
+ 0.158  initst-fdo-2      0.122  0.000
+ 0.000  shape-of-fdo      0.039  0.000
+ 0.000  rectang-fdo       0.039  0.000
+20
+> (g 15)
+;; T=87.60, #$*made-of-1 affiliates to #$sit-fdo.
+;; T=92.20, #<PR TO-REACH-CM1> received in TO-REACH-CM1<-->TO-REACH-FDO.
+;; Time  99.99, 241 agents in WM:  95 c,  81 i,  65 h (0+60+5)
+;;    6 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.208 | 14 | -.876 |  5 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.069 |  4 | -.886 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.088 |  6 | -.999 |  0 |    | sit-BPF | 0.007 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.058 |  4 | -.999 |  0 |    | sit-FDO | 0.956 | 21 | 1.290 | 11 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.051 |  4 | -.744 |  3 |   
+ | sit-SFF | 0.076 |  8 | -.989 |  1 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.893 | 11 | 1.290 | 11 |    | all WM  |164.91 |234 |       |  0 |
+
+
+> (show-coa 'sit-fdo)
+ 2.368  sit-fdo           3.332  2.094
+ 2.127  high-t-fdo        2.739  1.519
+ 1.813  oven-fdo          2.106  0.347
+ 1.511  initst-fdo-1      1.602  0.784
+ 1.391  dish-fdo          1.432  0.199
+ 1.341  t-of-fdo-o        1.356  0.495
+ 1.326  goalst-fdo        1.335  0.797
+ 1.274  *material-metal-1   1.275  0.905
+ 1.253  t-of-fdo-f        1.237  0.372
+ 1.226  to-reach-fdo      1.203  0.810
+ 1.219  *made-of-1        1.209  0.308
+ 1.140  food-fdo          1.094  0.285
+ 0.992  in-fdo-do         0.916  0.405
+ 0.776  on-fdo            0.681  0.142
+ 0.463  follows-fdo       0.378  0.000
+ 0.440  in-fdo-fo         0.358  0.099
+ 0.351  endst-fdo         0.279  0.000
+ 0.328  interst-fdo       0.260  0.000
+ 0.304  cause-fdo-t       0.239  0.000
+ 0.186  cause-fdo-i       0.143  0.000
+ 0.168  initst-fdo-2      0.129  0.000
+ 0.000  shape-of-fdo      0.035  0.000
+ 0.000  rectang-fdo       0.035  0.000
+21
+> (mfr #$sit-cm1<==>sit-fdo)
+(defagent  sit-cm1<==>sit-fdo   winner-hypoth-agent
+  "Created by T-OF-CM1<-->T-OF-FDO-O at time 6.35."
+  :type      (:hypoth :corr :temporary :winner)
+  :t-link    ((sit-cm1<==>sit-wtp -0.300)
+              (situation<==>situation 0.300)
+              (sit-cm1<==>sit-sff -0.300) )
+  :slot1   
+    :type      (:aspect)
+    :c-coref   (sit-cm1 0.300)
+  :slot2   
+    :type      (:aspect)
+    :c-coref   (sit-fdo 0.300)
+  :slot3   
+    :type      (:aspect)
+    :c-coref   ((t-of-cm1<-->t-of-fdo-o 0.300)
+                (situation 0.400)
+                (t-of-cm1<-->t-of-fdo-f 0.300)
+                (low-t-cm1<-->high-t-fdo 0.300)
+                (in-cm1<-->in-fdo-do 0.300)
+                (milk-cm1<==>oven-fdo 0.300)
+                (tpot-cm1<-->dish-fdo 0.300)
+                (initst-cm1<-->initst-fdo-1 0.300)
+                (in-cm1<-->in-fdo-fo 0.300)
+                (in-cm1<-->on-fdo 0.300)
+                (goalst-cm1<-->goalst-fdo 0.300)
+                (milk-cm1<==>food-fdo 0.300)
+                (tpot-cm1<==>oven-fdo 0.300)
+                (milk-cm1<==>dish-fdo 0.300)
+                (to-reach-cm1<-->to-reach-fdo 0.300)
+                (goalst-cm1<-->interst-fdo 0.300)
+                (initst-cm1<-->interst-fdo 0.300)
+                (tpot-cm1<==>food-fdo 0.300)
+                (goalst-cm1<-->endst-fdo 0.300)
+                (mmetal-cm1<-->*material-metal-1 0.300)
+                (made-of-cm1<-->*made-of-1 0.300) )
+  :slot4   
+    :type      (:aspect)
+    :c-coref   (sit-cm1 0.100)
+)
+
+> *time*
+99.999
+> (g 50)
+;; T=135.40, #<PR MADE-OF-CM1> received in MADE-OF-CM1<-->*MADE-OF-1.
+;; T=136.20, #<PR MMETAL-CM1> received in MMETAL-CM1<-->*MATERIAL-METAL-1.
+;; Time 150.00, 240 agents in WM:  99 c,  80 i,  61 h (0+54+7)
+;;    4 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.217 | 14 | -.911 |  4 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.073 |  4 | -.963 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.089 |  6 | -.999 |  0 |    | sit-BPF | 0.007 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.058 |  4 | -.999 |  0 |    | sit-FDO | 1.025 | 21 | 1.440 | 11 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.035 |  3 | -.962 |  2 |   
+ | sit-SFF | 0.077 |  8 | -.989 |  1 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.933 | 11 | 1.440 | 11 |    | all WM  |163.96 |233 |       |  0 |
+
+> (mt)
+ sit-cm1         sit-fdo          1.91   winner
+ milk-cm1        food-fdo         1.60   mature
+ tpot-cm1        dish-fdo         1.38   mature
+ in-cm1          in-fdo-do        1.31   mature
+ t-of-cm1        t-of-fdo-f       1.55   mature
+ low-t-cm1       high-t-fdo       1.79   winner
+ made-of-cm1     *made-of-1       1.76   winner
+ mmetal-cm1      *material-metal-1  1.73   winner
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.77   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+> (hyps #$in-cm1)
+ 1.313  m   1    in-cm1<-->in-fdo-do
+ 1.299  m   2    in-cm1<-->on-fdo
+ 1.147  m   1    in-cm1<-->in-fdo-fo
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (hyps #$in)
+ 1.320  m   2    in<==>in
+ 0.692  m   1    in<==>on
+ 2 hyps (0 e + 2 m + 0 W)
+
+> (hyps #$t-of-cm1)
+ 1.327  m   1    t-of-cm1<-->t-of-fdo-o
+ 1.552  m   1    t-of-cm1<-->t-of-fdo-f
+ 0.463  m   1    t-of-cm1<-->t-of-wtp-w
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (g 50)
+;; T=156.00, #<PR MILK-CM1> received in MILK-CM1<==>FOOD-FDO.
+;; Time 200.00, 247 agents in WM: 102 c,  84 i,  61 h (0+53+8)
+;;    3 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.219 | 14 | -.958 |  3 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.073 |  4 | -.963 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.086 |  6 | -.999 |  0 |    | sit-BPF | 0.007 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.058 |  4 | -.999 |  0 |    | sit-FDO | 1.060 | 21 | 1.501 | 11 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.035 |  3 | -.962 |  2 |   
+ | sit-SFF | 0.136 | 12 | -.980 |  2 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.936 | 11 | 1.501 | 11 |    | all WM  |166.23 |240 |       |  0 |
+
+
+> (mt)
+ sit-cm1         sit-fdo          1.91   winner
+ milk-cm1        food-fdo         1.76   winner
+ tpot-cm1        dish-fdo         1.51   mature
+ in-cm1          on-fdo           1.37   mature
+ t-of-cm1        t-of-fdo-f       1.60   mature
+ low-t-cm1       high-t-fdo       1.79   winner
+ made-of-cm1     *made-of-1       1.77   winner
+ mmetal-cm1      *material-metal-1  1.73   winner
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.77   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+> (show-coa 'sit-fdo)
+ 2.406  sit-fdo           3.431  2.169
+ 2.129  high-t-fdo        2.743  1.519
+ 1.945  *material-metal-1   2.356  1.949
+ 1.916  *made-of-1        2.299  1.406
+ 1.894  food-fdo          2.257  1.416
+ 1.790  oven-fdo          2.063  0.285
+ 1.515  initst-fdo-1      1.608  0.782
+ 1.470  dish-fdo          1.541  0.254
+ 1.334  t-of-fdo-o        1.346  0.487
+ 1.331  goalst-fdo        1.342  0.797
+ 1.285  t-of-fdo-f        1.280  0.392
+ 1.229  to-reach-fdo      1.205  0.811
+ 0.980  in-fdo-do         0.902  0.378
+ 0.827  on-fdo            0.733  0.171
+ 0.486  in-fdo-fo         0.398  0.131
+ 0.467  follows-fdo       0.381  0.000
+ 0.355  endst-fdo         0.283  0.000
+ 0.335  interst-fdo       0.266  0.000
+ 0.308  cause-fdo-t       0.243  0.000
+ 0.196  cause-fdo-i       0.151  0.000
+ 0.173  initst-fdo-2      0.132  0.000
+ 0.000  shape-of-fdo      0.037  0.000
+ 0.000  rectang-fdo       0.037  0.000
+21
+> (g 50)
+;; T=220.80, #<PR T-OF-CM1> received in T-OF-CM1<-->T-OF-FDO-F.
+;; Time 250.00, 246 agents in WM: 102 c,  84 i,  60 h (0+51+9)
+;;    2 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.219 | 14 | -.959 |  3 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.073 |  4 | -.964 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.086 |  6 | -.999 |  0 |    | sit-BPF | 0.007 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.059 |  4 | -.999 |  0 |    | sit-FDO | 1.085 | 21 | 1.537 | 11 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.035 |  3 | -.962 |  2 |   
+ | sit-SFF | 0.137 | 12 | -.987 |  1 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.927 | 11 | 1.537 | 11 |    | all WM  |166.43 |239 |       |  0 |
+
+
+> (mt)
+ sit-cm1         sit-fdo          1.91   winner
+ milk-cm1        food-fdo         1.78   winner
+ tpot-cm1        dish-fdo         1.52   mature
+ in-cm1          on-fdo           1.37   mature
+ t-of-cm1        t-of-fdo-f       1.76   winner
+ low-t-cm1       high-t-fdo       1.80   winner
+ made-of-cm1     *made-of-1       1.77   winner
+ mmetal-cm1      *material-metal-1  1.73   winner
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.78   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+> (hyps #$in-cm1)
+ 1.238  m   1    in-cm1<-->in-fdo-do
+ 1.375  m   2    in-cm1<-->on-fdo
+ 1.237  m   1    in-cm1<-->in-fdo-fo
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (rt #$in-cm1)
+ 0.233  1.375  m  in-cm1<-->on-fdo     
+ 0.745  1.238  m  in-cm1<-->in-fdo-do  
+ 0.000  1.237  m  in-cm1<-->in-fdo-fo  
+#<RT IN-CM1>
+> (show-hyps)
+ 1.914  WW 20    sit-cm1<==>sit-fdo
+ 1.800  WW  3    low-t-cm1<-->high-t-fdo
+ 1.783  WW  4    milk-cm1<==>food-fdo
+ 1.783  WW  2    goalst-cm1<-->goalst-fdo
+ 1.769  WW  1    to-reach-cm1<-->to-reach-fdo
+ 1.768  WW  1    made-of-cm1<-->*made-of-1
+ 1.761  WW  1    t-of-cm1<-->t-of-fdo-f
+ 1.733  WW  2    mmetal-cm1<-->*material-metal-1
+ 1.732  WW  2    initst-cm1<-->initst-fdo-1
+ 1.525  m   3    tpot-cm1<-->dish-fdo
+ 1.513  m   2    temperature-of<==>temperature-of
+ 1.482  m   3    made-of<==>made-of
+ 1.473  m   3    material-metal<==>material-metal
+ 1.465  m   3    low-temp<==>high-temp
+ 1.456  m   1    goal-state<==>goal-state
+ 1.451  m   1    milk<==>food
+ 1.449  m   3    situation<==>situation
+ 1.448  m   2    init-state<==>init-state
+ 1.447  m   1    to-reach<==>to-reach
+ 1.375  m   2    in-cm1<-->on-fdo
+ 1.323  m   2    in<==>in
+ 1.238  m   1    in-cm1<-->in-fdo-do
+ 1.237  m   1    in-cm1<-->in-fdo-fo
+ 1.224  m   1    teapot<==>baking-dish
+ 1.176  m   2    tpot-cm1<==>oven-fdo
+ 0.966  m   1    t-of-cm1<-->t-of-fdo-o
+26
+> (g 50)
+;; Time 300.00, 246 agents in WM: 102 c,  84 i,  60 h (0+51+9)
+;;    2 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.219 | 14 | -.959 |  3 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.073 |  4 | -.964 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.086 |  6 | -.999 |  0 |    | sit-BPF | 0.007 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.059 |  4 | -.999 |  0 |    | sit-FDO | 1.085 | 21 | 1.537 | 11 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.035 |  3 | -.962 |  2 |   
+ | sit-SFF | 0.137 | 12 | -.987 |  1 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.927 | 11 | 1.537 | 11 |    | all WM  |166.43 |239 |       |  0 |
+
+
+> (show-coa 'sit-fdo)
+ 2.412  sit-fdo           3.448  2.181
+ 2.134  high-t-fdo        2.756  1.520
+ 1.947  *material-metal-1   2.359  1.951
+ 1.919  *made-of-1        2.304  1.409
+ 1.915  food-fdo          2.296  1.421
+ 1.897  t-of-fdo-f        2.263  1.370
+ 1.781  oven-fdo          2.047  0.281
+ 1.511  initst-fdo-1      1.602  0.781
+ 1.475  dish-fdo          1.549  0.260
+ 1.328  goalst-fdo        1.338  0.786
+ 1.262  t-of-fdo-o        1.249  0.389
+ 1.226  to-reach-fdo      1.202  0.808
+ 0.980  in-fdo-do         0.902  0.378
+ 0.830  on-fdo            0.736  0.172
+ 0.490  in-fdo-fo         0.402  0.131
+ 0.469  follows-fdo       0.383  0.000
+ 0.365  endst-fdo         0.291  0.000
+ 0.335  interst-fdo       0.266  0.000
+ 0.314  cause-fdo-t       0.248  0.000
+ 0.197  cause-fdo-i       0.151  0.000
+ 0.173  initst-fdo-2      0.133  0.000
+ 0.000  shape-of-fdo      0.037  0.000
+ 0.000  rectang-fdo       0.037  0.000
+21
+> (mt)
+ sit-cm1         sit-fdo          1.91   winner
+ milk-cm1        food-fdo         1.78   winner
+ tpot-cm1        dish-fdo         1.52   mature
+ in-cm1          on-fdo           1.37   mature
+ t-of-cm1        t-of-fdo-f       1.76   winner
+ low-t-cm1       high-t-fdo       1.80   winner
+ made-of-cm1     *made-of-1       1.77   winner
+ mmetal-cm1      *material-metal-1  1.73   winner
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.78   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+> (g 50)
+;; T=310.80, #<PR TPOT-CM1> received in TPOT-CM1<-->DISH-FDO.
+;; Time 350.00, 244 agents in WM: 102 c,  84 i,  58 h (0+48+10)
+;;    1 clocks;   0 ag on agenda:   0 c,   0 i,   0 h (0+0+0), 0 nc
+
+ |  sit    |   ri  | ca |   mi  | cm |    |  sit    |   ri  | ca |   mi  | cm |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | sit-WTP | 0.217 | 14 | -.959 |  3 |    | sit-BF  | 0.000 |  0 | -.999 |  0 |   
+ | sit-IHC | 0.073 |  4 | -.964 |  2 |    | sit-GP  | 0.000 |  0 | -.999 |  0 |   
+ | sit-MTF | 0.087 |  6 | -.999 |  0 |    | sit-BPF | 0.007 |  1 | -.999 |  0 |   
+ | sit-ICF | 0.059 |  4 | -.999 |  0 |    | sit-FDO | 1.112 | 21 | 1.592 | 11 |   
+ | sit-STC | 0.000 |  0 | -.999 |  0 |    | sit-ERW | 0.035 |  3 | -.963 |  2 |   
+ | sit-SFF | 0.137 | 12 | -.987 |  1 |    | sit-GWB | 0.000 |  0 | -.999 |  0 |   
+ +---------+-------+----+-------+----+    +---------+-------+----+-------+----+
+ | SIT-CM1 | 2.923 | 11 | 1.592 | 11 |    | all WM  |166.55 |237 |       |  0 |
+
+
+> (mt)
+ sit-cm1         sit-fdo          1.92   winner
+ milk-cm1        food-fdo         1.78   winner
+ tpot-cm1        dish-fdo         1.77   winner
+ in-cm1          on-fdo           1.46   mature
+ t-of-cm1        t-of-fdo-f       1.76   winner
+ low-t-cm1       high-t-fdo       1.80   winner
+ made-of-cm1     *made-of-1       1.79   winner
+ mmetal-cm1      *material-metal-1  1.73   winner
+ initst-cm1      initst-fdo-1     1.73   winner
+ goalst-cm1      goalst-fdo       1.78   winner
+ to-reach-cm1    to-reach-fdo     1.77   winner
+> (mt (coa 'sit-fdo))
+ sit-fdo         sit-cm1          1.92   winner
+ food-fdo        milk-cm1         1.78   winner
+ dish-fdo        tpot-cm1         1.77   winner
+ oven-fdo        <unmapped>       0.00   
+ on-fdo          in-cm1           1.46   mature
+ in-fdo-do       <unmapped>       0.00   
+ in-fdo-fo       <unmapped>       0.00   
+ t-of-fdo-o      <unmapped>       0.00   
+ t-of-fdo-f      t-of-cm1         1.76   winner
+ high-t-fdo      low-t-cm1        1.80   winner
+ shape-of-fdo    <unmapped>       0.00   
+ rectang-fdo     <unmapped>       0.00   
+ initst-fdo-1    initst-cm1       1.73   winner
+ initst-fdo-2    <unmapped>       0.00   
+ interst-fdo     <unmapped>       0.00   
+ goalst-fdo      goalst-cm1       1.78   winner
+ endst-fdo       <unmapped>       0.00   
+ to-reach-fdo    to-reach-cm1     1.77   winner
+ follows-fdo     <unmapped>       0.00   
+ cause-fdo-i     <unmapped>       0.00   
+ cause-fdo-t     <unmapped>       0.00   
+ *material-metal-1 mmetal-cm1       1.73   winner
+ *made-of-1      made-of-cm1      1.79   winner
+> (hyps #$in-cm1)
+ 1.265  m   1    in-cm1<-->in-fdo-do
+ 1.458  m   2    in-cm1<-->on-fdo
+ 1.158  m   1    in-cm1<-->in-fdo-fo
+ 3 hyps (0 e + 3 m + 0 W)
+
+> (rt #$in-cm1)
+ 0.544  1.458  m  in-cm1<-->on-fdo     
+ 0.538  1.265  m  in-cm1<-->in-fdo-do  
+ 0.000  1.158  m  in-cm1<-->in-fdo-fo  
+#<RT IN-CM1>
+> (show-hyps T)
+ 1.916  WW 20    sit-cm1<==>sit-fdo
+ 1.800  WW  3    low-t-cm1<-->high-t-fdo
+ 1.793  WW  1    made-of-cm1<-->*made-of-1
+ 1.784  WW  4    milk-cm1<==>food-fdo
+ 1.783  WW  2    goalst-cm1<-->goalst-fdo
+ 1.775  WW  3    tpot-cm1<-->dish-fdo
+ 1.769  WW  1    to-reach-cm1<-->to-reach-fdo
+ 1.761  WW  1    t-of-cm1<-->t-of-fdo-f
+ 1.734  WW  2    mmetal-cm1<-->*material-metal-1
+ 1.734  WW  2    initst-cm1<-->initst-fdo-1
+ 1.513  m   2    temperature-of<==>temperature-of
+ 1.486  m   3    made-of<==>made-of
+ 1.473  m   3    material-metal<==>material-metal
+ 1.465  m   3    low-temp<==>high-temp
+ 1.458  m   2    in-cm1<-->on-fdo
+ 1.456  m   1    goal-state<==>goal-state
+ 1.452  m   1    milk<==>food
+ 1.449  m   1    teapot<==>baking-dish
+ 1.449  m   3    situation<==>situation
+ 1.449  m   2    init-state<==>init-state
+ 1.447  m   1    to-reach<==>to-reach
+ 1.309  m   2    in<==>in
+ 1.265  m   1    in-cm1<-->in-fdo-do
+ 1.158  m   1    in-cm1<-->in-fdo-fo
+ 0.966  m   1    t-of-cm1<-->t-of-fdo-o
+ 0.764  m   1    in<==>on
+ 0.744  m   1    goalst-cm1<-->endst-fdo
+ 0.718  m   2    tpot-cm1<==>oven-fdo
+ 0.591  m   2    milk-cm1<==>oven-fdo
+ 0.573  m   1    initst-cm1<-->interst-fdo
+ 0.535  m   1    goalst-cm1<-->interst-fdo
+ 0.386  m   0    low-temp<==>low-temp
+ 0.349  m   0    temperature-of<==>taste-of
+ 0.347  m   0    material-metal<==>material-china
+ 0.345  m   2    milk-cm1<==>dish-fdo
+ 0.342  m   0    teapot<==>teapot
+ 0.328  m   0    init-state<==>end-state
+ 0.324  m   1    goal-state<==>end-state
+ 0.322  m   0    milk<==>milk
+ 0.311  m   1    teapot<==>oven
+ 0.303  m   1    init-state<==>inter-state
+ 0.299  m   0    teapot<==>hot-plate
+ 0.299  m   1    milk<==>oven
+ 0.299  m   1    goal-state<==>inter-state
+ 0.297  m   0    milk<==>fridge
+ 0.292  m   0    teapot<==>cup
+ 0.291  m   0    milk<==>water
+ 0.287  m   0    milk<==>hot-plate
+ 0.283  m   0    milk<==>ice-cube
+ 0.244  m   1    made-of-cm1<-->made-of-ihc
+ 0.241  m   2    mmetal-cm1<-->mmetal-erw
+ 0.235  m   1    low-t-cm1<-->high-t-wtp
+ 0.228  m   1    made-of-cm1<-->made-of-erw
+ 0.220  m   1    mmetal-cm1<-->mmetal-ckves
+ 0.213  m   1    low-t-cm1<-->high-t-ihc
+ 0.189  m   1    sit-cm1<==>sit-sff
+ 0.183  m   3    sit-cm1<==>sit-wtp
+ 0.172  m   1    initst-cm1<-->initst-wtp-1
+58
+> 

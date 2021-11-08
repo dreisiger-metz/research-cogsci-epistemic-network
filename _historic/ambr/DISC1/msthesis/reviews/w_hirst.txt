@@ -1,0 +1,34 @@
+
+                "Extensions of DUAL and AMBR"
+
+                 Alexander Alexandrov Petrov
+
+Reviewed by William Hirst
+
+
+   This thesis's chief interest is in building a model of analogical
+reasoning.  The problem of how people construct analogies has received
+much attention in the last few years, and a number of models have been
+developed.  The present work uses Kokinov's DUAL general-purpose cognitive
+architecture and extends this to a specific model of analogical reasoning,
+AMBR, which is based on DUAL.  DUAL is a hybrid of symbolic and connectionist
+architecture and has one important feature that figures centrally in the
+present thesis -- it was developed specifically to handle the context-specific
+nature of many cognitive phenomena.   Information in AMBR2 is represented
+as concept or objects/events/situations and the links between informational
+nodes are constantly open to revision.  AMBR2 differs from AMBR in several
+ways, in particular, the introduction of a new activation function and
+'secretaries'.  These innovations allow for a solid simulation of experimental
+data and a good explanation of empirical findings.
+
+   The thesis is clearly written and presents a major effort to advance our
+understanding of analogical reasoning through the construction of cognitive
+models.  It reviews previous efforts cogently and concisely and pushes the
+framework developed by Kokinov in a deep and telling direction.  A fine work
+capable of being published in a revised form.
+
+   The thesis clearly represents work worthy of a Master's degree in Cognitive
+Science.
+
+
+                                                (signature)
